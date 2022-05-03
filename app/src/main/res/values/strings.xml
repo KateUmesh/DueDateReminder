@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Due Date Reminder</string>
+
+    //Login
+    <string name="mobile_number">Mobile Number</string>
+    <string name="login">Login</string>
+    <string name="createAccount">Create Account</string>
 </resources>
