@@ -1,5 +1,6 @@
 package com.duedatereminder.view.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -19,5 +20,13 @@ class LoginActivity : AppCompatActivity() {
         val tietMobileNumber :TextInputEditText = findViewById(R.id.tietMobileNumber)
         val btnLogin :Button = findViewById(R.id.btnLogin)
         val btnCreateAccount :Button = findViewById(R.id.btnCreateAccount)
+
+
+        /*Button Create Account click*/
+        btnCreateAccount.setOnClickListener {
+            val intent = Intent(this, CreateAccountActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+        }
     }
 }

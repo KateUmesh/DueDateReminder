@@ -2,7 +2,16 @@
     <string name="app_name">Due Date Reminder</string>
 
     //Login
-    <string name="mobile_number">Mobile Number</string>
+    <string name="mobileNumber">Mobile Number</string>
     <string name="login">Login</string>
+
+    //Create Account
     <string name="createAccount">Create Account</string>
+    <string name="name">Name</string>
+    <string name="whatsappNumber">Whatsapp Number</string>
+    <string name="email">Email</string>
+    <string name="address">Address</string>
+    <string name="you_will_get_otp">You will get an OTP on this number.</string>
+    <string name="accept_terms_msg">By creating an account, you agree to our  <a href="terms:">terms and conditions</a></string>
+
 </resources>
