@@ -14,4 +14,9 @@
     <string name="you_will_get_otp">You will get an OTP on this number.</string>
     <string name="accept_terms_msg">By creating an account, you agree to our  <a href="terms:">terms and conditions</a></string>
 
+    //OTP Verification
+    <string name="sentOTPto">OTP sent to</string>
+    <string name="verify_proceed">Verify and Proceed</string>
+    <string name="phone_verification">Phone verification</string>
+
 </resources>
