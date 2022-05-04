@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DueDateReminder">
-        <activity android:name=".view.activities.OtpVerificationActivity"></activity>
+        <activity android:name=".view.activities.EditAccountActivity"
+            android:exported="true"/>
+        <activity android:name=".view.activities.OtpVerificationActivity"
+            android:exported="true"/>
         <activity
             android:name=".view.activities.CreateAccountActivity"
             android:exported="true" />

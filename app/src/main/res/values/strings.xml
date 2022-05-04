@@ -19,4 +19,8 @@
     <string name="verify_proceed">Verify and Proceed</string>
     <string name="phone_verification">Phone verification</string>
 
+    //Edit Account
+    <string name="editAccount">Edit Account</string>
+    <string name="saveChanges">Save Changes</string>
+
 </resources>

@@ -22,6 +22,13 @@ class LoginActivity : AppCompatActivity() {
         val btnCreateAccount :Button = findViewById(R.id.btnCreateAccount)
 
 
+        /*Button Login Click*/
+        btnLogin.setOnClickListener {
+            val intent = Intent(this, OtpVerificationActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+        }
+
         /*Button Create Account click*/
         btnCreateAccount.setOnClickListener {
             val intent = Intent(this, CreateAccountActivity::class.java)
