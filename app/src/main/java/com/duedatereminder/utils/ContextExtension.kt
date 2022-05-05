@@ -4,11 +4,13 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.duedatereminder.R
 import com.duedatereminder.view.activities.HomeActivity
+import com.duedatereminder.view.activities.LoginActivity
 import com.duedatereminder.view.activities.OtpVerificationActivity
 import com.google.android.material.snackbar.Snackbar
 
@@ -38,6 +40,26 @@ class ContextExtension {
             builder.show()
         }
 
+        fun showOkFinishActivityDialog(message: String,activity: Activity) {
+            val builder =
+                AlertDialog.Builder(activity)
+            builder.setTitle(activity.getString(R.string.app_name) as CharSequence)
+            builder.setMessage(message)
+            builder.setPositiveButton(
+                R.string.Ok
+            ) { _, _ ->
+                activity.finish()
+            }
+            builder.show()
+        }
+
+        fun callLoginActivity(activity: Activity){
+            val intent = Intent(activity, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            activity.startActivity(intent)
+            activity.finish()
+        }
+
         fun callHomeActivity(activity: Activity){
             val intent = Intent(activity, HomeActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -55,6 +77,13 @@ class ContextExtension {
 
         fun snackBar(message: CharSequence,activity: Activity){
             Snackbar.make(activity.findViewById(android.R.id.content),message,Snackbar.LENGTH_SHORT).show()
+        }
+
+        fun hideKeyboard(view: View) {
+            view.apply {
+                val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(view.windowToken, 0)
+            }
         }
 
     }

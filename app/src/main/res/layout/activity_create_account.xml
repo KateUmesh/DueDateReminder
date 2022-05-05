@@ -116,11 +116,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/address"
-                        android:inputType="text"
-                        android:singleLine="true"
+                        android:inputType="textMultiLine"
                         android:textColor="@color/black"
                         android:textSize="16sp"/>
                 </com.google.android.material.textfield.TextInputLayout>
+
 
                 <!--Create Account Button-->
                 <com.google.android.material.button.MaterialButton

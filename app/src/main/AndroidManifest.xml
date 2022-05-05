@@ -10,22 +10,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DueDateReminder">
-        <activity android:name=".view.activities.TermsAndConditionActivity"></activity>
+        <activity android:name=".view.activities.TermsAndConditionActivity"
+            android:exported="true"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".view.activities.HomeActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".view.activities.EditAccountActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".view.activities.OtpVerificationActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".view.activities.CreateAccountActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".view.activities.LoginActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".view.activities.SplashActivity"
             android:exported="true">

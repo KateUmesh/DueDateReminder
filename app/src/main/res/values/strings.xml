@@ -4,7 +4,7 @@
     //Login
     <string name="mobileNumber">Mobile Number</string>
     <string name="login">Login</string>
-    <string name="invalid_number">Invalid phone number.</string>
+    <string name="invalid_number">Invalid mobile number</string>
 
     //Create Account
     <string name="createAccount">Create Account</string>
@@ -36,6 +36,11 @@
 
     //Terms and condition
     <string name="terms_and_condition">Terms and Conditions</string>
+
+    //Logout
+    <string name="logout">Logout</string>
+    <string name="cancel">Cancel</string>
+    <string name="logoutAlertMessage">Are ou sure you want to logout?</string>
 
     //
     <string name="Ok">Ok</string>

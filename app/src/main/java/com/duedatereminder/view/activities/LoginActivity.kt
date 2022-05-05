@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.duedatereminder.R
+import com.duedatereminder.utils.ContextExtension
 import com.duedatereminder.utils.ContextExtension.Companion.callOtpVerificationActivity
+import com.duedatereminder.utils.ContextExtension.Companion.hideKeyboard
 import com.duedatereminder.utils.ContextExtension.Companion.showOkDialog
 import com.duedatereminder.utils.ContextExtension.Companion.toolbar
 import com.google.android.material.textfield.TextInputEditText
@@ -26,6 +28,7 @@ class LoginActivity : AppCompatActivity() {
 
         /*Button Login Click*/
         btnLogin.setOnClickListener {
+            hideKeyboard(tietMobileNumber)
             if(tietMobileNumber.text.toString().length==10) {
                 callOtpVerificationActivity(this,tietMobileNumber.text.toString())
             }else{

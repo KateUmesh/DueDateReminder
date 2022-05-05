@@ -8,7 +8,9 @@ import android.widget.Button
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.text.isDigitsOnly
 import com.duedatereminder.R
+import com.duedatereminder.utils.ContextExtension
 import com.duedatereminder.utils.ContextExtension.Companion.callOtpVerificationActivity
+import com.duedatereminder.utils.ContextExtension.Companion.hideKeyboard
 import com.duedatereminder.utils.ContextExtension.Companion.snackBar
 import com.duedatereminder.utils.ContextExtension.Companion.toolbar
 import com.google.android.material.textfield.TextInputEditText
@@ -42,6 +44,7 @@ class CreateAccountActivity : AppCompatActivity() {
 
         /*Button Create Account Click*/
         btnCreateAccount.setOnClickListener {
+            hideKeyboard(tietAddress)
             validateInput()
         }
     }
@@ -55,7 +58,7 @@ class CreateAccountActivity : AppCompatActivity() {
             snackBar(getString(R.string.invalid_number),this)
         }else if(tietWhatsappNumber.text.toString().isEmpty()||tietWhatsappNumber.text.toString().length!=10|| !tietWhatsappNumber.text.toString().isDigitsOnly()){
             snackBar(getString(R.string.invalid_whatsapp_number),this)
-        }else if(tietAddress.text.toString().isEmpty()|| tietWhatsappNumber.text.toString().length<20){
+        }else if(tietAddress.text.toString().isEmpty()|| tietAddress.text.toString().length<20){
             snackBar(getString(R.string.enter_full_address),this)
         }else{
             callOtpVerificationActivity(this,tietMobileNumber.text.toString())

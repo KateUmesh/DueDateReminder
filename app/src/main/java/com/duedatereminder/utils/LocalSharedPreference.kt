@@ -39,4 +39,9 @@ object LocalSharedPreference {
         commitValue()
     }
 
+    fun clearAll() {
+        sharedPreferencesEdit.clear()
+        commitValue()
+    }
+
 }

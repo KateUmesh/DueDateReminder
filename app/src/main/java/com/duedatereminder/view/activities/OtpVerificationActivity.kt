@@ -37,7 +37,7 @@ class OtpVerificationActivity : AppCompatActivity() {
 
         /*Get mobile number from LoginActivity*/
         if(!intent.getStringExtra(Constant.MOBILE_NUMBER).isNullOrEmpty()){
-            tvOtpMessage.text = getString(R.string.sentOTPto)+intent.getStringExtra(Constant.MOBILE_NUMBER)
+            tvOtpMessage.text = getString(R.string.sentOTPto)+" "+intent.getStringExtra(Constant.MOBILE_NUMBER)
         }
 
         /*Verify and Proceed Button Click*/
