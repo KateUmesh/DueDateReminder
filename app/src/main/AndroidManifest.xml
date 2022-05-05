@@ -10,7 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DueDateReminder">
-        <activity android:name=".view.activities.HomeActivity"></activity>
+        <activity android:name=".view.activities.TermsAndConditionActivity"></activity>
+        <activity
+            android:name=".view.activities.HomeActivity"
+            android:exported="true" />
         <activity
             android:name=".view.activities.EditAccountActivity"
             android:exported="true" />

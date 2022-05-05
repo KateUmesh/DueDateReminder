@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import com.duedatereminder.R
 import com.duedatereminder.view.activities.HomeActivity
 import com.duedatereminder.view.activities.OtpVerificationActivity
+import com.google.android.material.snackbar.Snackbar
 
 class ContextExtension {
 
@@ -50,6 +51,10 @@ class ContextExtension {
             intent.putExtra(Constant.MOBILE_NUMBER,mobileNumber)
             activity.startActivity(intent)
 
+        }
+
+        fun snackBar(message: CharSequence,activity: Activity){
+            Snackbar.make(activity.findViewById(android.R.id.content),message,Snackbar.LENGTH_SHORT).show()
         }
 
     }

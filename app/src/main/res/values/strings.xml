@@ -8,15 +8,20 @@
 
     //Create Account
     <string name="createAccount">Create Account</string>
-    <string name="name">Name</string>
-    <string name="whatsappNumber">Whatsapp Number</string>
-    <string name="email">Email</string>
-    <string name="address">Address</string>
+    <string name="name">Name*</string>
+    <string name="mobileNumberAccount">Mobile Number*</string>
+    <string name="whatsappNumber">Whatsapp Number*</string>
+    <string name="email">Email*</string>
+    <string name="address">Address*</string>
     <string name="you_will_get_otp">You will get an OTP on this number.</string>
     <string name="accept_terms_msg">By creating an account, you agree to our  <a href="terms:">terms and conditions</a></string>
+    <string name="name_required"> Name required</string>
+    <string name="invalid_whatsapp_number">Invalid whatsapp number</string>
+    <string name="invalid_email_address">Invalid email address</string>
+    <string name="enter_full_address">Enter full address</string>
 
     //OTP Verification
-    <string name="sentOTPto">OTP sent to</string>
+    <string name="sentOTPto">OTP sent to </string>
     <string name="verify_proceed">Verify and Proceed</string>
     <string name="phone_verification">Phone verification</string>
     <string name="invalid_code">Invalid code</string>
@@ -28,6 +33,9 @@
 
     //Home
     <string name="home">Home</string>
+
+    //Terms and condition
+    <string name="terms_and_condition">Terms and Conditions</string>
 
     //
     <string name="Ok">Ok</string>
