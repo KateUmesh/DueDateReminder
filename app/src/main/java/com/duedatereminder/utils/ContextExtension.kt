@@ -8,7 +8,9 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import com.duedatereminder.R
+import com.duedatereminder.callback.SnackBarCallback
 import com.duedatereminder.view.activities.HomeActivity
 import com.duedatereminder.view.activities.LoginActivity
 import com.duedatereminder.view.activities.OtpVerificationActivity
@@ -84,6 +86,21 @@ class ContextExtension {
                 val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
             }
+        }
+
+        fun Activity.showSnackBar(snackBarCallback: SnackBarCallback, message: CharSequence){
+            val snackBar = Snackbar.make(this.findViewById(android.R.id.content),message,Snackbar.LENGTH_INDEFINITE)
+
+            snackBar.setActionTextColor(ContextCompat.getColor(this,R.color.Yellow))
+            snackBar.setAction(this.getString(R.string.retry)){
+                if(NetworkConnection.isNetworkConnected()){
+                    snackBarCallback.snackBarSuccessInternetConnection()
+                }else{
+                    this.showSnackBar(snackBarCallback,this.getString(R.string.no_internet_connection))
+                }
+                snackBar.dismiss()
+            }
+            snackBar.show()
         }
 
     }

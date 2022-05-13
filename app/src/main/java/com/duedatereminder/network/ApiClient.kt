@@ -25,8 +25,8 @@ object ApiClient {
             .followSslRedirects(true)
             .addInterceptor{chain->
                 val newRequest = chain.request().newBuilder()
-                    .addHeader("x-api-key","c4e2c2e8-b527-4ae9-80e5-f9c2bc04155d")
-                    .addHeader("Authorization",Constant.Bearer+LocalSharedPreference.getStringValue(Constant.id_user))
+                    .addHeader("x-api-key","7a719faf-cd21-460b-adf0-e07e9a400d43")
+                    .addHeader("Authorization",Constant.Bearer+LocalSharedPreference.getStringValue(Constant.token))
                     .build()
                 chain.proceed(newRequest)
             }

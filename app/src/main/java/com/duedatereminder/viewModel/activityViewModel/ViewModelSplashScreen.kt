@@ -12,7 +12,7 @@ import java.net.SocketTimeoutException
 
 class ViewModelSplashScreen() : ViewModel(){
     private var mRepository = RepositoryApi()
-    private var mSplashScreenLiveData = MutableLiveData<ModelSplashResponse>()
+     var mSplashScreenLiveData = MutableLiveData<ModelSplashResponse>()
 
     fun userAppStatus(modelSplashRequest: ModelSplashRequest) {
         viewModelScope.launch {
