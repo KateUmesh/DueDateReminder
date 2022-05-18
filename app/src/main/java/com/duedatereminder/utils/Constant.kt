@@ -4,6 +4,7 @@ class Constant {
 
     companion object{
         const val MOBILE_NUMBER="mobileNumber"
+        const val OTP="otp"
         const val DUE_DATE_REMINDER="DueDateReminder"
         const val Bearer: String="Bearer "
         const val token="token"

@@ -9,31 +9,31 @@ import com.duedatereminder.utils.Constant
 import kotlinx.coroutines.launch
 import java.net.SocketTimeoutException
 
-class ViewModelLogin() : ViewModel(){
+class ViewModelOtpVerification() : ViewModel(){
     private var mRepository = RepositoryApi()
-     var mSendLoginOtpLiveData = MutableLiveData<ModelSendLoginOtpResponse>()
+     var mResendLoginOtpLiveData = MutableLiveData<ModelSendLoginOtpResponse>()
 
-    fun sendLoginOtp(modelSendLoginOtpRequest: ModelSendLoginOtpRequest) {
+    fun resendLoginOtp(modelSendLoginOtpRequest: ModelSendLoginOtpRequest) {
         viewModelScope.launch {
             try {
                 val response = mRepository.sendLoginOtp(modelSendLoginOtpRequest)
                 if (response.isSuccessful)
-                    mSendLoginOtpLiveData.value = response.body()
+                    mResendLoginOtpLiveData.value = response.body()
                 else
-                    mSendLoginOtpLiveData.value =
+                    mResendLoginOtpLiveData.value =
                         ModelSendLoginOtpResponse(
                             "",
                             Constant.something_went_wrong,null
                         )
             } catch (e: Exception) {
                 if (e is SocketTimeoutException)
-                    mSendLoginOtpLiveData.value =
+                    mResendLoginOtpLiveData.value =
                         ModelSendLoginOtpResponse(
                             "",
                             Constant.slow_internet_connection_detected,null
                         )
                 else
-                    mSendLoginOtpLiveData.value =
+                    mResendLoginOtpLiveData.value =
                         ModelSendLoginOtpResponse(
                             "",
                             Constant.something_went_wrong,null

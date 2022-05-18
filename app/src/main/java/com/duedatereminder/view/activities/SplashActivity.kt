@@ -87,7 +87,7 @@ class SplashActivity : AppCompatActivity(),SnackBarCallback {
     }
 
 
-    fun callUserAppStatus(mModelSplashRequest: ModelSplashRequest){
+    private fun callUserAppStatus(mModelSplashRequest: ModelSplashRequest){
         if(NetworkConnection.isNetworkConnected()) {
             mViewModelSplashScreen.userAppStatus(mModelSplashRequest)
         }else{

@@ -69,10 +69,12 @@ class ContextExtension {
             activity.finish()
         }
 
-        fun callOtpVerificationActivity(activity: Activity,mobileNumber:String){
+        fun callOtpVerificationActivity(activity: Activity,mobileNumber:String,otp:String,token:String){
             val intent = Intent(activity, OtpVerificationActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             intent.putExtra(Constant.MOBILE_NUMBER,mobileNumber)
+            intent.putExtra(Constant.OTP,otp)
+            intent.putExtra(Constant.token,token)
             activity.startActivity(intent)
 
         }
