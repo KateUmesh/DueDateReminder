@@ -148,5 +148,5 @@
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>
-
+    <include layout="@layout/item_loading_layout"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

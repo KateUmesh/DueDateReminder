@@ -4,8 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
+import android.view.View
 import android.widget.Button
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -31,6 +33,7 @@ class CreateAccountActivity : AppCompatActivity(), SnackBarCallback {
     private lateinit var tietMobileNumber : TextInputEditText
     private lateinit var tietWhatsappNumber : TextInputEditText
     private lateinit var tietAddress : TextInputEditText
+    private lateinit var ll_loading : LinearLayoutCompat
     var otp:String = ""
     private lateinit var mViewModelCreateAccount: ViewModelCreateAccount
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +49,7 @@ class CreateAccountActivity : AppCompatActivity(), SnackBarCallback {
         tietMobileNumber = findViewById(R.id.tietMobileNumber)
         tietWhatsappNumber = findViewById(R.id.tietWhatsappNumber)
         tietAddress = findViewById(R.id.tietAddress)
+        ll_loading = findViewById(R.id.ll_loading)
         val btnCreateAccount : Button = findViewById(R.id.btnCreateAccount)
         val tvTermsAndConditions: AppCompatTextView = findViewById(R.id.tvTermsAndConditions)
 
@@ -65,6 +69,7 @@ class CreateAccountActivity : AppCompatActivity(), SnackBarCallback {
 
         /**Response of SendRegistrationOtp Api*/
         mViewModelCreateAccount.mSendRegistrationOtpLiveData.observe(this, Observer {
+            ll_loading.visibility = View.GONE
             when(it.status){
                 "1"->{
                     val intent = Intent(this, RegistrationOTPVerificationActivity::class.java)
@@ -111,6 +116,7 @@ class CreateAccountActivity : AppCompatActivity(), SnackBarCallback {
     }
 
     private fun callSendRegistrationOtpApi(mobileNumber:String){
+        ll_loading.visibility = View.VISIBLE
         val mModelSendRegistrationOtpRequest = ModelSendRegistrationOtpRequest(mobileNumber,otp)
         if(NetworkConnection.isNetworkConnected()) {
             mViewModelCreateAccount.sendRegistrationOtp(mModelSendRegistrationOtpRequest)

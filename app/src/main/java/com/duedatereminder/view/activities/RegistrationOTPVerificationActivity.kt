@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.provider.Settings
+import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.lifecycle.ViewModelProvider
 import com.duedatereminder.R
 import com.duedatereminder.callback.SnackBarCallback
@@ -35,6 +37,7 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
     private var androidId:String=""
     lateinit var tvTimer : TextView
     private lateinit var mViewModelCreateAccount: ViewModelCreateAccount
+    private lateinit var ll_loading : LinearLayoutCompat
     @SuppressLint("SetTextI18n", "HardwareIds")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +53,7 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
         val tvOtpMessage : TextView = findViewById(R.id.tvOtpMessage)
         val edtOtp : TextInputEditText = findViewById(R.id.edtOtp)
         val btnVerifyAndProceed : Button = findViewById(R.id.btnVerifyAndProceed)
+        ll_loading = findViewById(R.id.ll_loading)
         tvTimer  = findViewById(R.id.tvTimer)
 
         /**Start Timer*/
@@ -107,6 +111,7 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
 
         /**Response of SendRegistrationOtp Api*/
         mViewModelCreateAccount.mSendRegistrationOtpLiveData.observe(this, androidx.lifecycle.Observer {
+            ll_loading.visibility = View.GONE
             when(it.status){
                 "1"->{
                     otp=it.data!!.otp
@@ -122,9 +127,10 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
 
         /**Response of CreateAccount Api*/
         mViewModelCreateAccount.mCreateAccountLiveData.observe(this, androidx.lifecycle.Observer {
+            ll_loading.visibility = View.GONE
             when(it.status){
                 "1"->{
-                    LocalSharedPreference.putStringValue(Constant.token,token)
+                    LocalSharedPreference.putStringValue(Constant.token,it.data!!.token)
                     ContextExtension.callHomeActivity(this)
                 }
                 "0"->{
@@ -162,6 +168,7 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
 
 
     private fun callSendRegistrationOtpApi(mobileNumber:String){
+        ll_loading.visibility = View.VISIBLE
         val mModelSendRegistrationOtpRequest = ModelSendRegistrationOtpRequest(mobileNumber,otp)
         if(NetworkConnection.isNetworkConnected()) {
             mViewModelCreateAccount.sendRegistrationOtp(mModelSendRegistrationOtpRequest)
@@ -171,6 +178,7 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
     }
 
     private fun callCreateAccountApi(name:String,mobileNumber:String,whatsapp:String,email:String,address:String,androidId:String){
+        ll_loading.visibility = View.VISIBLE
         val modelCreateAccountRequest= ModelCreateAccountRequest(name,mobileNumber,whatsapp,email,address,androidId)
         if(NetworkConnection.isNetworkConnected()) {
             mViewModelCreateAccount.createAccount(modelCreateAccountRequest)

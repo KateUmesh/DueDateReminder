@@ -2,8 +2,10 @@ package com.duedatereminder.view.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.duedatereminder.R
@@ -29,6 +31,7 @@ class LoginActivity : AppCompatActivity(),SnackBarCallback {
     private lateinit var mViewModelLogin: ViewModelLogin
     var otp:String = ""
     lateinit var tietMobileNumber :TextInputEditText
+    private lateinit var ll_loading : LinearLayoutCompat
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -40,6 +43,7 @@ class LoginActivity : AppCompatActivity(),SnackBarCallback {
          tietMobileNumber  = findViewById(R.id.tietMobileNumber)
         val btnLogin :Button = findViewById(R.id.btnLogin)
         val btnCreateAccount :Button = findViewById(R.id.btnCreateAccount)
+        ll_loading = findViewById(R.id.ll_loading)
 
         /**Initialize View Model*/
         mViewModelLogin = ViewModelProvider(this).get(ViewModelLogin::class.java)
@@ -61,6 +65,7 @@ class LoginActivity : AppCompatActivity(),SnackBarCallback {
 
         /**Response of SendLoginOtp Api*/
         mViewModelLogin.mSendLoginOtpLiveData.observe(this, Observer {
+            ll_loading.visibility = View.GONE
             when(it.status){
                 "1"->{
                     callOtpVerificationActivity(this,tietMobileNumber.text.toString(),it.data?.otp!!,it.data?.token!!)
@@ -83,6 +88,7 @@ class LoginActivity : AppCompatActivity(),SnackBarCallback {
     }
 
     private fun callSendLoginOtpApi(mobileNumber:String){
+        ll_loading.visibility = View.VISIBLE
         val mModelSendLoginOtpRequest = ModelSendLoginOtpRequest(mobileNumber,otp)
         if(NetworkConnection.isNetworkConnected()) {
             mViewModelLogin.sendLoginOtp(mModelSendLoginOtpRequest)

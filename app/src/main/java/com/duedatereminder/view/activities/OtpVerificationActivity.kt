@@ -9,6 +9,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.lifecycle.ViewModelProvider
 import com.duedatereminder.R
 import com.duedatereminder.callback.SnackBarCallback
@@ -33,6 +34,7 @@ class OtpVerificationActivity : AppCompatActivity(),SnackBarCallback {
     var mobileNumber=""
     lateinit var tvTimer : TextView
     private lateinit var mViewModelOtpVerification: ViewModelOtpVerification
+    private lateinit var ll_loading : LinearLayoutCompat
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +51,7 @@ class OtpVerificationActivity : AppCompatActivity(),SnackBarCallback {
         val edtOtp : TextInputEditText = findViewById(R.id.edtOtp)
         val btnVerifyAndProceed : Button = findViewById(R.id.btnVerifyAndProceed)
          tvTimer  = findViewById(R.id.tvTimer)
+        ll_loading = findViewById(R.id.ll_loading)
 
         /**Start Timer*/
         countDownTimer(tvTimer)
@@ -88,6 +91,7 @@ class OtpVerificationActivity : AppCompatActivity(),SnackBarCallback {
 
         /**Response of ResendLoginOtp*/
         mViewModelOtpVerification.mResendLoginOtpLiveData.observe(this, androidx.lifecycle.Observer {
+            ll_loading.visibility = View.GONE
             when(it.status){
                 "1"->{
                     otp=it.data!!.otp
@@ -128,6 +132,7 @@ class OtpVerificationActivity : AppCompatActivity(),SnackBarCallback {
     }
 
     private fun callResendLoginOtp(mobileNumber:String){
+        ll_loading.visibility = View.VISIBLE
         val mModelSendLoginOtpRequest = ModelSendLoginOtpRequest(mobileNumber,otp)
         if(NetworkConnection.isNetworkConnected()) {
             mViewModelOtpVerification.resendLoginOtp(mModelSendLoginOtpRequest)
