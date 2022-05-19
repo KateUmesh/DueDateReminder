@@ -11,6 +11,11 @@ class Constant {
         const val firebase_token="firebase_token"
         const val something_went_wrong: String = "Something went wrong"
         const val slow_internet_connection_detected: String="Slow internet connection detected"
+        const val NAME="name"
+        const val WHATSAPP="whatsapp"
+        const val EMAIL="email"
+        const val ADDRESS="ADDRESS"
+
         const val userAppStatus="user/userAppStatus"
         const val sendRegistrationOtp="user/sendRegistrationOtp"
         const val createAccount="user/createAccount"

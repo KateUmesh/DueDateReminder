@@ -13,7 +13,7 @@ class ViewModelCreateAccount() : ViewModel(){
     private var mRepository = RepositoryApi()
 
     /**Create Account*/
-    private var mCreateAccountLiveData = MutableLiveData<ModelCreateAccountResponse>()
+     var mCreateAccountLiveData = MutableLiveData<ModelCreateAccountResponse>()
     fun createAccount(modelCreateAccountRequest: ModelCreateAccountRequest) {
         viewModelScope.launch {
             try {
@@ -44,7 +44,7 @@ class ViewModelCreateAccount() : ViewModel(){
     }
 
     /**sendRegistrationOtp*/
-    private var mSendRegistrationOtpLiveData = MutableLiveData<ModelSendRegistrationOtpResponse>()
+     var mSendRegistrationOtpLiveData = MutableLiveData<ModelSendRegistrationOtpResponse>()
     fun sendRegistrationOtp(modelSendRegistrationOtpRequest: ModelSendRegistrationOtpRequest) {
         viewModelScope.launch {
             try {
