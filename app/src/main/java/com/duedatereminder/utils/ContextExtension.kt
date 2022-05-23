@@ -13,6 +13,7 @@ import com.duedatereminder.R
 import com.duedatereminder.callback.SnackBarCallback
 import com.duedatereminder.view.activities.HomeActivity
 import com.duedatereminder.view.activities.LoginActivity
+import com.duedatereminder.view.activities.NavigationDrawerActivity
 import com.duedatereminder.view.activities.OtpVerificationActivity
 import com.google.android.material.snackbar.Snackbar
 
@@ -63,7 +64,7 @@ class ContextExtension {
         }
 
         fun callHomeActivity(activity: Activity){
-            val intent = Intent(activity, HomeActivity::class.java)
+            val intent = Intent(activity, NavigationDrawerActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK
             activity.startActivity(intent)
             activity.finish()

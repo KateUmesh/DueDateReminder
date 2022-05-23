@@ -1,9 +1,6 @@
 package com.duedatereminder.repository
 
-import com.duedatereminder.model.ModelCreateAccountRequest
-import com.duedatereminder.model.ModelSendLoginOtpRequest
-import com.duedatereminder.model.ModelSendRegistrationOtpRequest
-import com.duedatereminder.model.ModelSplashRequest
+import com.duedatereminder.model.*
 import com.duedatereminder.network.ApiClient
 
 class RepositoryApi {
@@ -14,4 +11,6 @@ class RepositoryApi {
     suspend fun createAccount(modelCreateAccountRequest: ModelCreateAccountRequest)=ApiClient.build().createAccount(modelCreateAccountRequest)
     /**Login*/
     suspend fun sendLoginOtp(modelSendLoginOtpRequest: ModelSendLoginOtpRequest)=ApiClient.build().sendLoginOtp(modelSendLoginOtpRequest)
+    /**Add Client*/
+    suspend fun addClient(modelAddClientRequest: ModelAddClientRequest)=ApiClient.build().addClient(modelAddClientRequest)
 }

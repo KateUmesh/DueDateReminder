@@ -20,5 +20,6 @@ class Constant {
         const val sendRegistrationOtp="user/sendRegistrationOtp"
         const val createAccount="user/createAccount"
         const val sendLoginOtp="user/sendLoginOtp"
+        const val addClient="user/addClient"
     }
 }

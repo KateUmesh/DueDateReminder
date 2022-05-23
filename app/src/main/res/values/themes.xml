@@ -25,4 +25,13 @@
         <item name="android:textColor">@color/white</item>
         <item name="backgroundTint">@color/colorPrimaryDark</item>
     </style>
+
+    <style name="Theme.DueDateReminder.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.DueDateReminder.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.DueDateReminder.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
