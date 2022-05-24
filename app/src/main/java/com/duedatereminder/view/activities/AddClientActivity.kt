@@ -38,6 +38,7 @@ class AddClientActivity : AppCompatActivity(), SnackBarCallback {
     private lateinit var tietMobileNumber : TextInputEditText
     private lateinit var tietWhatsappNumber : TextInputEditText
     private lateinit var tietAddress : TextInputEditText
+    private lateinit var edtNotificationCategories : TextInputEditText
     private lateinit var ll_loading : LinearLayoutCompat
     var otp:String = ""
     private lateinit var mViewModelAddClient: ViewModelAddClient
@@ -54,6 +55,7 @@ class AddClientActivity : AppCompatActivity(), SnackBarCallback {
         tietMobileNumber = findViewById(R.id.tietMobileNumber)
         tietWhatsappNumber = findViewById(R.id.tietWhatsappNumber)
         tietAddress = findViewById(R.id.tietAddress)
+        edtNotificationCategories = findViewById(R.id.edtNotificationCategories)
         ll_loading = findViewById(R.id.ll_loading)
         val btnSubmit : Button = findViewById(R.id.btnSubmit)
 
@@ -83,6 +85,13 @@ class AddClientActivity : AppCompatActivity(), SnackBarCallback {
                 }
             }
         })
+
+        /**Notification Categories Click*/
+        edtNotificationCategories.setOnClickListener {
+            val intent = Intent(this, NotificationCategoriesActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+        }
     }
 
     private fun validateInput(){

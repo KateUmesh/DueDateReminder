@@ -33,4 +33,8 @@ interface ApiInterface {
     /**Notification Categories*/
     @GET(Constant.notificationCategories)
     suspend fun notificationCategories():Response<ModelNotificationCategoriesResponse>
+
+    /**All Clients*/
+    @GET(Constant.allClients)
+    suspend fun allClients():Response<ModelAllClientsResponse>
 }

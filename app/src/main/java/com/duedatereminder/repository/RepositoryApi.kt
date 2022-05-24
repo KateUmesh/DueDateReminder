@@ -15,4 +15,6 @@ class RepositoryApi {
     suspend fun addClient(modelAddClientRequest: ModelAddClientRequest)=ApiClient.build().addClient(modelAddClientRequest)
     /**Notification Categories*/
     suspend fun notificationCategories()=ApiClient.build().notificationCategories()
+    /**All Client*/
+    suspend fun allClients()=ApiClient.build().allClients()
 }

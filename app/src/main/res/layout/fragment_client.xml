@@ -16,10 +16,20 @@
         android:layout_marginEnd="8dp"
         android:textAlignment="center"
         android:textSize="20sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <!--All Clients Recycler View-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rvAllClients"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -29,4 +39,6 @@
         android:layout_margin="@dimen/fab_margin"
         app:tint="@color/white"
         app:srcCompat="@drawable/ic_baseline_add_24" />
+
+    <include layout="@layout/item_loading_layout"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

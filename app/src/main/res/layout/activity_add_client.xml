@@ -120,6 +120,31 @@
                         android:textSize="16sp"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- caste-->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ti_notification_categories"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:visibility="visible"
+                    android:hint="@string/notification_categories"
+
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtNotificationCategories"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        android:editable="false"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:drawableEnd="@drawable/ic_arrow_drop_down_24dp"
+                        android:singleLine="true"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+
 
                 <!--Create Account Button-->
                 <com.google.android.material.button.MaterialButton
