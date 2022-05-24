@@ -4,6 +4,7 @@ import com.duedatereminder.model.*
 import com.duedatereminder.utils.Constant
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface ApiInterface {
@@ -28,4 +29,8 @@ interface ApiInterface {
     /**Add Client*/
     @POST(Constant.addClient)
     suspend fun addClient(@Body modelAddClientRequest: ModelAddClientRequest):Response<ModelAddClientResponse>
+
+    /**Notification Categories*/
+    @GET(Constant.notificationCategories)
+    suspend fun notificationCategories():Response<ModelNotificationCategoriesResponse>
 }

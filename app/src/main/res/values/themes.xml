@@ -34,4 +34,9 @@
     <style name="Theme.DueDateReminder.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.DueDateReminder.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="editTextGrey">
+        <item name="colorControlActivated">@color/grey_60</item>
+        <item name="colorControlHighlight">@color/grey_60</item>
+        <item name="colorControlNormal">@color/grey_40</item>
+    </style>
 </resources>

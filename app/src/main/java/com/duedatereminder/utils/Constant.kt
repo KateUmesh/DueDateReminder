@@ -21,5 +21,6 @@ class Constant {
         const val createAccount="user/createAccount"
         const val sendLoginOtp="user/sendLoginOtp"
         const val addClient="user/addClient"
+        const val notificationCategories="user/notificationCategories"
     }
 }

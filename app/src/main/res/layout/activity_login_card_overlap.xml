@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:background="@color/grey_10" android:layout_width="match_parent" android:layout_height="match_parent">
+    <View android:background="@color/colorPrimary" android:layout_width="match_parent" android:layout_height="220dp"/>
+    <LinearLayout android:orientation="vertical" android:padding="@dimen/spacing_mlarge" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_centerInParent="true">
+        <ImageView android:layout_gravity="center_horizontal" android:layout_width="90dp" android:layout_height="90dp" android:layout_marginTop="@dimen/spacing_large" android:layout_marginBottom="@dimen/spacing_mlarge" android:src="@drawable/ic_launcher_foreground" android:tint="@android:color/white"/>
+        <androidx.cardview.widget.CardView android:visibility="visible" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="@dimen/spacing_middle" app:cardCornerRadius="6dp" app:cardElevation="5dp">
+            <LinearLayout android:orientation="vertical" android:padding="@dimen/spacing_mlarge" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <TextView android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" android:textStyle="bold" android:textColor="@color/green_500" android:layout_gravity="center_horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_middle" android:layout_marginBottom="@dimen/spacing_xlarge" android:text="SIGN IN"/>
+                <TextView android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
+                    android:textColor="@color/grey_40"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mobileNumber"
+                    android:textAlignment="center"/>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tietMobileNumber"
+                    android:theme="@style/editTextGrey"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    android:textStyle="bold" android:textColor="@color/blue_600"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginLeft="-4dp" android:layout_marginRight="-4dp"
+                    android:maxLines="1" android:singleLine="true" android:maxLength="50"
+                    android:inputType="text"/>
+                <View android:layout_width="0dp" android:layout_height="@dimen/spacing_mlarge"/>
+                <TextView android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
+                    android:textColor="@color/grey_40"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PASSWORD"
+                    android:visibility="gone"
+                    android:textAlignment="center"/>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:theme="@style/editTextGrey"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    android:textStyle="bold"
+                    android:textColor="@color/blue_600"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="-4dp"
+                    android:layout_marginRight="-4dp"
+                    android:visibility="gone"
+                    android:maxLines="1" android:singleLine="true"
+                    android:maxLength="50" android:inputType="textPassword"/>
+                <View android:layout_width="0dp"
+                    android:visibility="gone"
+                    android:layout_height="@dimen/spacing_mlarge"/>
+                <Button
+                    android:id="@+id/btnLogin"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/btn_rounded_primary"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginLeft="-4dp"
+                    android:layout_marginRight="-4dp"
+                    android:text="SIGN IN" android:textAllCaps="false"/>
+                <LinearLayout android:gravity="center" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_large" android:layout_marginBottom="@dimen/spacing_medium">
+                    <TextView android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" android:textColor="@color/blue_grey_300" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="New user? "/>
+                    <TextView
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryLight"
+                        android:id="@+id/tvSignUp"
+                        android:clickable="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sign Up"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <View android:layout_width="0dp" android:layout_height="@dimen/spacing_large"/>
+    </LinearLayout>
+    <include layout="@layout/item_loading_layout" />
+</RelativeLayout>

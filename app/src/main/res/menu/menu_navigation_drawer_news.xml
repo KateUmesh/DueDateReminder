@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt">
+    <group android:id="@+id/grp_1" android:checkableBehavior="single">
+        <item android:icon="@drawable/ic_home"
+            android:id="@+id/nav_home"
+            android:title="@string/menu_home"/>
+        <item android:icon="@drawable/ic_whatshot"
+            android:id="@+id/nav_client"
+            android:title="@string/menu_client"/>
+        <item android:icon="@drawable/ic_schedule"
+            android:id="@+id/nav_slideshow"
+            android:title="@string/menu_slideshow"/>
+        <item android:icon="@drawable/ic_highlight"
+            android:id="@+id/nav_highlight"
+            android:title="Highlight"/>
+    </group>
+    <group android:id="@+id/grp_2"
+        android:checkableBehavior="none">
+        <item android:icon="@drawable/ic_settings"
+            android:id="@+id/nav_settings"
+            android:title="Settings"/>
+        <item android:icon="@drawable/ic_help"
+            android:id="@+id/nav_help" android:title="Help"/>
+    </group>
+</menu>

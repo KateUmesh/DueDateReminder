@@ -21,7 +21,7 @@
         <activity
             android:name=".view.activities.NavigationDrawerActivity"
             android:label="@string/title_activity_navigation_drawer"
-            android:theme="@style/Theme.DueDateReminder.NoActionBar"/>
+            android:theme="@style/Theme.DueDateReminder.NoActionBar" />
         <activity
             android:name=".view.activities.RegistrationOTPVerificationActivity"
             android:exported="true"

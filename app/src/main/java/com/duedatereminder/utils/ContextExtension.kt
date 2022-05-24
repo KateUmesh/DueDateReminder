@@ -11,10 +11,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.duedatereminder.R
 import com.duedatereminder.callback.SnackBarCallback
-import com.duedatereminder.view.activities.HomeActivity
-import com.duedatereminder.view.activities.LoginActivity
-import com.duedatereminder.view.activities.NavigationDrawerActivity
-import com.duedatereminder.view.activities.OtpVerificationActivity
+import com.duedatereminder.view.activities.*
 import com.google.android.material.snackbar.Snackbar
 
 class ContextExtension {
