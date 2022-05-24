@@ -17,4 +17,7 @@ class RepositoryApi {
     suspend fun notificationCategories()=ApiClient.build().notificationCategories()
     /**All Client*/
     suspend fun allClients()=ApiClient.build().allClients()
+    /**Edit Client*/
+    suspend fun editClient(idClient: Int)=ApiClient.build().editClient(idClient)
+    suspend fun editClient(idClient: Int,modelEditClientRequest: ModelEditClientRequest)=ApiClient.build().editClient(idClient,modelEditClientRequest)
 }

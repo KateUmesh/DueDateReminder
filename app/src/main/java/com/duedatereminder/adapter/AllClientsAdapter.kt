@@ -1,6 +1,7 @@
 package com.duedatereminder.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.duedatereminder.R
 import com.duedatereminder.model.AllClients
 import com.duedatereminder.model.DueDateCategories
+import com.duedatereminder.utils.Constant
+import com.duedatereminder.view.activities.EditClientActivity
+import com.duedatereminder.view.activities.LoginActivity
 
 class AllClientsAdapter(var context: Context, private var items: List<AllClients>): RecyclerView.Adapter<AllClientsAdapter.AllClientsViewHolder>() {
 
@@ -44,7 +48,10 @@ class AllClientsAdapter(var context: Context, private var items: List<AllClients
 
         /*More Click*/
         holder.ivMore.setOnClickListener {
-
+            val intent = Intent(context, EditClientActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            intent.putExtra(Constant.ID_CLIENT,items[position].id_client)
+            context.startActivity(intent)
         }
 
     }

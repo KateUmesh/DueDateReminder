@@ -62,6 +62,11 @@
     //Add Client
     <string name="submit">Submit</string>
     <string name="add_client">Add Client</string>
+
+    //Notification Categories
     <string name="notification_categories">Notification Categories</string>
+
+    //Edit Client
+    <string name="edit_client">Edit Client</string>
 
 </resources>

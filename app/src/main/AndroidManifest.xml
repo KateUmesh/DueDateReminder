@@ -13,7 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DueDateReminder">
-        <activity android:name=".view.activities.NotificationCategoriesActivity"></activity>
+        <activity
+            android:name=".view.activities.EditClientActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".view.activities.NotificationCategoriesActivity"/>
         <activity
             android:name=".view.activities.AddClientActivity"
             android:exported="true"

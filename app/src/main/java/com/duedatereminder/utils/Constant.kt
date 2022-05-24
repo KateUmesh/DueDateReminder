@@ -15,6 +15,7 @@ class Constant {
         const val WHATSAPP="whatsapp"
         const val EMAIL="email"
         const val ADDRESS="ADDRESS"
+        const val ID_CLIENT="idClient"
 
         const val userAppStatus="user/userAppStatus"
         const val sendRegistrationOtp="user/sendRegistrationOtp"
@@ -23,5 +24,6 @@ class Constant {
         const val addClient="user/addClient"
         const val notificationCategories="user/dueDateCategories"
         const val allClients="user/allClients"
+        const val editClient="user/editClient/{idClient}"
     }
 }

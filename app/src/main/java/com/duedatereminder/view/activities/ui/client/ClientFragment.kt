@@ -19,7 +19,7 @@ import com.duedatereminder.utils.ContextExtension
 import com.duedatereminder.utils.ContextExtension.Companion.showSnackBar
 import com.duedatereminder.utils.NetworkConnection
 import com.duedatereminder.view.activities.AddClientActivity
-import com.duedatereminder.viewModel.activityViewModel.ViewModelAllClient
+import com.duedatereminder.viewModel.fragmentViewModel.ViewModelAllClient
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ClientFragment : Fragment(),SnackBarCallback {

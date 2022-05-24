@@ -1,4 +1,4 @@
-package com.duedatereminder.viewModel.activityViewModel
+package com.duedatereminder.viewModel.fragmentViewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

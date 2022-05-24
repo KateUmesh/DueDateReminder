@@ -6,6 +6,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface ApiInterface {
 
@@ -37,4 +38,13 @@ interface ApiInterface {
     /**All Clients*/
     @GET(Constant.allClients)
     suspend fun allClients():Response<ModelAllClientsResponse>
+
+    /**Edit Client*/
+    /*GET Edit Client*/
+    @GET(Constant.editClient)
+    suspend fun editClient(@Path("idClient") idClient: Int,):Response<ModelEditClientGetResponse>
+
+    /*POST Edit Client*/
+    @POST(Constant.editClient)
+    suspend fun editClient(@Path("idClient") idClient: Int,@Body modelEditClientRequest: ModelEditClientRequest):Response<ModelEditClientResponse>
 }
