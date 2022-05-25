@@ -28,6 +28,8 @@ interface ApiInterface {
     suspend fun sendLoginOtp(@Body modelSendLoginOtpRequest: ModelSendLoginOtpRequest):Response<ModelSendLoginOtpResponse>
 
     /**Add Client*/
+    @GET(Constant.addClient)
+    suspend fun addClient():Response<ModelAddClientGetResponse>
     @POST(Constant.addClient)
     suspend fun addClient(@Body modelAddClientRequest: ModelAddClientRequest):Response<ModelAddClientResponse>
 

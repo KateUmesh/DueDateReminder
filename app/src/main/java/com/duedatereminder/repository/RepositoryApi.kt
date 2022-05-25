@@ -12,6 +12,7 @@ class RepositoryApi {
     /**Login*/
     suspend fun sendLoginOtp(modelSendLoginOtpRequest: ModelSendLoginOtpRequest)=ApiClient.build().sendLoginOtp(modelSendLoginOtpRequest)
     /**Add Client*/
+    suspend fun addClient()=ApiClient.build().addClient()
     suspend fun addClient(modelAddClientRequest: ModelAddClientRequest)=ApiClient.build().addClient(modelAddClientRequest)
     /**Notification Categories*/
     suspend fun notificationCategories()=ApiClient.build().notificationCategories()

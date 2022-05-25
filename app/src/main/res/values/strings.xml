@@ -19,6 +19,7 @@
     <string name="invalid_whatsapp_number">Invalid whatsapp number</string>
     <string name="invalid_email_address">Invalid email address</string>
     <string name="enter_full_address">Enter full address</string>
+    <string name="select_notification_categories">Enter full address</string>
 
     //OTP Verification
     <string name="sentOTPto">OTP sent to </string>
@@ -61,7 +62,8 @@
 
     //Add Client
     <string name="submit">Submit</string>
-    <string name="add_client">Add Client</string>
+    <string name="add_client">My Clients</string>
+    <string name="select_categories">Select Categories</string>
 
     //Notification Categories
     <string name="notification_categories">Notification Categories</string>

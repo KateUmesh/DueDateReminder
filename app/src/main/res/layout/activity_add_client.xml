@@ -21,6 +21,8 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:id="@+id/nsAddClient"
+            android:visibility="gone"
             android:padding="@dimen/spacing_mlarge">
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -136,7 +138,7 @@
                         android:id="@+id/edtNotificationCategories"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="none"
+                        android:inputType="textMultiLine"
                         android:editable="false"
                         android:focusable="false"
                         android:clickable="true"

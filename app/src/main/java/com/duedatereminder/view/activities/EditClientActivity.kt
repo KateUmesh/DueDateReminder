@@ -1,12 +1,15 @@
 package com.duedatereminder.view.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.text.isDigitsOnly
@@ -37,8 +40,11 @@ class EditClientActivity : AppCompatActivity(), SnackBarCallback {
     var otp:String = ""
     var idClient:String = ""
     private lateinit var mViewModelEditClient: ViewModelEditClient
-    private lateinit var dueDateCategories:ArrayList<String>
+    //private lateinit var dueDateCategories:ArrayList<String>
     private lateinit var dueDateCategoriesNames:ArrayList<String>
+    private var dueDateCategoriesList = ArrayList<DueDateCategories>()
+    private var selectedCategoriesList = ArrayList<String>()
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_client)
@@ -55,7 +61,7 @@ class EditClientActivity : AppCompatActivity(), SnackBarCallback {
         edtNotificationCategories = findViewById(R.id.edtNotificationCategories)
         ll_loading = findViewById(R.id.ll_loading)
         val btnSubmit : Button = findViewById(R.id.btnSubmit)
-        dueDateCategories = ArrayList()
+        //dueDateCategories = ArrayList()
         dueDateCategoriesNames = ArrayList()
 
         /**Get Client id From AllClientAdapter*/
@@ -103,19 +109,41 @@ class EditClientActivity : AppCompatActivity(), SnackBarCallback {
 
                     /*Set dueDateCategories*/
                     if(!it.data?.client!!.due_date_categories.isNullOrEmpty()){
-                       dueDateCategories = it.data?.client!!.due_date_categories
-                        for(i in 0 until dueDateCategories.size){
+                        selectedCategoriesList = it.data?.client!!.due_date_categories
+                        for(i in 0 until selectedCategoriesList.size){
                             for(j in 0 until it.data?.due_date_categories!!.size){
-                                if(dueDateCategories[i].equals(it.data?.due_date_categories!![j].id_due_date_category)){
+                                if(selectedCategoriesList[i].equals(it.data?.due_date_categories!![j].id_due_date_category)){
                                     dueDateCategoriesNames.add(it.data?.due_date_categories!![j].category_name)
                                 }
                             }
 
                         }
-                        Log.e("cats", dueDateCategoriesNames.toString())
                         val categories: String = TextUtils.join(", ", dueDateCategoriesNames)
                         edtNotificationCategories.setText(categories)
-                        Log.e("joined", categories)
+
+                        edtNotificationCategories.setOnTouchListener { _, event ->
+                            if (event.action == MotionEvent.ACTION_UP) {
+                                val values = ArrayList<String>()
+                                val key = ArrayList<String>()
+                                for (i in this.dueDateCategoriesList.indices) {
+                                    values.add(this.dueDateCategoriesList[i].category_name)
+                                    key.add(this.dueDateCategoriesList[i].id_due_date_category)
+                                }
+                                val alertDialog = AlertDialog.Builder(this)
+                                alertDialog.setTitle(getString(R.string.select_categories))
+                                alertDialog.setMultiChoiceItems(values.toTypedArray(), null) { _, which, isChecked ->
+                                    if(isChecked){
+                                        selectedCategoriesList.add(key[which])
+                                    }else{
+                                        selectedCategoriesList.remove(key[which])
+                                    }
+                                }
+                                val alert = alertDialog.create()
+                                alert.setCanceledOnTouchOutside(false)
+                                alert.show()
+                            }
+                            true
+                        }
                     }
                 }
                 "0"->{
@@ -170,7 +198,7 @@ class EditClientActivity : AppCompatActivity(), SnackBarCallback {
             snackBar(getString(R.string.enter_full_address),this)
         }else{
             callEditClientPostApi(tietName.text.toString(),tietMobileNumber.text.toString(),tietWhatsappNumber.text.toString(),
-                tietEmail.text.toString(),tietAddress.text.toString(),dueDateCategories)
+                tietEmail.text.toString(),tietAddress.text.toString(),selectedCategoriesList)
 
         }
     }
@@ -200,7 +228,7 @@ class EditClientActivity : AppCompatActivity(), SnackBarCallback {
 
     override fun snackBarSuccessInternetConnection() {
         callEditClientPostApi(tietName.text.toString(),tietMobileNumber.text.toString(),tietWhatsappNumber.text.toString(),
-            tietEmail.text.toString(),tietAddress.text.toString(),dueDateCategories)
+            tietEmail.text.toString(),tietAddress.text.toString(),selectedCategoriesList)
     }
 
     override fun snackBarFailedInterConnection() {
