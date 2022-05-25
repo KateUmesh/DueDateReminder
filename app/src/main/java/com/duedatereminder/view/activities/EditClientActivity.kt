@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.text.isDigitsOnly
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.duedatereminder.R
@@ -44,6 +45,7 @@ class EditClientActivity : AppCompatActivity(), SnackBarCallback {
     private lateinit var dueDateCategoriesNames:ArrayList<String>
     private var dueDateCategoriesList = ArrayList<DueDateCategories>()
     private var selectedCategoriesList = ArrayList<String>()
+    private var checkedItems=ArrayList<Boolean>()
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +63,7 @@ class EditClientActivity : AppCompatActivity(), SnackBarCallback {
         edtNotificationCategories = findViewById(R.id.edtNotificationCategories)
         ll_loading = findViewById(R.id.ll_loading)
         val btnSubmit : Button = findViewById(R.id.btnSubmit)
+        val nsEditClient : NestedScrollView = findViewById(R.id.nsEditClient)
         //dueDateCategories = ArrayList()
         dueDateCategoriesNames = ArrayList()
 
@@ -80,8 +83,10 @@ class EditClientActivity : AppCompatActivity(), SnackBarCallback {
         /**Response of EditClient GET Api*/
         mViewModelEditClient.mModelEditClientGetResponse.observe(this, Observer {
             ll_loading.visibility = View.GONE
+
             when(it.status){
                 "1"->{
+                    nsEditClient.visibility = View.VISIBLE
                     /*Set name*/
                     if(it.data?.client!!.name.isNotEmpty()){
                        tietName.setText(it.data?.client!!.name)
@@ -109,11 +114,17 @@ class EditClientActivity : AppCompatActivity(), SnackBarCallback {
 
                     /*Set dueDateCategories*/
                     if(!it.data?.client!!.due_date_categories.isNullOrEmpty()){
+                        dueDateCategoriesList = it.data!!.due_date_categories!!
                         selectedCategoriesList = it.data?.client!!.due_date_categories
+                        for(k in 0 until it.data?.due_date_categories!!.size){
+                            checkedItems.add(false)
+                        }
+
                         for(i in 0 until selectedCategoriesList.size){
                             for(j in 0 until it.data?.due_date_categories!!.size){
                                 if(selectedCategoriesList[i].equals(it.data?.due_date_categories!![j].id_due_date_category)){
                                     dueDateCategoriesNames.add(it.data?.due_date_categories!![j].category_name)
+                                    checkedItems[j]=true
                                 }
                             }
 
@@ -131,13 +142,28 @@ class EditClientActivity : AppCompatActivity(), SnackBarCallback {
                                 }
                                 val alertDialog = AlertDialog.Builder(this)
                                 alertDialog.setTitle(getString(R.string.select_categories))
-                                alertDialog.setMultiChoiceItems(values.toTypedArray(), null) { _, which, isChecked ->
+                                alertDialog.setMultiChoiceItems(values.toTypedArray(), checkedItems.toBooleanArray()) { _, which, isChecked ->
                                     if(isChecked){
                                         selectedCategoriesList.add(key[which])
+                                        dueDateCategoriesNames.add(values[which])
+                                        if(!checkedItems[which]){
+                                            checkedItems[which]=true
+                                        }
                                     }else{
                                         selectedCategoriesList.remove(key[which])
+                                        dueDateCategoriesNames.remove(values[which])
+                                        if(checkedItems[which]){
+                                            checkedItems[which]=false
+                                        }
                                     }
                                 }
+                                alertDialog.setPositiveButton("Ok") { dialogInterface, which ->
+                                    val categories: String = TextUtils.join(", ", dueDateCategoriesNames)
+                                    edtNotificationCategories.setText(categories)
+                                    dialogInterface.dismiss()
+
+                                }
+                                alertDialog.setNegativeButton("Cancel", { dialogInterface, i -> dialogInterface.dismiss() })
                                 val alert = alertDialog.create()
                                 alert.setCanceledOnTouchOutside(false)
                                 alert.show()
@@ -196,6 +222,8 @@ class EditClientActivity : AppCompatActivity(), SnackBarCallback {
             snackBar(getString(R.string.invalid_whatsapp_number),this)
         }else if(tietAddress.text.toString().isEmpty()|| tietAddress.text.toString().length<20){
             snackBar(getString(R.string.enter_full_address),this)
+        }else if(selectedCategoriesList.isNullOrEmpty()){
+            snackBar(getString(R.string.select_notification_categories),this)
         }else{
             callEditClientPostApi(tietName.text.toString(),tietMobileNumber.text.toString(),tietWhatsappNumber.text.toString(),
                 tietEmail.text.toString(),tietAddress.text.toString(),selectedCategoriesList)

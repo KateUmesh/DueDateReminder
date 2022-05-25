@@ -28,6 +28,7 @@ import java.util.concurrent.TimeUnit
 
 class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallback {
     var otp=""
+    var etOtp=""
     var token=""
     var mobileNumber=""
     var name=""
@@ -36,25 +37,33 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
     var address=""
     private var androidId:String=""
     lateinit var tvTimer : TextView
+    lateinit var btnResendCode : Button
     private lateinit var mViewModelCreateAccount: ViewModelCreateAccount
     private lateinit var ll_loading : LinearLayoutCompat
+    var otpEt = arrayOfNulls<TextInputEditText>(4)
     @SuppressLint("SetTextI18n", "HardwareIds")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration_otpverification)
 
         /*Toolbar*/
-        toolbar(getString(R.string.phone_verification),true)
+        toolbar("",true)
 
         /**Initialize View Model*/
         mViewModelCreateAccount = ViewModelProvider(this).get(ViewModelCreateAccount::class.java)
 
         /**Initialize Variable*/
-        val tvOtpMessage : TextView = findViewById(R.id.tvOtpMessage)
-        val edtOtp : TextInputEditText = findViewById(R.id.edtOtp)
+        //val tvOtpMessage : TextView = findViewById(R.id.tvOtpMessage)
+        //val edtOtp : TextInputEditText = findViewById(R.id.edtOtp)
+        val etMobileNumber : TextInputEditText = findViewById(R.id.etMobileNumber)
+        otpEt[0] = findViewById<View>(R.id.etOtp1) as TextInputEditText
+        otpEt[1] = findViewById<View>(R.id.etOtp2) as TextInputEditText
+        otpEt[2] = findViewById<View>(R.id.etOtp3) as TextInputEditText
+        otpEt[3] = findViewById<View>(R.id.etOtp4) as TextInputEditText
         val btnVerifyAndProceed : Button = findViewById(R.id.btnVerifyAndProceed)
         ll_loading = findViewById(R.id.ll_loading)
         tvTimer  = findViewById(R.id.tvTimer)
+        btnResendCode  = findViewById(R.id.btnResendCode)
 
         /**Start Timer*/
         countDownTimer(tvTimer)
@@ -75,7 +84,8 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
         /**Get mobile number from CreateAccountActivity*/
         if(!intent.getStringExtra(Constant.MOBILE_NUMBER).isNullOrEmpty()){
             mobileNumber=intent.getStringExtra(Constant.MOBILE_NUMBER)!!
-            tvOtpMessage.text = getString(R.string.sentOTPto)+" "+intent.getStringExtra(Constant.MOBILE_NUMBER)
+            //tvOtpMessage.text = getString(R.string.sentOTPto)+" "+intent.getStringExtra(Constant.MOBILE_NUMBER)
+            etMobileNumber.setText(intent.getStringExtra(Constant.MOBILE_NUMBER))
         }
 
         /**Get whatsapp from CreateAccountActivity*/
@@ -95,7 +105,22 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
 
         /**Verify and Proceed Button Click*/
         btnVerifyAndProceed.setOnClickListener {
-            if(edtOtp.text.toString() == otp){
+            otpEt[0]?.let { it1 -> ContextExtension.hideKeyboard(it1) }
+
+            etOtp = otpEt[0]!!.text.toString()+otpEt[1]!!.text.toString()+otpEt[2]!!.text.toString()+otpEt[3]!!.text.toString()
+
+            if(etOtp.length==4 && etOtp == otp) {
+                callCreateAccountApi(name, mobileNumber, whatsapp, email, address, androidId)
+            }else{
+                if(!this.isFinishing){
+                    try{
+                        ContextExtension.showOkDialog(getString(R.string.invalid_code), this)
+                    }catch(e: WindowManager.BadTokenException){
+                        e.printStackTrace()
+                    }
+                }
+            }
+            /*if(edtOtp.text.toString() == otp){
                 callCreateAccountApi(name, mobileNumber, whatsapp, email, address, androidId)
             }else{
                 if(!this.isFinishing){
@@ -106,7 +131,7 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
                     }
                 }
 
-            }
+            }*/
         }
 
         /**Response of SendRegistrationOtp Api*/
@@ -144,6 +169,8 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
     }
 
     private fun countDownTimer(tvTime:TextView) {
+        tvTime.visibility = View.VISIBLE
+        btnResendCode.visibility = View.GONE
         object : CountDownTimer(120000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 tvTime.text = String.format(
@@ -158,8 +185,14 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
             }
 
             override fun onFinish() {
-                tvTime.text = getString(R.string.resend_code)
+               /* tvTime.text = getString(R.string.resend_code)
                 tvTime.setOnClickListener {
+                    callSendRegistrationOtpApi(mobileNumber)
+                }*/
+
+                tvTime.visibility = View.GONE
+                btnResendCode.visibility = View.VISIBLE
+                btnResendCode.setOnClickListener {
                     callSendRegistrationOtpApi(mobileNumber)
                 }
             }

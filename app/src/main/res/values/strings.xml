@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Due Date Reminder</string>
+    <string name="app_name">Compliance Reminder</string>
 
     //Login
     <string name="mobileNumber">Mobile Number</string>
@@ -57,12 +57,12 @@
 
     //Navigation Drawer
     <string name="menu_home">Home</string>
-    <string name="menu_client">Add Client</string>
+    <string name="menu_client">My Clients</string>
     <string name="menu_slideshow">Slideshow</string>
 
     //Add Client
     <string name="submit">Submit</string>
-    <string name="add_client">My Clients</string>
+    <string name="add_client">Add Client</string>
     <string name="select_categories">Select Categories</string>
 
     //Notification Categories

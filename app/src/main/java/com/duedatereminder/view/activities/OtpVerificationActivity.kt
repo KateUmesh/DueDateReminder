@@ -17,6 +17,7 @@ import com.duedatereminder.model.ModelSendLoginOtpRequest
 import com.duedatereminder.utils.Constant
 import com.duedatereminder.utils.ContextExtension
 import com.duedatereminder.utils.ContextExtension.Companion.callHomeActivity
+import com.duedatereminder.utils.ContextExtension.Companion.hideKeyboard
 import com.duedatereminder.utils.ContextExtension.Companion.showOkDialog
 import com.duedatereminder.utils.ContextExtension.Companion.showSnackBar
 import com.duedatereminder.utils.ContextExtension.Companion.toolbar
@@ -30,27 +31,36 @@ import java.util.concurrent.TimeUnit
 
 class OtpVerificationActivity : AppCompatActivity(),SnackBarCallback {
     var otp=""
+    var etOtp=""
     var token=""
     var mobileNumber=""
     lateinit var tvTimer : TextView
+    lateinit var btnResendCode : Button
     private lateinit var mViewModelOtpVerification: ViewModelOtpVerification
     private lateinit var ll_loading : LinearLayoutCompat
+    var otpEt = arrayOfNulls<TextInputEditText>(4)
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_otp_verification)
+        setContentView(R.layout.activity_verification_header)
 
         /*Toolbar*/
-        toolbar(getString(R.string.phone_verification),true)
+        toolbar("",true)
 
         /**Initialize View Model*/
         mViewModelOtpVerification = ViewModelProvider(this).get(ViewModelOtpVerification::class.java)
 
         /**Initialize Variable*/
-        val tvOtpMessage : TextView = findViewById(R.id.tvOtpMessage)
-        val edtOtp : TextInputEditText = findViewById(R.id.edtOtp)
+        //val tvOtpMessage : TextView = findViewById(R.id.tvOtpMessage)
+        val etMobileNumber : TextInputEditText = findViewById(R.id.etMobileNumber)
+        //val edtOtp : TextInputEditText = findViewById(R.id.edtOtp)
+        otpEt[0] = findViewById<View>(R.id.etOtp1) as TextInputEditText
+        otpEt[1] = findViewById<View>(R.id.etOtp2) as TextInputEditText
+        otpEt[2] = findViewById<View>(R.id.etOtp3) as TextInputEditText
+        otpEt[3] = findViewById<View>(R.id.etOtp4) as TextInputEditText
         val btnVerifyAndProceed : Button = findViewById(R.id.btnVerifyAndProceed)
          tvTimer  = findViewById(R.id.tvTimer)
+        btnResendCode  = findViewById(R.id.btnResendCode)
         ll_loading = findViewById(R.id.ll_loading)
 
         /**Start Timer*/
@@ -59,7 +69,8 @@ class OtpVerificationActivity : AppCompatActivity(),SnackBarCallback {
         /**Get mobile number from LoginActivity*/
         if(!intent.getStringExtra(Constant.MOBILE_NUMBER).isNullOrEmpty()){
             mobileNumber=intent.getStringExtra(Constant.MOBILE_NUMBER)!!
-            tvOtpMessage.text = getString(R.string.sentOTPto)+" "+intent.getStringExtra(Constant.MOBILE_NUMBER)
+            //tvOtpMessage.text = getString(R.string.sentOTPto)+" "+intent.getStringExtra(Constant.MOBILE_NUMBER)
+            etMobileNumber.setText(intent.getStringExtra(Constant.MOBILE_NUMBER))
         }
 
         /**Get otp from LoginActivity*/
@@ -74,7 +85,23 @@ class OtpVerificationActivity : AppCompatActivity(),SnackBarCallback {
 
         /**Verify and Proceed Button Click*/
         btnVerifyAndProceed.setOnClickListener {
-            if(edtOtp.text.toString() == otp){
+            otpEt[0]?.let { it1 -> hideKeyboard(it1) }
+
+            etOtp = otpEt[0]!!.text.toString()+otpEt[1]!!.text.toString()+otpEt[2]!!.text.toString()+otpEt[3]!!.text.toString()
+
+            if(etOtp.length==4 && etOtp == otp) {
+                LocalSharedPreference.putStringValue(Constant.token,token)
+                callHomeActivity(this)
+            }else{
+                if(!this.isFinishing){
+                    try{
+                        showOkDialog(getString(R.string.invalid_code),this)
+                    }catch(e: WindowManager.BadTokenException){
+                        e.printStackTrace()
+                    }
+                }
+            }
+            /*if(edtOtp.text.toString() == otp){
                 LocalSharedPreference.putStringValue(Constant.token,token)
                 callHomeActivity(this)
             }else{
@@ -86,7 +113,7 @@ class OtpVerificationActivity : AppCompatActivity(),SnackBarCallback {
                     }
                 }
 
-            }
+            }*/
         }
 
         /**Response of ResendLoginOtp*/
@@ -109,6 +136,8 @@ class OtpVerificationActivity : AppCompatActivity(),SnackBarCallback {
 
 
     private fun countDownTimer(tvTime:TextView) {
+        tvTime.visibility = View.VISIBLE
+        btnResendCode.visibility = View.GONE
         object : CountDownTimer(120000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 tvTime.text = String.format(
@@ -123,10 +152,16 @@ class OtpVerificationActivity : AppCompatActivity(),SnackBarCallback {
             }
 
             override fun onFinish() {
-                tvTime.text = getString(R.string.resend_code)
+                /*tvTime.text = getString(R.string.resend_code)
                 tvTime.setOnClickListener {
                     callResendLoginOtp(mobileNumber)
+                }*/
+                tvTime.visibility = View.GONE
+                btnResendCode.visibility = View.VISIBLE
+                btnResendCode.setOnClickListener {
+                    callResendLoginOtp(mobileNumber)
                 }
+
             }
         }.start()
     }
