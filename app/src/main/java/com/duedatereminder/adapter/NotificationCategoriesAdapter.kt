@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.duedatereminder.R
 import com.duedatereminder.model.DueDateCategories
@@ -19,6 +20,10 @@ class NotificationCategoriesAdapter(var context: Context, private var items: Lis
 
     override fun onBindViewHolder(holder: NotificationCategoriesViewHolder, position: Int) {
         holder.tvNotificationCategories.text = items[position].category_name
+
+        /*Set First Character*/
+        val charArray = items[position].category_name.toCharArray()
+        holder.tvFirstLetter.text = charArray[0].toString()
     }
 
     override fun getItemCount(): Int {
@@ -28,5 +33,6 @@ class NotificationCategoriesAdapter(var context: Context, private var items: Lis
 
     class NotificationCategoriesViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
          var tvNotificationCategories:TextView  = itemView.findViewById(R.id.tvNotificationCategories)
+        var tvFirstLetter: AppCompatTextView = itemView.findViewById(R.id.tvFirstLetter)
     }
 }

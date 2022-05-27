@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="?actionBarSize"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <!--Interest received-->
@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
+        android:visibility="gone"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:minHeight="50dp"
@@ -19,7 +20,6 @@
         android:paddingRight="@dimen/spacing_large">
 
         <TextView
-            android:id="@+id/tvNotificationCategories"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -31,23 +31,56 @@
             android:layout_width="@dimen/spacing_middle"
             android:layout_height="0dp" />
 
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/cbNotificationCategories"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textColor="@color/colorPrimary" />
-
-        <View
-            android:layout_width="@dimen/spacing_middle"
-            android:layout_height="0dp" />
 
     </LinearLayout>
 
     <View
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginStart="72dp"
         android:background="#1F000000" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+      android:layout_centerInParent="true">
+    <LinearLayout android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="@dimen/spacing_middle">
+        <View android:layout_width="@dimen/spacing_large" android:layout_height="0dp"/>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvAllClient"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:backgroundTint="@color/colorPrimary"
+            app:cardCornerRadius="30dp">
+            <TextView
+                android:id="@+id/tvFirstLetter"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="U"
+                android:layout_gravity="center"
+                android:textColor="@color/white"/>
+        </androidx.cardview.widget.CardView>
+        <View android:layout_width="@dimen/spacing_large" android:layout_height="0dp"/>
+        <TextView android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/grey_80"
+            android:id="@+id/tvNotificationCategories"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Item Title"
+            android:layout_weight="1"/>
+        <View android:layout_width="@dimen/spacing_large"
+            android:layout_height="0dp"/>
 
+    </LinearLayout>
+    <View android:background="@color/grey_10"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
 </LinearLayout>
+</RelativeLayout>

@@ -28,6 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/rvAllClients"
+        tools:listitem="@layout/item_swipe"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 

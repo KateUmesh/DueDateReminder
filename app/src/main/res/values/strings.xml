@@ -58,7 +58,7 @@
     //Navigation Drawer
     <string name="menu_home">Home</string>
     <string name="menu_client">My Clients</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_notification">Notification Categories</string>
 
     //Add Client
     <string name="submit">Submit</string>

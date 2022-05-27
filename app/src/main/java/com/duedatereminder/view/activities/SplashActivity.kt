@@ -17,6 +17,7 @@ import com.duedatereminder.R
 import com.duedatereminder.callback.SnackBarCallback
 import com.duedatereminder.firebase.MyFirebaseMessagingService
 import com.duedatereminder.model.ModelSplashRequest
+import com.duedatereminder.utils.AppSignatureHelper
 import com.duedatereminder.utils.Constant
 import com.duedatereminder.utils.ContextExtension.Companion.callHomeActivity
 import com.duedatereminder.utils.ContextExtension.Companion.callLoginActivity
@@ -55,6 +56,8 @@ class SplashActivity : AppCompatActivity(),SnackBarCallback {
         androidId =  Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
 
         mModelSplashRequest = ModelSplashRequest(token,androidId,firebaseToken)
+
+        AppSignatureHelper(this).appSignatures
 
         /**Call UserAppStatus Api*/
         callUserAppStatus(mModelSplashRequest)

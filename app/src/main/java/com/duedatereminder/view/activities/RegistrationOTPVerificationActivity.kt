@@ -1,10 +1,13 @@
 package com.duedatereminder.view.activities
 
 import android.annotation.SuppressLint
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.provider.Settings
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
@@ -12,6 +15,8 @@ import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.lifecycle.ViewModelProvider
 import com.duedatereminder.R
+import com.duedatereminder.broadcast.OtpReceivedInterface
+import com.duedatereminder.broadcast.SMSBroadcastReceiver
 import com.duedatereminder.callback.SnackBarCallback
 import com.duedatereminder.model.ModelCreateAccountRequest
 import com.duedatereminder.model.ModelSendRegistrationOtpRequest
@@ -22,11 +27,13 @@ import com.duedatereminder.utils.ContextExtension.Companion.toolbar
 import com.duedatereminder.utils.LocalSharedPreference
 import com.duedatereminder.utils.NetworkConnection
 import com.duedatereminder.viewModel.activityViewModel.ViewModelCreateAccount
+import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.material.textfield.TextInputEditText
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallback {
+class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallback,
+    OtpReceivedInterface {
     var otp=""
     var etOtp=""
     var token=""
@@ -41,6 +48,8 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
     private lateinit var mViewModelCreateAccount: ViewModelCreateAccount
     private lateinit var ll_loading : LinearLayoutCompat
     var otpEt = arrayOfNulls<TextInputEditText>(4)
+    lateinit var edtOtp : TextInputEditText
+    private var smsBroadcastReceiver: SMSBroadcastReceiver? = null
     @SuppressLint("SetTextI18n", "HardwareIds")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,8 +62,9 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
         mViewModelCreateAccount = ViewModelProvider(this).get(ViewModelCreateAccount::class.java)
 
         /**Initialize Variable*/
-        //val tvOtpMessage : TextView = findViewById(R.id.tvOtpMessage)
+        val tvOtpMessage : TextView = findViewById(R.id.tvOtpMessage)
         //val edtOtp : TextInputEditText = findViewById(R.id.edtOtp)
+        edtOtp  = findViewById(R.id.edtOtp)
         val etMobileNumber : TextInputEditText = findViewById(R.id.etMobileNumber)
         otpEt[0] = findViewById<View>(R.id.etOtp1) as TextInputEditText
         otpEt[1] = findViewById<View>(R.id.etOtp2) as TextInputEditText
@@ -67,6 +77,12 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
 
         /**Start Timer*/
         countDownTimer(tvTimer)
+
+        /**Sms listener*/
+        smsListener()
+
+        /**Text watcher*/
+        editTextOperation()
 
         /**Android Id*/
         androidId =  Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
@@ -85,6 +101,7 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
         if(!intent.getStringExtra(Constant.MOBILE_NUMBER).isNullOrEmpty()){
             mobileNumber=intent.getStringExtra(Constant.MOBILE_NUMBER)!!
             //tvOtpMessage.text = getString(R.string.sentOTPto)+" "+intent.getStringExtra(Constant.MOBILE_NUMBER)
+            tvOtpMessage.text = "You will get SMS with a confirmation code to this "+intent.getStringExtra(Constant.MOBILE_NUMBER)+" number."
             etMobileNumber.setText(intent.getStringExtra(Constant.MOBILE_NUMBER))
         }
 
@@ -105,7 +122,7 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
 
         /**Verify and Proceed Button Click*/
         btnVerifyAndProceed.setOnClickListener {
-            otpEt[0]?.let { it1 -> ContextExtension.hideKeyboard(it1) }
+            /*otpEt[0]?.let { it1 -> ContextExtension.hideKeyboard(it1) }
 
             etOtp = otpEt[0]!!.text.toString()+otpEt[1]!!.text.toString()+otpEt[2]!!.text.toString()+otpEt[3]!!.text.toString()
 
@@ -119,8 +136,9 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
                         e.printStackTrace()
                     }
                 }
-            }
-            /*if(edtOtp.text.toString() == otp){
+            }*/
+
+            if(edtOtp.text.toString() == otp){
                 callCreateAccountApi(name, mobileNumber, whatsapp, email, address, androidId)
             }else{
                 if(!this.isFinishing){
@@ -131,7 +149,7 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
                     }
                 }
 
-            }*/
+            }
         }
 
         /**Response of SendRegistrationOtp Api*/
@@ -226,5 +244,73 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
 
     override fun snackBarFailedInterConnection() {
         showSnackBar(this,getString(R.string.no_internet_connection))
+    }
+
+    private fun editTextOperation() {
+        edtOtp.requestFocus()
+
+        edtOtp.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence,
+                start: Int,
+                Attempt: Int,
+                after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence,
+                start: Int,
+                before: Int,
+                Attempt: Int
+            ) {
+
+            }
+
+            override fun afterTextChanged(s: Editable) {
+
+                if(edtOtp.text.toString().length == 4){
+                    checkingOtp()
+                }
+            }
+        })
+
+    }
+
+    fun checkingOtp() {
+        if(edtOtp.text.toString() == otp){
+            callCreateAccountApi(name, mobileNumber, whatsapp, email, address, androidId)
+        }else{
+            if(!this.isFinishing){
+                try{
+                    ContextExtension.showOkDialog(getString(R.string.invalid_code), this)
+                }catch(e: WindowManager.BadTokenException){
+                    e.printStackTrace()
+                }
+            }
+
+        }
+
+    }
+
+    private fun smsListener() {
+        smsBroadcastReceiver = SMSBroadcastReceiver()
+        smsBroadcastReceiver!!.setOnOtpListener(this)
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(SmsRetriever.SMS_RETRIEVED_ACTION)
+        applicationContext.registerReceiver(smsBroadcastReceiver, intentFilter)
+        val client = SmsRetriever.getClient(this)
+        val task = client.startSmsRetriever()
+        task.addOnSuccessListener {}
+        task.addOnFailureListener {}
+    }
+
+    override fun onOtpReceived(otp: String?) {
+        val s = otp!!.replace("\\D+".toRegex(), "")
+        edtOtp.setText(s)
+        edtOtp.setSelection(4)
+    }
+
+    override fun onOtpTimeout() {
     }
 }

@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +21,7 @@ class AllClientsAdapter(var context: Context, private var items: List<AllClients
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllClientsViewHolder {
-        val view:View=LayoutInflater.from(parent.context).inflate(R.layout.item_all_clients,parent,false)
+        val view:View=LayoutInflater.from(parent.context).inflate(R.layout.item_inbox,parent,false)
         return AllClientsViewHolder(view)
     }
 
@@ -35,8 +36,19 @@ class AllClientsAdapter(var context: Context, private var items: List<AllClients
         val charArray = items[position].name.toCharArray()
         holder.tvAllClient.text = charArray[0].toString()
 
+
+        /*Set Email*/
+        if(items[position].email.isNotEmpty()){
+            holder.tvEmail.text = items[position].email
+        }
+
+        /*Set Address*/
+        if(items[position].address.isNotEmpty()){
+            holder.tvAddress.text = items[position].address
+        }
+
         /*Set Card background*/
-        holder.cvAllClient.backgroundTintList= ColorStateList.valueOf(getRandomColorCode())
+        //holder.cvAllClient.backgroundTintList= ColorStateList.valueOf(getRandomColorCode())
 
         /*Item Click*/
         holder.itemView.setOnClickListener {
@@ -60,8 +72,10 @@ class AllClientsAdapter(var context: Context, private var items: List<AllClients
 
 
     class AllClientsViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
-         var tvName:AppCompatTextView  = itemView.findViewById(R.id.tvName)
-         var tvAllClient:AppCompatTextView  = itemView.findViewById(R.id.tvAllClient)
-         var cvAllClient:CardView  = itemView.findViewById(R.id.cvAllClient)
+         var tvName:TextView  = itemView.findViewById(R.id.tvName)
+         var tvAllClient:TextView  = itemView.findViewById(R.id.tvAllClient)
+         var tvEmail: TextView = itemView.findViewById(R.id.tvEmail)
+         var tvAddress:TextView  = itemView.findViewById(R.id.tvAddress)
+         //var cvAllClient:CardView  = itemView.findViewById(R.id.cvAllClient)
     }
 }

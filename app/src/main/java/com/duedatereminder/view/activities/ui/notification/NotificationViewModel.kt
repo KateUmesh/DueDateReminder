@@ -1,10 +1,10 @@
-package com.duedatereminder.view.activities.ui.slideshow
+package com.duedatereminder.view.activities.ui.notification
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class SlideshowViewModel : ViewModel() {
+class NotificationViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is slideshow Fragment"
