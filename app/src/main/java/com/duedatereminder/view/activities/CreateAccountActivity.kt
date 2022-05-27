@@ -95,9 +95,9 @@ class CreateAccountActivity : AppCompatActivity(), SnackBarCallback {
     private fun validateInput(){
         if(tietName.text.toString().isEmpty()){
            snackBar(getString(R.string.name_required),this)
-        }else if(tietEmail.text.toString().isEmpty()or!isEmailValid(tietEmail.text.toString())){
+        }else if(tietEmail.text.toString().trim().isEmpty()or!isEmailValid(tietEmail.text.toString().trim())){
             snackBar(getString(R.string.invalid_email_address),this)
-        }else if(tietMobileNumber.text.toString().isEmpty()|| tietMobileNumber.text.toString().length!=10|| !tietMobileNumber.text.toString().isDigitsOnly()){
+        }else if(tietMobileNumber.text.toString().trim().isEmpty()|| tietMobileNumber.text.toString().trim().length!=10|| !tietMobileNumber.text.toString().trim().isDigitsOnly()){
             snackBar(getString(R.string.invalid_number),this)
         }else if(tietWhatsappNumber.text.toString().isEmpty()||tietWhatsappNumber.text.toString().length!=10|| !tietWhatsappNumber.text.toString().isDigitsOnly()){
             snackBar(getString(R.string.invalid_whatsapp_number),this)

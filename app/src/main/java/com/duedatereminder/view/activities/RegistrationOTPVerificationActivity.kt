@@ -44,7 +44,7 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
     @SuppressLint("SetTextI18n", "HardwareIds")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_registration_otpverification)
+        setContentView(R.layout.activity_verification_header)
 
         /*Toolbar*/
         toolbar("",true)

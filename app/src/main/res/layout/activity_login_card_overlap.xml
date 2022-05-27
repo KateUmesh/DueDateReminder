@@ -17,33 +17,16 @@
                     android:theme="@style/editTextGrey"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                     android:textStyle="bold" android:textColor="@color/blue_600"
-                    android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:layout_marginLeft="-4dp" android:layout_marginRight="-4dp"
-                    android:maxLines="1" android:singleLine="true" android:maxLength="50"
-                    android:inputType="text"/>
-                <View android:layout_width="0dp" android:layout_height="@dimen/spacing_mlarge"/>
-                <TextView android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                    android:textColor="@color/grey_40"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PASSWORD"
-                    android:visibility="gone"
-                    android:textAlignment="center"/>
-                <com.google.android.material.textfield.TextInputEditText
-                    android:theme="@style/editTextGrey"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                    android:textStyle="bold"
-                    android:textColor="@color/blue_600"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="-4dp"
                     android:layout_marginRight="-4dp"
-                    android:visibility="gone"
-                    android:maxLines="1" android:singleLine="true"
-                    android:maxLength="50" android:inputType="textPassword"/>
-                <View android:layout_width="0dp"
-                    android:visibility="gone"
-                    android:layout_height="@dimen/spacing_mlarge"/>
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:maxLength="10"
+                    android:inputType="numberDecimal"/>
+                <View android:layout_width="0dp" android:layout_height="@dimen/spacing_mlarge"/>
+
                 <Button
                     android:id="@+id/btnLogin"
                     android:textStyle="bold"

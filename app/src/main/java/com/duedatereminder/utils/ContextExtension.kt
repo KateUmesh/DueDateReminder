@@ -1,6 +1,7 @@
 package com.duedatereminder.utils
 
 import android.app.Activity
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.view.View
@@ -10,8 +11,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.duedatereminder.R
+import com.duedatereminder.application.ApplicationContext.Companion.context
 import com.duedatereminder.callback.SnackBarCallback
 import com.duedatereminder.view.activities.*
+import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.credentials.HintRequest
+import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.material.snackbar.Snackbar
 
 class ContextExtension {
@@ -81,6 +86,13 @@ class ContextExtension {
             Snackbar.make(activity.findViewById(android.R.id.content),message,Snackbar.LENGTH_SHORT).show()
         }
 
+        fun showKeyBoard(view: View) {
+            view.requestFocus()
+            val imm =
+                context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+        }
+
         fun hideKeyboard(view: View) {
             view.apply {
                 val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -103,12 +115,23 @@ class ContextExtension {
             snackBar.show()
         }
 
+        fun getPhone(googleApiClient: GoogleApiClient.ConnectionCallbacks, googleConnectionFailedListener: GoogleApiClient.OnConnectionFailedListener): PendingIntent? {
+            val googleApiClient = GoogleApiClient.Builder(context)
+                .addApi(Auth.CREDENTIALS_API)
+                .addConnectionCallbacks(googleApiClient)
+                .addOnConnectionFailedListener(googleConnectionFailedListener)
+                .build()
+            googleApiClient.connect()
+            val hintRequest = HintRequest.Builder()
+                .setPhoneNumberIdentifierSupported(true)
+                .build()
+            return Auth.CredentialsApi.getHintPickerIntent(googleApiClient, hintRequest)
+        }
+
     }
 
-    fun hideKeyboard(view: View) {
-        view.apply {
-            val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(view.windowToken, 0)
-        }
-    }
+
+
+
+
 }

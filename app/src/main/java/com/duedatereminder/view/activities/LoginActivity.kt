@@ -1,10 +1,16 @@
 package com.duedatereminder.view.activities
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.PendingIntent
 import android.content.Intent
+import android.content.IntentSender
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.lifecycle.Observer
@@ -17,7 +23,9 @@ import com.duedatereminder.model.ModelSplashRequest
 import com.duedatereminder.utils.Constant
 import com.duedatereminder.utils.ContextExtension
 import com.duedatereminder.utils.ContextExtension.Companion.callOtpVerificationActivity
+import com.duedatereminder.utils.ContextExtension.Companion.getPhone
 import com.duedatereminder.utils.ContextExtension.Companion.hideKeyboard
+import com.duedatereminder.utils.ContextExtension.Companion.showKeyBoard
 import com.duedatereminder.utils.ContextExtension.Companion.showOkDialog
 import com.duedatereminder.utils.ContextExtension.Companion.showSnackBar
 import com.duedatereminder.utils.ContextExtension.Companion.snackBar
@@ -26,13 +34,20 @@ import com.duedatereminder.utils.LocalSharedPreference
 import com.duedatereminder.utils.NetworkConnection
 import com.duedatereminder.viewModel.activityViewModel.ViewModelLogin
 import com.duedatereminder.viewModel.activityViewModel.ViewModelSplashScreen
+import com.google.android.gms.auth.api.credentials.Credential
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.material.textfield.TextInputEditText
 
-class LoginActivity : AppCompatActivity(),SnackBarCallback {
+class LoginActivity : AppCompatActivity(),SnackBarCallback ,GoogleApiClient.ConnectionCallbacks,
+GoogleApiClient.OnConnectionFailedListener {
     private lateinit var mViewModelLogin: ViewModelLogin
     var otp:String = ""
     lateinit var tietMobileNumber :TextInputEditText
     private lateinit var ll_loading : LinearLayoutCompat
+    private var nonMob = 0
+    private val RC_HINT = 1000
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_card_overlap)
@@ -51,6 +66,23 @@ class LoginActivity : AppCompatActivity(),SnackBarCallback {
         mViewModelLogin = ViewModelProvider(this).get(ViewModelLogin::class.java)
 
 
+        tietMobileNumber.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (nonMob != 0) {
+                    tietMobileNumber.isEnabled = true
+                    if (tietMobileNumber.text!!.length >= 10) tietMobileNumber.setSelection(
+                        10
+                    )
+
+                   showKeyBoard(tietMobileNumber)
+                } else {
+                    //getPhone()
+                    val pendingIntent = getPhone(this, this)
+                    startIntentResult(pendingIntent)
+                }
+            }
+            false
+        }
 
 
         /*Button Login Click*/
@@ -105,5 +137,50 @@ class LoginActivity : AppCompatActivity(),SnackBarCallback {
 
     override fun snackBarFailedInterConnection() {
         showSnackBar(this,getString(R.string.no_internet_connection))
+    }
+
+    override fun onConnected(p0: Bundle?) {
+
+    }
+
+    override fun onConnectionSuspended(p0: Int) {
+
+    }
+
+    override fun onConnectionFailed(p0: ConnectionResult) {
+
+    }
+
+    private fun startIntentResult(pendingIntent: PendingIntent?) {
+        try {
+            startIntentSenderForResult(
+                pendingIntent?.intentSender,
+                RC_HINT, null, 0, 0, 0
+            )
+        } catch (e: IntentSender.SendIntentException) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        nonMob = requestCode
+        if (requestCode == RC_HINT) {
+            showKeyBoard(tietMobileNumber)
+            if (resultCode == Activity.RESULT_OK) {
+                val credential: Credential =
+                    data!!.getParcelableExtra(Credential.EXTRA_KEY)!!
+                if (credential != null) {
+                    var mobile = credential.id
+                    val newString: String = mobile.replace("+91", "")
+                    tietMobileNumber.setText(newString)
+                    tietMobileNumber.setSelection(tietMobileNumber.text!!.length)
+
+                } else {
+                    Toast.makeText(this, "Error", Toast.LENGTH_LONG).show()
+                    showKeyBoard(tietMobileNumber)
+                }
+            }
+        }
     }
 }
