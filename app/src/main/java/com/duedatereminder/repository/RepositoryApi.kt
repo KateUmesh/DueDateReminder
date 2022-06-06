@@ -28,4 +28,6 @@ class RepositoryApi {
     suspend fun importClientCsvFile(idDueDateCategory: RequestBody, csv_file: MultipartBody.Part)=ApiClient.build().importClientCsvFile(idDueDateCategory,csv_file)
     /**Notification Templates*/
     suspend fun getNotificationTemplates(idNotificationCategory: Int)=ApiClient.build().getNotificationTemplates(idNotificationCategory)
+    /**Client Details To Send Notifications*/
+    suspend fun getClientDetailsToSendNotifications(idNotificationCategory: Int)=ApiClient.build().getClientDetailsToSendNotifications(idNotificationCategory)
 }
