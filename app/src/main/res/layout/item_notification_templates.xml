@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="@dimen/spacing_middle">
+        <View android:layout_width="@dimen/spacing_large" android:layout_height="0dp"/>
+        <TextView android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/grey_80"
+            android:id="@+id/tvNotificationTemplates"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Item Title"
+            android:layout_weight="1"/>
+        <View android:layout_width="@dimen/spacing_large"
+            android:layout_height="0dp"/>
+
+    </LinearLayout>
+    <View android:background="@color/grey_10"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+</LinearLayout>

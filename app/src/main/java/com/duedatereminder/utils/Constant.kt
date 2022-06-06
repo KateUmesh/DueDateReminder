@@ -17,6 +17,7 @@ class Constant {
         const val ADDRESS="ADDRESS"
         const val ID_CLIENT="idClient"
         const val ID_DUE_DATE_CATEGORY="id_due_date_category"
+        const val ID_NOTIFICATION="id_notification"
 
         const val userAppStatus="user/userAppStatus"
         const val sendRegistrationOtp="user/sendRegistrationOtp"
@@ -27,6 +28,7 @@ class Constant {
         const val allClients="user/allClients"
         const val editClient="user/editClient/{idClient}"
         const val importClientCsvFile="user/importClientCsvFile"
-        const val notificationTemplates="user/notificationTemplates/{idNotification}"
+        const val notificationTemplates="user/notificationTemplates/{idNotificationCategory}"
+        const val clientDetailsToSendNotifications="user/clientDetailsToSendNotifications/{idNotificationCategory}"
     }
 }

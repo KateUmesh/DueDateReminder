@@ -74,4 +74,10 @@
     <string name="uploadCsvFile">Upload CSV File</string>
     <string name="selectCsvFile">Select CSV File</string>
 
+    //Notification Templates
+    <string name="notification_templates">Notification Templates</string>
+
+    //Client Details
+    <string name="client_details">Client Details</string>
+
 </resources>

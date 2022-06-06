@@ -15,7 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_1_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DueDateReminder">
-        <activity android:name=".view.activities.SplashActivity"/>
+        <activity android:name=".view.activities.ClientDetailsToSendNotificationsActivity"></activity>
+        <activity android:name=".view.activities.NotificationTemplatesActivity" />
+        <activity android:name=".view.activities.SplashActivity" />
         <activity android:name=".view.activities.ImportClientCsvFileActivity" />
         <activity
             android:name=".view.activities.EditClientActivity"

@@ -56,5 +56,5 @@ interface ApiInterface {
 
     /**GET Notification Templates*/
     @GET(Constant.notificationTemplates)
-    suspend fun getNotificationTemplates(@Path("idNotification") idNotification: Int,):Response<ModelNotificationTemplatesResponse>
+    suspend fun getNotificationTemplates(@Path("idNotificationCategory") idNotificationCategory: Int,):Response<ModelNotificationTemplatesResponse>
 }

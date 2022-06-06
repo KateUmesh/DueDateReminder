@@ -16,10 +16,10 @@ class ViewModelNotificationTemplates() : ViewModel(){
 
 
      var mModelNotificationTemplatesResponse = MutableLiveData<ModelNotificationTemplatesResponse>()
-    fun getNotificationTemplates(idNotification: Int) {
+    fun getNotificationTemplates(idNotificationCategory: Int) {
         viewModelScope.launch {
             try {
-                val response = mRepository.getNotificationTemplates(idNotification)
+                val response = mRepository.getNotificationTemplates(idNotificationCategory)
                 if (response.isSuccessful)
                     mModelNotificationTemplatesResponse.value = response.body()
                 else
