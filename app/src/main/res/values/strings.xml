@@ -71,4 +71,7 @@
     //Edit Client
     <string name="edit_client">Edit Client</string>
 
+    <string name="uploadCsvFile">Upload CSV File</string>
+    <string name="selectCsvFile">Select CSV File</string>
+
 </resources>

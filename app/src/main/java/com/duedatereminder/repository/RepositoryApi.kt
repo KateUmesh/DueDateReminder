@@ -2,8 +2,11 @@ package com.duedatereminder.repository
 
 import com.duedatereminder.model.*
 import com.duedatereminder.network.ApiClient
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class RepositoryApi {
+
     /**Splash*/
     suspend fun userAppStatus(modelSplashRequest: ModelSplashRequest)=ApiClient.build().userAppStatus(modelSplashRequest)
     /**Create Account*/
@@ -21,4 +24,6 @@ class RepositoryApi {
     /**Edit Client*/
     suspend fun editClient(idClient: Int)=ApiClient.build().editClient(idClient)
     suspend fun editClient(idClient: Int,modelEditClientRequest: ModelEditClientRequest)=ApiClient.build().editClient(idClient,modelEditClientRequest)
+    /**Import Client Csv File*/
+    suspend fun importClientCsvFile(idDueDateCategory: RequestBody, csv_file: MultipartBody.Part)=ApiClient.build().importClientCsvFile(idDueDateCategory,csv_file)
 }

@@ -23,9 +23,6 @@ class NotificationFragment : Fragment(), SnackBarCallback {
 
     private lateinit var notificationViewModel: NotificationViewModel
     private var _binding: FragmentNotificationBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     lateinit var rvNotificationCategories: RecyclerView

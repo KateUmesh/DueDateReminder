@@ -2,11 +2,10 @@ package com.duedatereminder.network
 
 import com.duedatereminder.model.*
 import com.duedatereminder.utils.Constant
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface ApiInterface {
 
@@ -49,4 +48,9 @@ interface ApiInterface {
     /*POST Edit Client*/
     @POST(Constant.editClient)
     suspend fun editClient(@Path("idClient") idClient: Int,@Body modelEditClientRequest: ModelEditClientRequest):Response<ModelEditClientResponse>
+
+    /*POST Import Client Csv File*/
+    @Multipart
+    @POST(Constant.importClientCsvFile)
+    suspend fun importClientCsvFile(@Part(Constant.ID_DUE_DATE_CATEGORY) idDueDateCategory: RequestBody, @Part csv_file: MultipartBody.Part):Response<ModelImportClientCsvFileResponse>
 }

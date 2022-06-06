@@ -43,4 +43,34 @@ class ViewModelAllClient() : ViewModel(){
         }
     }
 
+
+    /**Notification Categories*/
+    var mModelNotificationCategoriesResponse = MutableLiveData<ModelNotificationCategoriesResponse>()
+    fun notificationCategories() {
+        viewModelScope.launch {
+            try {
+                val response = mRepository.notificationCategories()
+                if (response.isSuccessful)
+                    mModelNotificationCategoriesResponse.value = response.body()
+                else
+                    mModelNotificationCategoriesResponse.value =
+                        ModelNotificationCategoriesResponse(
+                            "",
+                            Constant.something_went_wrong,null
+                        )
+            } catch (e: Exception) {
+                if (e is SocketTimeoutException)
+                    mModelNotificationCategoriesResponse.value =
+                        ModelNotificationCategoriesResponse(
+                            "",
+                            Constant.slow_internet_connection_detected,null
+                        )
+                else
+                    mModelNotificationCategoriesResponse.value =
+                        ModelNotificationCategoriesResponse(
+                            "", Constant.something_went_wrong,null)
+            }
+        }
+    }
+
 }

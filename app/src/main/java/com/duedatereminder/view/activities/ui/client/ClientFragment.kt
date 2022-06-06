@@ -19,6 +19,7 @@ import com.duedatereminder.utils.ContextExtension
 import com.duedatereminder.utils.ContextExtension.Companion.showSnackBar
 import com.duedatereminder.utils.NetworkConnection
 import com.duedatereminder.view.activities.AddClientActivity
+import com.duedatereminder.view.activities.NotificationCategoriesActivity
 import com.duedatereminder.viewModel.fragmentViewModel.ViewModelAllClient
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -58,7 +59,8 @@ class ClientFragment : Fragment(),SnackBarCallback {
 
         /**Fab Click*/
         fab.setOnClickListener {
-            val intent = Intent(context, AddClientActivity::class.java)
+            //val intent = Intent(context, AddClientActivity::class.java)
+            val intent = Intent(context, NotificationCategoriesActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
         }

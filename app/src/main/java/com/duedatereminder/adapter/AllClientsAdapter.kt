@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.cardview.widget.CardView
@@ -51,7 +52,7 @@ class AllClientsAdapter(var context: Context, private var items: List<AllClients
         //holder.cvAllClient.backgroundTintList= ColorStateList.valueOf(getRandomColorCode())
 
         /*Item Click*/
-        holder.itemView.setOnClickListener {
+        holder.lyt_parent.setOnClickListener {
             val intent = Intent(context, EditClientActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             intent.putExtra(Constant.ID_CLIENT,items[position].id_client)
@@ -76,6 +77,7 @@ class AllClientsAdapter(var context: Context, private var items: List<AllClients
          var tvAllClient:TextView  = itemView.findViewById(R.id.tvAllClient)
          var tvEmail: TextView = itemView.findViewById(R.id.tvEmail)
          var tvAddress:TextView  = itemView.findViewById(R.id.tvAddress)
+         var lyt_parent:LinearLayout  = itemView.findViewById(R.id.lyt_parent)
          //var cvAllClient:CardView  = itemView.findViewById(R.id.cvAllClient)
     }
 }
