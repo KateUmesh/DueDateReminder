@@ -26,4 +26,6 @@ class RepositoryApi {
     suspend fun editClient(idClient: Int,modelEditClientRequest: ModelEditClientRequest)=ApiClient.build().editClient(idClient,modelEditClientRequest)
     /**Import Client Csv File*/
     suspend fun importClientCsvFile(idDueDateCategory: RequestBody, csv_file: MultipartBody.Part)=ApiClient.build().importClientCsvFile(idDueDateCategory,csv_file)
+    /**Notification Templates*/
+    suspend fun getNotificationTemplates(idNotification: Int)=ApiClient.build().getNotificationTemplates(idNotification)
 }

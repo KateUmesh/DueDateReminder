@@ -53,4 +53,8 @@ interface ApiInterface {
     @Multipart
     @POST(Constant.importClientCsvFile)
     suspend fun importClientCsvFile(@Part(Constant.ID_DUE_DATE_CATEGORY) idDueDateCategory: RequestBody, @Part csv_file: MultipartBody.Part):Response<ModelImportClientCsvFileResponse>
+
+    /**GET Notification Templates*/
+    @GET(Constant.notificationTemplates)
+    suspend fun getNotificationTemplates(@Path("idNotification") idNotification: Int,):Response<ModelNotificationTemplatesResponse>
 }
