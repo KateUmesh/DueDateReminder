@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/spacing_middle">
+        <View android:layout_width="@dimen/spacing_large"
+            android:layout_height="0dp"/>
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/grey_80"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name" />
+        <View android:layout_width="0dp"
+            android:layout_height="@dimen/spacing_medium"/>
+        <TextView
+            android:id="@+id/tvMobileNumber"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/grey_80"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="9876543210" />
+        <View android:layout_width="0dp"
+            android:layout_height="@dimen/spacing_medium"/>
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/grey_80"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="test@mail.com" />
+        <View android:layout_width="0dp"
+            android:layout_height="@dimen/spacing_medium"/>
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/grey_80"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Address" />
+        <View android:layout_width="0dp"
+            android:layout_height="@dimen/spacing_medium"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSendSms"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:text="@string/send_sms"
+                style="@style/primaryDarkBackgroundButton"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:layout_marginStart="@dimen/spacing_large"
+                android:layout_marginEnd="@dimen/spacing_middle"
+                android:layout_marginBottom="@dimen/spacing_middle"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSendEmail"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:text="@string/send_email"
+                style="@style/primaryDarkBackgroundButton"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:layout_marginStart="@dimen/spacing_middle"
+                android:layout_marginEnd="@dimen/spacing_large"
+                android:layout_marginBottom="@dimen/spacing_middle"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <View android:background="@color/grey_10"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+</LinearLayout>

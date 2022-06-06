@@ -28,7 +28,7 @@ class NotificationTemplatesActivity : AppCompatActivity(), SnackBarCallback {
         /**Toolbar*/
         toolbar(getString(R.string.notification_templates),true)
 
-        /**Get idNotification from Notification Categories*/
+        /**Get idNotification from NotificationCategoriesFragmentAdapter*/
         if(intent.getStringExtra(Constant.ID_DUE_DATE_CATEGORY)!=null) {
             idNotificationCategory = intent.getStringExtra(Constant.ID_DUE_DATE_CATEGORY)!!.toInt()
         }

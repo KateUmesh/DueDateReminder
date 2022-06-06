@@ -80,4 +80,8 @@
     //Client Details
     <string name="client_details">Client Details</string>
 
+
+    <string name="send_sms">Send SMS</string>
+    <string name="send_email">Send Email</string>
+
 </resources>
