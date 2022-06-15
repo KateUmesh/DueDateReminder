@@ -13,7 +13,6 @@ class ViewModelClientDetailsToSendNotification() : ViewModel(){
     private var mRepository = RepositoryApi()
 
     /**GET Client Details To Send Notifications*/
-
     var mModelClientDetailsToSendNotificationsResponse = MutableLiveData<ModelClientDetailsToSendNotificationsResponse>()
     fun getClientDetailsToSendNotifications(idNotificationCategory: Int) {
         viewModelScope.launch {
@@ -44,4 +43,65 @@ class ViewModelClientDetailsToSendNotification() : ViewModel(){
         }
     }
 
+    /**POST Send Sms Notification*/
+    var mModelSendSmsNotificationResponse = MutableLiveData<ModelSendSmsNotificationResponse>()
+    fun sendSmsNotification(modelSendSmsNotificationRequest: ModelSendSmsNotificationRequest) {
+        viewModelScope.launch {
+            try {
+                val response = mRepository.sendSmsNotification(modelSendSmsNotificationRequest)
+                if (response.isSuccessful)
+                    mModelSendSmsNotificationResponse.value = response.body()
+                else
+                    mModelSendSmsNotificationResponse.value =
+                        ModelSendSmsNotificationResponse(
+                            "",
+                            Constant.something_went_wrong
+                        )
+            } catch (e: Exception) {
+                if (e is SocketTimeoutException)
+                    mModelSendSmsNotificationResponse.value =
+                        ModelSendSmsNotificationResponse(
+                            "",
+                            Constant.slow_internet_connection_detected
+                        )
+                else
+                    mModelSendSmsNotificationResponse.value =
+                        ModelSendSmsNotificationResponse(
+                            "",
+                            Constant.something_went_wrong
+                        )
+            }
+        }
+    }
+
+    /**POST Send Email Notification*/
+    var mModelSendEmailNotificationResponse = MutableLiveData<ModelSendEmailNotificationResponse>()
+    fun sendEmailNotification(modelSendEmailNotificationRequest: ModelSendEmailNotificationRequest) {
+        viewModelScope.launch {
+            try {
+                val response = mRepository.sendEmailNotification(modelSendEmailNotificationRequest)
+                if (response.isSuccessful)
+                    mModelSendEmailNotificationResponse.value = response.body()
+                else
+                    mModelSendEmailNotificationResponse.value =
+                        ModelSendEmailNotificationResponse(
+                            "",
+                            Constant.something_went_wrong
+                        )
+            } catch (e: Exception) {
+                if (e is SocketTimeoutException)
+                    mModelSendEmailNotificationResponse.value =
+                        ModelSendEmailNotificationResponse(
+                            "",
+                            Constant.slow_internet_connection_detected
+                        )
+                else
+                    mModelSendEmailNotificationResponse.value =
+                        ModelSendEmailNotificationResponse(
+                            "",
+                            Constant.something_went_wrong
+                        )
+            }
+        }
+    }
 }

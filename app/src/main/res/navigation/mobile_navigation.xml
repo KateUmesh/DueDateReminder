@@ -22,4 +22,10 @@
         android:name="com.duedatereminder.view.activities.ui.notification.NotificationFragment"
         android:label="@string/menu_notification"
         tools:layout="@layout/fragment_notification" />
+
+    <fragment
+        android:id="@+id/nav_import_client"
+        android:name="com.duedatereminder.view.activities.ui.importClient.importClientFragment"
+        android:label="@string/menu_import_client"
+        tools:layout="@layout/fragment_notification" />
 </navigation>

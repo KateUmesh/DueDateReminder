@@ -15,7 +15,7 @@ class ViewModelImportClientCsvFile() : ViewModel(){
     private var mRepository = RepositoryApi()
      var mImportClientCsvFileLiveData = MutableLiveData<ModelImportClientCsvFileResponse>()
 
-    fun importClientCsvFile(idDueDateCategory: RequestBody, csv_file: MultipartBody.Part) {
+    fun importClientCsvFile(idDueDateCategory: RequestBody, csv_file: RequestBody) {
         viewModelScope.launch {
             try {
                 val response = mRepository.importClientCsvFile(idDueDateCategory,csv_file)
@@ -25,20 +25,19 @@ class ViewModelImportClientCsvFile() : ViewModel(){
                     mImportClientCsvFileLiveData.value =
                         ModelImportClientCsvFileResponse(
                             "",
-                            Constant.something_went_wrong
+                            response.message()
                         )
             } catch (e: Exception) {
                 if (e is SocketTimeoutException)
                     mImportClientCsvFileLiveData.value =
                         ModelImportClientCsvFileResponse(
                             "",
-                            Constant.slow_internet_connection_detected
+                            e.message!!
                         )
                 else
                     mImportClientCsvFileLiveData.value =
                         ModelImportClientCsvFileResponse(
-                            "",
-                            Constant.something_went_wrong
+                            "",e.message!!
                         )
             }
         }

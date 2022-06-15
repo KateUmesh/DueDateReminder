@@ -39,4 +39,54 @@
         <item name="colorControlHighlight">@color/grey_60</item>
         <item name="colorControlNormal">@color/grey_40</item>
     </style>
+    <style name="App.Base.TextAppearance.Body1" parent="Base.TextAppearance.AppCompat.Body1">
+        <item name="android:ellipsize">end</item>
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+        <item name="android:maxLines">1</item>
+    </style>
+    <style name="App.TextAppearance.h4" parent="App.Base.TextAppearance.Body1">
+        <!--<item name="android:fontFamily">sans-serif-light</item>-->
+        <item name="android:textSize">@dimen/font_16</item>
+        <item name="android:textColor">@color/md_grey_800</item>
+    </style>
+
+    <style name="App.TextAppearance.h4.Title" parent="App.TextAppearance.h4">
+        <!--<item name="android:fontFamily">sans-serif-light</item>-->
+        <item name="android:ellipsize">end</item>
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+        <item name="android:maxLines">1</item>
+    </style>
+    <!--Text -->
+    <style name="TextTitle" parent="App.TextAppearance.h4.Title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">start</item>
+    </style>
+
+    <style name="App.TextAppearance.Text" parent="App.Base.TextAppearance.Body1">
+        <item name="android:textSize">@dimen/font_16</item>
+        <item name="android:textColor">@color/md_grey_600</item>
+    </style>
+
+    <style name="TextNormal" parent="App.TextAppearance.Text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">start</item>
+        <item name="android:textColor">@color/md_black_1000</item>
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:color">@color/md_white_1000</item>
+    </style>
+
+    <style name="App.Button.Primary" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="colorButtonNormal">@color/md_grey_500</item>
+        <item name="colorAccent">@color/tb_doc_picker_accent</item>
+        <!--<item name="colorControlHighlight">@color/colorAccent</item>-->
+    </style>
+    <style name="App.Dialog.BottomSheet" parent="@style/Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:colorBackground">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
 </resources>

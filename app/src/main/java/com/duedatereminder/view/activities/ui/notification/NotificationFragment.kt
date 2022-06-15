@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.duedatereminder.R
 import com.duedatereminder.adapter.NotificationCategoriesAdapter
+import com.duedatereminder.adapter.NotificationCategoriesFragmentAdapter
 import com.duedatereminder.callback.SnackBarCallback
 import com.duedatereminder.databinding.FragmentNotificationBinding
 import com.duedatereminder.utils.ContextExtension
@@ -58,14 +59,14 @@ class NotificationFragment : Fragment(), SnackBarCallback {
         /**Call NotificationCategories GET Api*/
         callNotificationCategoriesApi()
 
-        /**Response of SendLoginOtp Api*/
+        /**Response of NotificationCategories Api*/
         mViewModelNotificationCategories.mModelNotificationCategoriesResponse.observe(this, Observer {
             ll_loading.visibility = View.GONE
             when(it.status){
                 "1"->{
 
                     if(!it.data!!.due_date_categories.isNullOrEmpty()){
-                        val mAdapter = NotificationCategoriesAdapter(this.requireContext(),it.data!!.due_date_categories!!)
+                        val mAdapter = NotificationCategoriesFragmentAdapter(this.requireContext(),it.data!!.due_date_categories!!)
                         rvNotificationCategories.adapter=mAdapter
                     }
                 }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.duedatereminder.R
 import com.duedatereminder.model.DueDateCategories
 import com.duedatereminder.utils.Constant
+import com.duedatereminder.view.activities.ClientDetailsToSendNotificationsActivity
 import com.duedatereminder.view.activities.ImportClientCsvFileActivity
 import com.duedatereminder.view.activities.NotificationCategoriesActivity
 import com.duedatereminder.view.activities.NotificationTemplatesActivity
@@ -32,7 +33,12 @@ class NotificationCategoriesFragmentAdapter(var context: Context, private var it
 
         /*Item Click*/
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, NotificationTemplatesActivity::class.java)
+           /* val intent = Intent(context, NotificationTemplatesActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            intent.putExtra(Constant.ID_DUE_DATE_CATEGORY,items[position].id_due_date_category)
+            context.startActivity(intent)*/
+
+            val intent = Intent(context, ClientDetailsToSendNotificationsActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             intent.putExtra(Constant.ID_DUE_DATE_CATEGORY,items[position].id_due_date_category)
             context.startActivity(intent)

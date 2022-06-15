@@ -43,7 +43,7 @@ interface ApiInterface {
     /**Edit Client*/
     /*GET Edit Client*/
     @GET(Constant.editClient)
-    suspend fun editClient(@Path("idClient") idClient: Int,):Response<ModelEditClientGetResponse>
+    suspend fun editClient(@Path("idClient") idClient: Int):Response<ModelEditClientGetResponse>
 
     /*POST Edit Client*/
     @POST(Constant.editClient)
@@ -52,13 +52,22 @@ interface ApiInterface {
     /*POST Import Client Csv File*/
     @Multipart
     @POST(Constant.importClientCsvFile)
-    suspend fun importClientCsvFile(@Part(Constant.ID_DUE_DATE_CATEGORY) idDueDateCategory: RequestBody, @Part csv_file: MultipartBody.Part):Response<ModelImportClientCsvFileResponse>
+    suspend fun importClientCsvFile(@Part(Constant.ID_DUE_DATE_CATEGORY) idDueDateCategory: RequestBody, @Part (Constant.CSV_FILE)csv_file: RequestBody):Response<ModelImportClientCsvFileResponse>
+    //suspend fun importClientCsvFile(@Part(Constant.ID_DUE_DATE_CATEGORY) idDueDateCategory: RequestBody, @Part csv_file: MultipartBody.Part):Response<ModelImportClientCsvFileResponse>
 
     /**GET Notification Templates*/
     @GET(Constant.notificationTemplates)
-    suspend fun getNotificationTemplates(@Path("idNotificationCategory") idNotificationCategory: Int,):Response<ModelNotificationTemplatesResponse>
+    suspend fun getNotificationTemplates(@Path("idNotificationCategory") idNotificationCategory: Int):Response<ModelNotificationTemplatesResponse>
 
     /**GET Client Details To Send Notifications*/
     @GET(Constant.clientDetailsToSendNotifications)
-    suspend fun getClientDetailsToSendNotifications(@Path("idNotificationCategory") idNotificationCategory: Int,):Response<ModelClientDetailsToSendNotificationsResponse>
+    suspend fun getClientDetailsToSendNotifications(@Path("idNotificationCategory") idNotificationCategory: Int):Response<ModelClientDetailsToSendNotificationsResponse>
+
+    /**POST Send Sms Notification*/
+    @POST(Constant.sendSmsNotification)
+    suspend fun sendSmsNotification(@Body mModelSendSmsNotificationRequest: ModelSendSmsNotificationRequest):Response<ModelSendSmsNotificationResponse>
+
+    /**POST Send Email Notification*/
+    @POST(Constant.sendEmailNotification)
+    suspend fun sendEmailNotification(@Body mModelSendEmailNotificationRequest: ModelSendEmailNotificationRequest):Response<ModelSendEmailNotificationResponse>
 }

@@ -12,10 +12,11 @@ import com.duedatereminder.R
 import com.duedatereminder.model.DueDateCategories
 import com.duedatereminder.model.NotificationTemplates
 import com.duedatereminder.utils.Constant
+import com.duedatereminder.view.activities.ClientDetailsToSendNotificationsActivity
 import com.duedatereminder.view.activities.ImportClientCsvFileActivity
 import com.duedatereminder.view.activities.NotificationCategoriesActivity
 
-class NotificationTemplatesAdapter(var context: Context, private var items: List<NotificationTemplates>): RecyclerView.Adapter<NotificationTemplatesAdapter.NotificationTemplatesViewHolder>() {
+class NotificationTemplatesAdapter(var context: Context, private var items: List<NotificationTemplates>,var idNotificationCategory:String): RecyclerView.Adapter<NotificationTemplatesAdapter.NotificationTemplatesViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationTemplatesViewHolder {
@@ -29,9 +30,10 @@ class NotificationTemplatesAdapter(var context: Context, private var items: List
 
         /*Item Click*/
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, ImportClientCsvFileActivity::class.java)
+            val intent = Intent(context, ClientDetailsToSendNotificationsActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             intent.putExtra(Constant.ID_NOTIFICATION,items[position].id_notification)
+            intent.putExtra(Constant.ID_DUE_DATE_CATEGORY,idNotificationCategory)
             context.startActivity(intent)
         }
     }

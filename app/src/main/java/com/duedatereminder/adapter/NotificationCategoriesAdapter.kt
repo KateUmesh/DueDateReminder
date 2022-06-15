@@ -12,6 +12,7 @@ import com.duedatereminder.R
 import com.duedatereminder.model.DueDateCategories
 import com.duedatereminder.utils.Constant
 import com.duedatereminder.view.activities.ImportClientCsvFileActivity
+import com.duedatereminder.view.activities.ImportClientCsvFileActivity1
 import com.duedatereminder.view.activities.NotificationCategoriesActivity
 
 class NotificationCategoriesAdapter(var context: Context, private var items: List<DueDateCategories>): RecyclerView.Adapter<NotificationCategoriesAdapter.NotificationCategoriesViewHolder>() {
@@ -31,7 +32,7 @@ class NotificationCategoriesAdapter(var context: Context, private var items: Lis
 
         /*Item Click*/
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, ImportClientCsvFileActivity::class.java)
+            val intent = Intent(context, ImportClientCsvFileActivity1::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             intent.putExtra(Constant.ID_DUE_DATE_CATEGORY,items[position].id_due_date_category)
             context.startActivity(intent)

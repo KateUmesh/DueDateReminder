@@ -58,12 +58,14 @@
     //Navigation Drawer
     <string name="menu_home">Home</string>
     <string name="menu_client">My Clients</string>
-    <string name="menu_notification">Notification Categories</string>
+    <string name="menu_notification">Send Messages</string>
+    <string name="menu_import_client">Import Clients</string>
 
     //Add Client
     <string name="submit">Submit</string>
     <string name="add_client">Add Client</string>
     <string name="select_categories">Select Categories</string>
+    <string name="select_template">Select Template</string>
 
     //Notification Categories
     <string name="notification_categories">Notification Categories</string>
@@ -83,5 +85,6 @@
 
     <string name="send_sms">Send SMS</string>
     <string name="send_email">Send Email</string>
+    <string name="total_clients">"Total Clients  : "</string>
 
 </resources>

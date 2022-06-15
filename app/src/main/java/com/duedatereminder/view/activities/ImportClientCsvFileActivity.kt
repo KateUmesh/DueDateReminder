@@ -1,9 +1,12 @@
 package com.duedatereminder.view.activities
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -11,8 +14,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.provider.DocumentsContract
-import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.text.TextUtils
 import android.util.Log
@@ -22,6 +23,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import androidx.loader.content.CursorLoader
 import com.duedatereminder.R
@@ -36,9 +40,9 @@ import com.duedatereminder.utils.NetworkConnection
 import com.duedatereminder.viewModel.activityViewModel.ViewModelImportClientCsvFile
 import com.google.android.gms.common.util.IOUtils
 import okhttp3.MediaType
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.*
+import java.util.*
 
 
 class ImportClientCsvFileActivity : AppCompatActivity(), SnackBarCallback {
@@ -51,6 +55,7 @@ class ImportClientCsvFileActivity : AppCompatActivity(), SnackBarCallback {
     var arrayUri: java.util.ArrayList<UploadFileModel>? = null
     private var fileName: String? = null
     private var idDueDateCategory:String = ""
+    var stringUri:String = "uri:content://com.greentoad.turtlebody.docpicker.sample.greentoad.turtlebody.docprovider/media/Download/Sample-Spreadsheet-10-rows.csv"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_import_client_csv_file)
@@ -65,6 +70,7 @@ class ImportClientCsvFileActivity : AppCompatActivity(), SnackBarCallback {
         ll_loading = findViewById(R.id.ll_loading)
         tvCsvFile = findViewById(R.id.tvCsvFile)
         btnUploadCsvFile = findViewById(R.id.btnUploadCsvFile)
+        requestStoragePermission()
 
         /**Initialize View Model*/
         mViewModelImportClientCsvFile = ViewModelProvider(this)[ViewModelImportClientCsvFile::class.java]
@@ -73,13 +79,18 @@ class ImportClientCsvFileActivity : AppCompatActivity(), SnackBarCallback {
         /**TV CSV File Click*/
         tvCsvFile.setOnClickListener {
 
-            openDocumentPicker()
+            //openDocumentPicker()
+            showFileChooser()
         }
 
         /**Button Upload CSV File Click*/
         btnUploadCsvFile.setOnClickListener {
             uploadCSVFile(idDueDateCategory,finalUri)
         }
+
+        val fUri:Uri=stringUri.toUri()
+       Log.e("fileUri", fUri.toString())
+       Log.e("filePath", fUri.path.toString())
     }
 
 
@@ -89,15 +100,17 @@ class ImportClientCsvFileActivity : AppCompatActivity(), SnackBarCallback {
         //creating a file
         val file1 = File(getFileName1(uri)!!)
 
-        Log.e("fileUri11",file1.toString())
-            val originalFile = File(uri.path!!)
-            //tvCsvFile.text = getFileName(uri)
-            val filePart: RequestBody = RequestBody.create(MediaType.parse("*/*"), file1)
-            val file: MultipartBody.Part = MultipartBody.Part.createFormData("csv_file", getFileName(uri), filePart)
+        /*Log.e("fileUri11",file1.toString())
+        val originalFile = File(uri.path!!)*/
+        //tvCsvFile.text = getFileName(uri)
+        //val filePart: RequestBody = RequestBody.create(MediaType.parse("*/*"), file1)
+        //val file: MultipartBody.Part = MultipartBody.Part.createFormData("csv_file", getFileName(uri), filePart)
+
         val idDueDateCategoryRequestBody: RequestBody = RequestBody.create(MediaType.parse("text/plain"),idDueDateCategory)
+        val csv_file: RequestBody = RequestBody.create(MediaType.parse("text/csv"), file1)
         ll_loading.visibility = View.VISIBLE
         if (NetworkConnection.isNetworkConnected()) {
-            mViewModelImportClientCsvFile.importClientCsvFile(idDueDateCategoryRequestBody,file)
+            mViewModelImportClientCsvFile.importClientCsvFile(idDueDateCategoryRequestBody,csv_file)
         } else {
             showSnackBar(this,getString(R.string.no_internet_connection))
         }
@@ -121,7 +134,7 @@ class ImportClientCsvFileActivity : AppCompatActivity(), SnackBarCallback {
              */
             //type = "application/*"
             //type = "text/*"
-            type = "application/pdf"
+            type = "*/*"
 
             /**
              * Because we'll want to use [ContentResolver.openFileDescriptor] to read
@@ -197,6 +210,19 @@ class ImportClientCsvFileActivity : AppCompatActivity(), SnackBarCallback {
 
         }
 
+        if(requestCode==456){
+            if(resultCode== RESULT_OK){
+                val selectedUri = data!!.data
+                val file = File(selectedUri!!.path.toString())
+                Log.e("", "File : " + file.name)
+                val uploadedFileName = file.name.toString()
+                val tokens = StringTokenizer(uploadedFileName, ":")
+                val first = tokens.nextToken()
+                val file_1 = tokens.nextToken().trim()
+                tvCsvFile.setText(file_1)
+            }
+        }
+
     }
 
     /*private fun getRealPathFromURI(contentURI: Uri): String? {
@@ -267,6 +293,9 @@ class ImportClientCsvFileActivity : AppCompatActivity(), SnackBarCallback {
     companion object {
         const val READ_REQUEST_CODE = 123
         const val FILE_PICKER_REQUEST_CODE = 1
+
+        //storage permission code
+        private const val STORAGE_PERMISSION_CODE = 123
     }
 
     fun getStringPdf(filepath: Uri?): String? {
@@ -350,6 +379,75 @@ class ImportClientCsvFileActivity : AppCompatActivity(), SnackBarCallback {
             outputStream.close()
         } catch (e: IOException) {
             e.printStackTrace()
+        }
+    }
+
+    private fun showFileChooser() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "*/*"
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        try {
+            startActivityForResult(
+                Intent.createChooser(intent, "Select a File to Upload"),
+                456
+            )
+        } catch (ex: ActivityNotFoundException) {
+            Toast.makeText(this, "Please install a File Manager.",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+
+    //Requesting permission
+    private fun requestStoragePermission() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        ) return
+        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        ) {
+            //If the user has denied the permission previously your code will come to this block
+            //Here you can explain why you need this permission
+            //Explain here why you need this permission
+        }
+        //And finally ask for the permission
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+            STORAGE_PERMISSION_CODE
+        )
+    }
+
+
+    //This method will be called when the user will tap on allow or deny
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        //Checking the request code of our request
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+
+            //If permission is granted
+            if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //Displaying a toast
+                Toast.makeText(
+                    this,
+                    "Permission granted now you can read the storage",
+                    Toast.LENGTH_LONG
+                ).show()
+            } else {
+                //Displaying another toast if permission is not granted
+                Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG)
+                    .show()
+            }
         }
     }
 

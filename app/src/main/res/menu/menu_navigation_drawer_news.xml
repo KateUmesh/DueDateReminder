@@ -8,13 +8,13 @@
         <item android:icon="@drawable/ic_whatshot"
             android:id="@+id/nav_client"
             android:title="@string/menu_client"/>
+        <item android:icon="@drawable/ic_highlight"
+            android:id="@+id/nav_import_client"
+            android:title="@string/menu_import_client"/>
         <item android:icon="@drawable/ic_schedule"
             android:id="@+id/nav_notification"
             android:title="@string/menu_notification"/>
-        <item android:icon="@drawable/ic_highlight"
-            android:id="@+id/nav_highlight"
-            android:visible="false"
-            android:title="Highlight"/>
+
     </group>
     <group android:id="@+id/grp_2"
         android:checkableBehavior="none">

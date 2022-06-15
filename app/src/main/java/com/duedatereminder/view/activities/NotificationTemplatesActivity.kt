@@ -52,9 +52,9 @@ class NotificationTemplatesActivity : AppCompatActivity(), SnackBarCallback {
                 "1" -> {
 
                     if (!it.data!!.templates.isNullOrEmpty()) {
-                                            val mAdapter = NotificationTemplatesAdapter(this,it.data!!.templates!!)
-                                            rvNotificationTemplates.adapter=mAdapter
-                                        }
+                        val mAdapter = NotificationTemplatesAdapter(this,it.data!!.templates!!,idNotificationCategory.toString())
+                        rvNotificationTemplates.adapter=mAdapter
+                    }
                 }
                 "0" -> {
                     ContextExtension.snackBar(it.message, this)

@@ -25,9 +25,13 @@ class RepositoryApi {
     suspend fun editClient(idClient: Int)=ApiClient.build().editClient(idClient)
     suspend fun editClient(idClient: Int,modelEditClientRequest: ModelEditClientRequest)=ApiClient.build().editClient(idClient,modelEditClientRequest)
     /**Import Client Csv File*/
-    suspend fun importClientCsvFile(idDueDateCategory: RequestBody, csv_file: MultipartBody.Part)=ApiClient.build().importClientCsvFile(idDueDateCategory,csv_file)
+    suspend fun importClientCsvFile(idDueDateCategory: RequestBody, csv_file: RequestBody)=ApiClient.build().importClientCsvFile(idDueDateCategory,csv_file)
     /**Notification Templates*/
     suspend fun getNotificationTemplates(idNotificationCategory: Int)=ApiClient.build().getNotificationTemplates(idNotificationCategory)
     /**Client Details To Send Notifications*/
     suspend fun getClientDetailsToSendNotifications(idNotificationCategory: Int)=ApiClient.build().getClientDetailsToSendNotifications(idNotificationCategory)
+    /**Send Sms Notification*/
+    suspend fun sendSmsNotification(modelSendSmsNotificationRequest: ModelSendSmsNotificationRequest)=ApiClient.build().sendSmsNotification(modelSendSmsNotificationRequest)
+    /**Send Email Notification*/
+    suspend fun sendEmailNotification(modelSendEmailNotificationRequest: ModelSendEmailNotificationRequest)=ApiClient.build().sendEmailNotification(modelSendEmailNotificationRequest)
 }
