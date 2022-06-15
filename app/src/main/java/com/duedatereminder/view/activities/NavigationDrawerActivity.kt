@@ -1,7 +1,10 @@
 package com.duedatereminder.view.activities
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -13,7 +16,9 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.duedatereminder.R
 import com.duedatereminder.databinding.ActivityNavigationDrawerBinding
-import com.duedatereminder.utils.ContextExtension.Companion.toolbar
+import com.duedatereminder.utils.Constant
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.UpdateAvailability
 
 class NavigationDrawerActivity : AppCompatActivity() {
 
@@ -44,6 +49,17 @@ class NavigationDrawerActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        val appUpdateManager = AppUpdateManagerFactory.create(this)
+        // Returns an intent object that you use to check for an update.
+        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+        // Checks that the platform will allow the specified type of update.
+        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+                // Request the update.
+                showAppUpdateDialog()
+            }
+        }
     }
 
 
@@ -51,5 +67,23 @@ class NavigationDrawerActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_navigation_drawer)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+
+    private fun showAppUpdateDialog() {
+        val builder =
+            AlertDialog.Builder(this)
+        builder.setCancelable(false)
+        builder.setTitle(getString(R.string.new_version_available) as CharSequence)
+        builder.setMessage(R.string.VersionUpdateMessage)
+        builder.setPositiveButton(R.string.Update) { _, _ ->
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(Constant.appUrl + packageName)
+                )
+            )
+        }
+        builder.show()
     }
 }

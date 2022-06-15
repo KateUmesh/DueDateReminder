@@ -88,4 +88,10 @@ dependencies {
     //rxjava
     implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
+    //App Update
+    implementation("com.google.android.play:app-update:2.0.0")
+
+    // For Kotlin users also import the Kotlin extensions library for Play In-App Update:
+    implementation("com.google.android.play:app-update-ktx:2.0.0")
 }

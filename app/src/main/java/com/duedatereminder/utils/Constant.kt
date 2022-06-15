@@ -19,6 +19,7 @@ class Constant {
         const val ID_DUE_DATE_CATEGORY="id_due_date_category"
         const val CSV_FILE="csv_file"
         const val ID_NOTIFICATION="id_notification"
+        const val appUrl:String ="market://details?id="
 
         const val userAppStatus="user/userAppStatus"
         const val sendRegistrationOtp="user/sendRegistrationOtp"

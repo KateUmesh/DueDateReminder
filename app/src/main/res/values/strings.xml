@@ -82,6 +82,11 @@
     //Client Details
     <string name="client_details">Client Details</string>
 
+    //App Update
+    <string name="new_version_available">New version available</string>
+    <string name="VersionUpdateMessage">Please, update app to new version .</string>
+    <string name="Update">Update</string>
+
 
     <string name="send_sms">Send SMS</string>
     <string name="send_email">Send Email</string>
