@@ -56,7 +56,7 @@
                 android:textStyle="bold"
                 android:visibility="visible"
                 android:textColor="@color/blue_600"
-                android:id="@+id/date" android:layout_width="wrap_content"
+                android:id="@+id/tvBlogDate" android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:text="10:30 AM"
                 android:layout_alignParentRight="true" android:layout_alignParentEnd="true"/>
         </RelativeLayout>
