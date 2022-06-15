@@ -33,5 +33,6 @@ class Constant {
         const val clientDetailsToSendNotifications="user/clientDetailsToSendNotifications/{idNotificationCategory}"
         const val sendEmailNotification="user/sendEmailNotification"
         const val sendSmsNotification="user/sendSmsNotification"
+        const val blogs="user/blogs"
     }
 }

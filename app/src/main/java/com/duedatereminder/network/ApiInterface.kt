@@ -70,4 +70,7 @@ interface ApiInterface {
     /**POST Send Email Notification*/
     @POST(Constant.sendEmailNotification)
     suspend fun sendEmailNotification(@Body mModelSendEmailNotificationRequest: ModelSendEmailNotificationRequest):Response<ModelSendEmailNotificationResponse>
+
+    @GET(Constant.blogs)
+    suspend fun getBlogs():Response<ModelBlogsResponse>
 }
