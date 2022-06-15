@@ -34,4 +34,6 @@ class RepositoryApi {
     suspend fun sendSmsNotification(modelSendSmsNotificationRequest: ModelSendSmsNotificationRequest)=ApiClient.build().sendSmsNotification(modelSendSmsNotificationRequest)
     /**Send Email Notification*/
     suspend fun sendEmailNotification(modelSendEmailNotificationRequest: ModelSendEmailNotificationRequest)=ApiClient.build().sendEmailNotification(modelSendEmailNotificationRequest)
+    /**Get Blogs*/
+    suspend fun getBlogs()=ApiClient.build().getBlogs()
 }
