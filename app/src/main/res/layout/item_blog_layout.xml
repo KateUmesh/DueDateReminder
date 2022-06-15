@@ -42,9 +42,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_small"
-                    android:text="Description"
-                    android:maxLines="1"
-                    android:singleLine="true"/>
+                    android:text="DescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescription"
+                    />
                 <TextView
                     android:visibility="gone"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"

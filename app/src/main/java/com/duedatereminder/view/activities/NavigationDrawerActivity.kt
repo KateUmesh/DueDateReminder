@@ -13,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.duedatereminder.R
 import com.duedatereminder.databinding.ActivityNavigationDrawerBinding
+import com.duedatereminder.utils.ContextExtension.Companion.toolbar
 
 class NavigationDrawerActivity : AppCompatActivity() {
 
@@ -38,18 +39,14 @@ class NavigationDrawerActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_client, R.id.nav_notification
+                R.id.nav_home, R.id.nav_client, R.id.nav_import_client,R.id.nav_notification
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.navigation_drawer, menu)
-        return true
-    }
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_navigation_drawer)

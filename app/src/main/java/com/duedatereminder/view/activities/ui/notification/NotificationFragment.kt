@@ -49,7 +49,6 @@ class NotificationFragment : Fragment(), SnackBarCallback {
         /**Initialize Variables*/
         rvNotificationCategories = root.findViewById(R.id.rvNotificationCategories)
         ll_loading = root.findViewById(R.id.ll_loading)
-
         ll_loading.visibility = View.VISIBLE
 
         /**Initialize View Model*/
