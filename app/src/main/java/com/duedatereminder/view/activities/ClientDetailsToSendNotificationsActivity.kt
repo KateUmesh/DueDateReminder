@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -28,32 +29,32 @@ import com.duedatereminder.viewModel.activityViewModel.ViewModelNotificationTemp
 import org.jetbrains.anko.toast
 
 
-class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCallback,ClientDetailsToSendNotificationAdapter.SendSmsClickListener,ClientDetailsToSendNotificationAdapter.SendEmailClickListener {
+class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCallback {
     lateinit var rvClientDetails: RecyclerView
     private lateinit var mViewModelClientDetailsToSendNotification: ViewModelClientDetailsToSendNotification
     private lateinit var mViewModelNotificationTemplates: ViewModelNotificationTemplates
     private lateinit var llLoading : LinearLayoutCompat
+    private lateinit var llClientDetails : LinearLayout
     private var idNotification:String=""
+    private var notificationMessage:String=""
     private var idNotificationCategory:String=""
     private lateinit var tvTotalClients:TextView
-    private lateinit var btnSendSms:Button
-    private lateinit var btnSendEmail:Button
+    private lateinit var btnSendMessage:Button
     private lateinit var nsClientDetails:NestedScrollView
     private var flag:Int=1
-    private var maritalStatusList = ArrayList<NotificationTemplates>()
-    private var mSelectedMaritalStatus = -1
+    private var templateList = ArrayList<NotificationTemplates>()
+    private var mSelectedTemplate = -1
+    private lateinit var tvNoData:TextView
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_client_details_to_send_notifications)
 
-        /**Toolbar*/
-        toolbar(getString(R.string.client_details),true)
-
         /**Get idNotification from NotificationTemplatesAdapter*/
-        /*if(intent.getStringExtra(Constant.ID_NOTIFICATION)!=null) {
-            idNotification = intent.getStringExtra(Constant.ID_NOTIFICATION)!!
-        }*/
+        if(intent.getStringExtra(Constant.CATEGORY_NAME)!=null) {
+            /**Toolbar*/
+            toolbar(intent.getStringExtra(Constant.CATEGORY_NAME)!!,true)
+        }
         if(intent.getStringExtra(Constant.ID_DUE_DATE_CATEGORY)!=null) {
             idNotificationCategory = intent.getStringExtra(Constant.ID_DUE_DATE_CATEGORY)!!
         }
@@ -62,9 +63,10 @@ class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCa
         rvClientDetails = findViewById(R.id.rvClientDetails)
         llLoading = findViewById(R.id.ll_loading)
         tvTotalClients = findViewById(R.id.tvTotalClients)
-        btnSendSms = findViewById(R.id.btnSendSms)
-        //btnSendEmail = findViewById(R.id.btnSendEmail)
+        btnSendMessage = findViewById(R.id.btnSendMessage)
         nsClientDetails = findViewById(R.id.nsClientDetails)
+        llClientDetails = findViewById(R.id.llClientDetails)
+        tvNoData = findViewById(R.id.tvNoData)
 
         llLoading.visibility = View.VISIBLE
 
@@ -80,21 +82,17 @@ class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCa
             llLoading.visibility = View.GONE
             when (it.status) {
                 "1" -> {
-
-                    /*Set Total clients*/
-                    if(it.data!!.totalClients.isNotEmpty()){
-                        tvTotalClients.text = getString(R.string.total_clients)+it.data!!.totalClients
-                    }
-
                     if (!it.data!!.clients.isNullOrEmpty()) {
-                        val mAdapter = ClientDetailsToSendNotificationAdapter(this,it.data!!.clients!!,this,this)
+                        tvNoData.visibility = View.GONE
+                        val mAdapter = ClientDetailsToSendNotificationAdapter(this,it.data!!.clients!!)
                         rvClientDetails.adapter=mAdapter
-                        nsClientDetails.visibility = View.VISIBLE
+                        llClientDetails.visibility = View.VISIBLE
+                    }else{
+                        tvNoData.visibility = View.VISIBLE
                     }
-
-
                 }
                 "0" -> {
+                    tvNoData.visibility = View.VISIBLE
                     ContextExtension.snackBar(it.message, this)
                 }
                 else -> {
@@ -103,59 +101,12 @@ class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCa
             }
         })
 
-        /**Send Sms Click*/
-        btnSendSms.setOnClickListener {
-            //callSendSmsNotificationPostApi(idNotificationCategory,idNotification)
+        /**Send Sms Button Click*/
+        btnSendMessage.setOnClickListener {
             /**Call NotificationCategories GET Api*/
             callGetNotificationTemplatesApi()
         }
 
-
-        /**Response of SendSmsNotification Api*/
-        mViewModelClientDetailsToSendNotification.mModelSendSmsNotificationResponse.observe(this, {
-            llLoading.visibility = View.GONE
-            when (it.status) {
-                "1" -> {
-
-                    if (it.message.isNotEmpty()) {
-                        showOkDialog(it.message,this)
-                    }
-                }
-                "0" -> {
-                    ContextExtension.snackBar(it.message, this)
-                }
-                else -> {
-                    showSnackBar(this, it.message)
-                }
-            }
-        })
-
-        /**Send Email Click*//*
-        btnSendEmail.setOnClickListener {
-            callSendEmailNotificationPostApi(idNotificationCategory,idNotification)
-        }*/
-
-        /**Response of SendEmailNotification Api*/
-        mViewModelClientDetailsToSendNotification.mModelSendEmailNotificationResponse.observe(this, {
-            llLoading.visibility = View.GONE
-            when (it.status) {
-                "1" -> {
-
-                    if (it.message.isNotEmpty()) {
-                        showOkDialog(it.message,this)
-                    }
-                }
-                "0" -> {
-                    ContextExtension.snackBar(it.message, this)
-                }
-                else -> {
-                    showSnackBar(this, it.message)
-                }
-            }
-        })
-
-        /**Initialize View Model*/
-        mViewModelNotificationTemplates = ViewModelProvider(this)[ViewModelNotificationTemplates::class.java]
 
 
 
@@ -166,36 +117,43 @@ class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCa
                 "1" -> {
 
                     if (!it.data!!.templates.isNullOrEmpty()) {
-                        maritalStatusList = it.data?.templates as ArrayList<NotificationTemplates>
+                        templateList = it.data?.templates as ArrayList<NotificationTemplates>
 
                         val values = ArrayList<String>()
                         val key = ArrayList<String>()
-                        for (i in this.maritalStatusList.indices) {
-                            values.add(this.maritalStatusList[i].message)
-                            key.add(this.maritalStatusList[i].id_notification)
+                        for (i in this.templateList.indices) {
+                            values.add(this.templateList[i].message)
+                            key.add(this.templateList[i].id_notification)
                         }
                         val mBuilder = AlertDialog.Builder(this)
                         mBuilder.setTitle(getString(R.string.select_template))
 
-                        mBuilder.setSingleChoiceItems(values.toTypedArray(), mSelectedMaritalStatus) { dialogInterface, i ->
-                            mSelectedMaritalStatus = i
+                        mBuilder.setSingleChoiceItems(values.toTypedArray(), mSelectedTemplate) { dialogInterface, i ->
+                            mSelectedTemplate = i
                             idNotification = key[i]
-                            dialogInterface.dismiss()
+                            notificationMessage=values[i]
                         }
-                        mBuilder.setPositiveButton("Ok", DialogInterface.OnClickListener { _, _ ->
+
+                        mBuilder.setPositiveButton("Ok", DialogInterface.OnClickListener { dialogInterface, i ->
                                 if(idNotification.isNotEmpty()) {
                                     val intent = Intent(this, SendMessageActivity::class.java)
                                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                                     intent.putExtra(Constant.ID_NOTIFICATION, idNotification)
                                     intent.putExtra(Constant.ID_DUE_DATE_CATEGORY, idNotificationCategory)
+                                    intent.putExtra(Constant.TEMPLATE, notificationMessage)
                                     startActivity(intent)
+                                    dialogInterface.dismiss()
                                 }else{
                                     toast("Please Select Template")
                                 }
+
                             })
+
 
                         val mDialog = mBuilder.create()
                         mDialog.show()
+                    }else{
+
                     }
                 }
                 "0" -> {
@@ -209,6 +167,7 @@ class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCa
     }
 
     private fun callGetNotificationTemplatesApi(){
+        flag=2
         llLoading.visibility = View.VISIBLE
         if(NetworkConnection.isNetworkConnected()) {
             mViewModelNotificationTemplates.getNotificationTemplates(idNotificationCategory.toInt())
@@ -227,27 +186,6 @@ class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCa
         }
     }
 
-    private fun callSendSmsNotificationPostApi(idDueDateCategory:String,idNotification:String){
-        flag=2
-        llLoading.visibility = View.VISIBLE
-        val mModelSendSmsNotificationRequest = ModelSendSmsNotificationRequest(idDueDateCategory,idNotification)
-        if(NetworkConnection.isNetworkConnected()) {
-            mViewModelClientDetailsToSendNotification.sendSmsNotification(mModelSendSmsNotificationRequest)
-        }else{
-            showSnackBar(this,getString(R.string.no_internet_connection))
-        }
-    }
-
-    private fun callSendEmailNotificationPostApi(idDueDateCategory:String,idNotification:String){
-        flag=3
-        llLoading.visibility = View.VISIBLE
-        val mModelSendEmailNotificationRequest = ModelSendEmailNotificationRequest(idDueDateCategory,idNotification)
-        if(NetworkConnection.isNetworkConnected()) {
-            mViewModelClientDetailsToSendNotification.sendEmailNotification(mModelSendEmailNotificationRequest)
-        }else{
-            showSnackBar(this,getString(R.string.no_internet_connection))
-        }
-    }
 
     override fun snackBarSuccessInternetConnection() {
         when(flag){
@@ -255,11 +193,9 @@ class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCa
                 mViewModelClientDetailsToSendNotification.getClientDetailsToSendNotifications(idNotificationCategory.toInt())
             }
             2->{
-                callSendEmailNotificationPostApi(idNotificationCategory,idNotification)
+                callGetNotificationTemplatesApi()
             }
-            3->{
-                callSendEmailNotificationPostApi(idNotificationCategory,idNotification)
-            }
+
         }
 
     }
@@ -268,11 +204,4 @@ class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCa
         showSnackBar(this,getString(R.string.no_internet_connection))
     }
 
-    override fun sendSmsClick(position: Int, items: ArrayList<ClientsList>) {
-        callSendSmsNotificationPostApi(items[position].id_client,items[position].due_date_categories)
-    }
-
-    override fun sendEmailClick(position: Int, items: ArrayList<ClientsList>) {
-        callSendEmailNotificationPostApi(items[position].id_client,items[position].due_date_categories)
-    }
 }

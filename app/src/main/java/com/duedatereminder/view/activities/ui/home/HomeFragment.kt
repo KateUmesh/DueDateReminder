@@ -34,6 +34,7 @@ class HomeFragment : Fragment(), SnackBarCallback {
     lateinit var rvHome: RecyclerView
     lateinit var mViewModelHome: ViewModelHome
     private lateinit var ll_loading : LinearLayoutCompat
+    private lateinit var tvNoData : TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,6 +55,7 @@ class HomeFragment : Fragment(), SnackBarCallback {
         /**Initialize Variables*/
         rvHome = root.findViewById(R.id.rvHome)
         ll_loading = root.findViewById(R.id.ll_loading)
+        tvNoData = root.findViewById(R.id.tvNoData)
         ll_loading.visibility = View.VISIBLE
 
         /**Initialize View Model*/
@@ -67,13 +69,16 @@ class HomeFragment : Fragment(), SnackBarCallback {
             ll_loading.visibility = View.GONE
             when(it.status){
                 "1"->{
-
                     if(!it.data!!.blogs.isNullOrEmpty()){
+                        tvNoData.visibility = View.GONE
                         val mAdapter = BlogAdapter(this.requireContext(),it.data!!.blogs!!)
                         rvHome.adapter=mAdapter
+                    }else{
+                        tvNoData.visibility = View.VISIBLE
                     }
                 }
                 "0"->{
+                    tvNoData.visibility = View.VISIBLE
                     ContextExtension.snackBar(it.message, this.requireActivity())
                 }
                 else->{

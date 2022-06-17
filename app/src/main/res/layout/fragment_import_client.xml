@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="visible"
+            android:visibility="gone"
             android:padding="@dimen/spacing_mlarge">
 
             <!--Select CSV File-->
@@ -74,4 +74,5 @@
 
 
     <include layout="@layout/item_loading_layout"/>
+    <include layout="@layout/no_data_found_layout"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

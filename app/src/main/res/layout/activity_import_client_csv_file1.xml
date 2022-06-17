@@ -79,5 +79,6 @@
 
 
     <include layout="@layout/item_loading_layout"/>
+    <include layout="@layout/no_data_found_layout"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -17,9 +17,11 @@ class Constant {
         const val ADDRESS="ADDRESS"
         const val ID_CLIENT="idClient"
         const val ID_DUE_DATE_CATEGORY="id_due_date_category"
+        const val CATEGORY_NAME="category_name"
         const val CSV_FILE="csv_file"
         const val ID_NOTIFICATION="id_notification"
         const val appUrl:String ="market://details?id="
+        const val TEMPLATE:String ="template"
 
         const val userAppStatus="user/userAppStatus"
         const val sendRegistrationOtp="user/sendRegistrationOtp"

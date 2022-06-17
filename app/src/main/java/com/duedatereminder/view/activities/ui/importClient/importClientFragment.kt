@@ -53,6 +53,7 @@ class importClientFragment : Fragment(), SnackBarCallback {
     var maritalStatus = ""
     lateinit var fileUri: Uri
     private var idDueDateCategory:String = ""
+    private lateinit var tvNoData : TextView
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -72,6 +73,7 @@ class importClientFragment : Fragment(), SnackBarCallback {
         btnUploadCsvFile = root.findViewById(R.id.btnUploadCsvFile)
         edt_categories = root.findViewById(R.id.edt_categories)
         llImportClient = root.findViewById(R.id.llImportClient)
+        tvNoData = root.findViewById(R.id.tvNoData)
         ll_loading.visibility = View.VISIBLE
 
         /**Initialize View Model*/
@@ -88,12 +90,16 @@ class importClientFragment : Fragment(), SnackBarCallback {
             ll_loading.visibility = View.GONE
             when(it.status){
                 "1"->{
+                    tvNoData.visibility= View.GONE
                     llImportClient.visibility = View.VISIBLE
                     if(!it.data!!.due_date_categories.isNullOrEmpty()){
                         maritalStatusList = it.data?.due_date_categories as ArrayList<DueDateCategories>
+                    }else{
+                        tvNoData.visibility= View.VISIBLE
                     }
                 }
                 "0"->{
+                    tvNoData.visibility= View.VISIBLE
                     ContextExtension.snackBar(it.message, this.requireActivity())
                 }
                 else->{

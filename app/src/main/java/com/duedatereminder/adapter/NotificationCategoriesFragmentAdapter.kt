@@ -41,6 +41,7 @@ class NotificationCategoriesFragmentAdapter(var context: Context, private var it
             val intent = Intent(context, ClientDetailsToSendNotificationsActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             intent.putExtra(Constant.ID_DUE_DATE_CATEGORY,items[position].id_due_date_category)
+            intent.putExtra(Constant.CATEGORY_NAME,items[position].category_name)
             context.startActivity(intent)
         }
     }

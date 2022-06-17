@@ -30,11 +30,32 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textStyle="bold" android:textColor="@color/grey_90"
-                    android:id="@+id/tvBlogName" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="Name"
-                    android:maxLines="1" android:singleLine="true"/>
+
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold"
+                    android:textColor="@color/grey_90"
+                    android:id="@+id/tvBlogName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:singleLine="true"/>
+                <TextView
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textStyle="bold"
+                    android:layout_gravity="end"
+                    android:visibility="visible"
+                    android:textColor="@color/blue_600"
+                    android:id="@+id/tvBlogDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10:30 AM"
+                    android:layout_alignParentRight="true" android:layout_alignParentEnd="true"/>
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
                 <TextView android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textStyle="bold"
                     android:textColor="@color/grey_90"
@@ -51,13 +72,7 @@
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="Address" android:maxLines="1" android:singleLine="true"/>
             </LinearLayout>
-            <TextView android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textStyle="bold"
-                android:visibility="visible"
-                android:textColor="@color/blue_600"
-                android:id="@+id/tvBlogDate" android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="10:30 AM"
-                android:layout_alignParentRight="true" android:layout_alignParentEnd="true"/>
+
         </RelativeLayout>
         <View android:layout_width="@dimen/spacing_large" android:layout_height="0dp"/>
     </LinearLayout>

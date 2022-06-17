@@ -18,7 +18,6 @@ import com.duedatereminder.databinding.FragmentClientBinding
 import com.duedatereminder.utils.ContextExtension
 import com.duedatereminder.utils.ContextExtension.Companion.showSnackBar
 import com.duedatereminder.utils.NetworkConnection
-import com.duedatereminder.view.activities.AddClientActivity
 import com.duedatereminder.view.activities.NotificationCategoriesActivity
 import com.duedatereminder.viewModel.fragmentViewModel.ViewModelAllClient
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -32,6 +31,7 @@ class ClientFragment : Fragment(),SnackBarCallback {
     // onDestroyView.
     private val binding get() = _binding!!
     private lateinit var ll_loading : LinearLayoutCompat
+    private lateinit var tvNoData : TextView
     private lateinit var mViewModelAllClient: ViewModelAllClient
 
     override fun onCreateView(
@@ -39,7 +39,7 @@ class ClientFragment : Fragment(),SnackBarCallback {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        clientViewModel = ViewModelProvider(this).get(ClientViewModel::class.java)
+        clientViewModel = ViewModelProvider(this)[ClientViewModel::class.java]
 
         _binding = FragmentClientBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -49,9 +49,10 @@ class ClientFragment : Fragment(),SnackBarCallback {
         val fab: FloatingActionButton = binding.fab
         val rvAllClients: RecyclerView = binding.rvAllClients
         ll_loading = root.findViewById(R.id.ll_loading)
+        tvNoData = root.findViewById(R.id.tvNoData)
 
         /**Initialize View Model*/
-        mViewModelAllClient = ViewModelProvider(this).get(ViewModelAllClient::class.java)
+        mViewModelAllClient = ViewModelProvider(this)[ViewModelAllClient::class.java]
 
         clientViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
@@ -59,7 +60,6 @@ class ClientFragment : Fragment(),SnackBarCallback {
 
         /**Fab Click*/
         fab.setOnClickListener {
-            //val intent = Intent(context, AddClientActivity::class.java)
             val intent = Intent(context, NotificationCategoriesActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
@@ -73,13 +73,16 @@ class ClientFragment : Fragment(),SnackBarCallback {
             ll_loading.visibility = View.GONE
             when(it.status){
                 "1"->{
-
                     if(!it.data!!.clients.isNullOrEmpty()){
+                        tvNoData.visibility = View.GONE
                         val mAdapter = AllClientsAdapter(this.requireContext(),it.data!!.clients!!)
                         rvAllClients.adapter=mAdapter
+                    }else{
+                        tvNoData.visibility = View.VISIBLE
                     }
                 }
                 "0"->{
+                    tvNoData.visibility = View.VISIBLE
                     ContextExtension.snackBar(it.message,this.requireActivity())
                 }
                 else->{

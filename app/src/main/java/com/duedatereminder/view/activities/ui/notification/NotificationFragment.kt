@@ -29,6 +29,7 @@ class NotificationFragment : Fragment(), SnackBarCallback {
     lateinit var rvNotificationCategories: RecyclerView
     lateinit var mViewModelNotificationCategories: ViewModelNotificationCategories
     private lateinit var ll_loading : LinearLayoutCompat
+    private lateinit var tvNoData : TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +50,7 @@ class NotificationFragment : Fragment(), SnackBarCallback {
         /**Initialize Variables*/
         rvNotificationCategories = root.findViewById(R.id.rvNotificationCategories)
         ll_loading = root.findViewById(R.id.ll_loading)
+        tvNoData = root.findViewById(R.id.tvNoData)
         ll_loading.visibility = View.VISIBLE
 
         /**Initialize View Model*/
@@ -63,13 +65,16 @@ class NotificationFragment : Fragment(), SnackBarCallback {
             ll_loading.visibility = View.GONE
             when(it.status){
                 "1"->{
-
                     if(!it.data!!.due_date_categories.isNullOrEmpty()){
+                        tvNoData.visibility = View.GONE
                         val mAdapter = NotificationCategoriesFragmentAdapter(this.requireContext(),it.data!!.due_date_categories!!)
                         rvNotificationCategories.adapter=mAdapter
+                    }else{
+                        tvNoData.visibility = View.VISIBLE
                     }
                 }
                 "0"->{
+                    tvNoData.visibility = View.VISIBLE
                     ContextExtension.snackBar(it.message, this.requireActivity())
                 }
                 else->{

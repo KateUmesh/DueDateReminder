@@ -54,6 +54,7 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="no_data_found">No Data Found</string>
 
     //Navigation Drawer
     <string name="menu_home">Home</string>
@@ -65,7 +66,7 @@
     <string name="submit">Submit</string>
     <string name="add_client">Add Client</string>
     <string name="select_categories">Select Categories</string>
-    <string name="select_template">Select Template</string>
+    <string name="select_template">Select Message</string>
 
     //Notification Categories
     <string name="notification_categories">Notification Categories</string>
@@ -89,6 +90,7 @@
 
 
     <string name="send_sms">Send SMS</string>
+    <string name="send_message">Send Message</string>
     <string name="send_email">Send Email</string>
     <string name="total_clients">"Total Clients  : "</string>
 

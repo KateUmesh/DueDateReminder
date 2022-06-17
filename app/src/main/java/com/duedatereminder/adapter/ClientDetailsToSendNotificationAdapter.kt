@@ -11,9 +11,7 @@ import com.duedatereminder.R
 import com.duedatereminder.model.ClientsList
 
 class ClientDetailsToSendNotificationAdapter(var context: Context,
-                                             private var items: ArrayList<ClientsList>,
-                                             var sendSmsClickListener:SendSmsClickListener,
-                                             var sendEmailClickListener:SendEmailClickListener): RecyclerView.Adapter<ClientDetailsToSendNotificationAdapter.ClientDetailsToSendNotificationViewHolder>() {
+                                             private var items: ArrayList<ClientsList>): RecyclerView.Adapter<ClientDetailsToSendNotificationAdapter.ClientDetailsToSendNotificationViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClientDetailsToSendNotificationViewHolder {
