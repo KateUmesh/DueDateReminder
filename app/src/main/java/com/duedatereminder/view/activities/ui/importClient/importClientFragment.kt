@@ -77,12 +77,12 @@ class importClientFragment : Fragment(), SnackBarCallback {
         /**Initialize Variables*/
         wvImportClient = root.findViewById(R.id.wvImportClient)
 
-        val intent = Intent(context, MyWb::class.java)
+        /*val intent = Intent(context, MyWb::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-        context!!.startActivity(intent)
+        context!!.startActivity(intent)*/
 
-        //wvImportClient.loadUrl(" https://kuberaduedate.com/app/welcome/csv_file_upload/"+ LocalSharedPreference.getStringValue(Constant.token))
-        //wvImportClient.settings.javaScriptEnabled = true
+        wvImportClient.loadUrl(" https://kuberaduedate.com/app/welcome/csv_file_upload/"+ LocalSharedPreference.getStringValue(Constant.token))
+        wvImportClient.settings.javaScriptEnabled = true
 
         /**Initialize Variables*/
         ll_loading = root.findViewById(R.id.ll_loading)
