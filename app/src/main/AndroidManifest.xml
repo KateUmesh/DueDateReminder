@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_2_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DueDateReminder">
-        <activity android:name=".view.activities.SendMessageActivity"></activity>
+        <activity android:name=".view.activities.MyWb"></activity>
+        <activity android:name=".view.activities.SendMessageActivity" />
         <activity android:name=".docpicker.ui.components.ActivityLibMain" />
         <activity android:name=".view.activities.ImportClientCsvFileActivity1" />
         <activity android:name=".view.activities.ClientDetailsToSendNotificationsActivity" />

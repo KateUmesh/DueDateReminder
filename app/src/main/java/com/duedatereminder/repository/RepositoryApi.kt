@@ -36,4 +36,8 @@ class RepositoryApi {
     suspend fun sendEmailNotification(modelSendEmailNotificationRequest: ModelSendEmailNotificationRequest)=ApiClient.build().sendEmailNotification(modelSendEmailNotificationRequest)
     /**Get Blogs*/
     suspend fun getBlogs()=ApiClient.build().getBlogs()
+    /**Delete Client*/
+    suspend fun deleteClient(modelDeleteClientRequest: ModelDeleteClientRequest)=ApiClient.build().deleteClient(modelDeleteClientRequest)
+    /**Get My Balance*/
+    suspend fun getMyBalance()=ApiClient.build().getMyBalance()
 }

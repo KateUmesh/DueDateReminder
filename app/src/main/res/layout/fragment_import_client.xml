@@ -5,11 +5,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activities.ui.importClient.importClientFragment">
+    tools:context=".view.activities.ui.importClient.MyBalanceFragment">
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/wvImportClient"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.LinearLayoutCompat

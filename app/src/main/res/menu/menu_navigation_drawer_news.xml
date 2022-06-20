@@ -5,22 +5,25 @@
         <item android:icon="@drawable/ic_home"
             android:id="@+id/nav_home"
             android:title="@string/menu_home"/>
-        <item android:icon="@drawable/ic_whatshot"
+        <item android:icon="@drawable/ic_client_24"
             android:id="@+id/nav_client"
             android:title="@string/menu_client"/>
-        <item android:icon="@drawable/ic_highlight"
+        <item android:icon="@drawable/ic_import_client_24"
             android:id="@+id/nav_import_client"
             android:title="@string/menu_import_client"/>
-        <item android:icon="@drawable/ic_schedule"
+        <item android:icon="@drawable/ic_send_messgae_24"
             android:id="@+id/nav_notification"
             android:title="@string/menu_notification"/>
+        <item android:icon="@drawable/ic_baseline_account_balance_wallet_24"
+            android:id="@+id/nav_my_balnce"
+            android:title="@string/menu_my_balance"/>
 
     </group>
     <group android:id="@+id/grp_2"
         android:checkableBehavior="none">
-        <item android:icon="@drawable/ic_settings"
-            android:id="@+id/nav_settings"
-            android:title="Settings"/>
+        <item android:icon="@drawable/ic_logout_24"
+            android:id="@+id/nav_logout"
+            android:title="Logout"/>
         <item android:icon="@drawable/ic_help"
             android:visible="false"
             android:id="@+id/nav_help"

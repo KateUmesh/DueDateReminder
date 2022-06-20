@@ -22,6 +22,10 @@ class Constant {
         const val ID_NOTIFICATION="id_notification"
         const val appUrl:String ="market://details?id="
         const val TEMPLATE:String ="template"
+        const val USER_NAME:String ="userName"
+        const val USER_EMAIL:String ="userEmail"
+        const val SEND_SMS_DETAILS:String ="send_sms_details"
+        const val SEND_EMAIL_DETAILS:String ="send_email_details"
 
         const val userAppStatus="user/userAppStatus"
         const val sendRegistrationOtp="user/sendRegistrationOtp"
@@ -37,5 +41,7 @@ class Constant {
         const val sendEmailNotification="user/sendEmailNotification"
         const val sendSmsNotification="user/sendSmsNotification"
         const val blogs="user/blogs"
+        const val deleteClient="user/deleteClient"
+        const val myBalance="user/myBalance"
     }
 }

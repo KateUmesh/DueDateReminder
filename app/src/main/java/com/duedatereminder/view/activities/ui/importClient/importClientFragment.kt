@@ -1,6 +1,7 @@
 package com.duedatereminder.view.activities.ui.importClient
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -26,9 +28,13 @@ import com.duedatereminder.databinding.FragmentNotificationBinding
 import com.duedatereminder.docpicker.DocPicker
 import com.duedatereminder.docpicker.core.DocPickerConfig
 import com.duedatereminder.model.DueDateCategories
+import com.duedatereminder.utils.Constant
 import com.duedatereminder.utils.ContextExtension
 import com.duedatereminder.utils.ContextExtension.Companion.showSnackBar
+import com.duedatereminder.utils.LocalSharedPreference
 import com.duedatereminder.utils.NetworkConnection
+import com.duedatereminder.view.activities.ClientDetailsToSendNotificationsActivity
+import com.duedatereminder.view.activities.MyWb
 import com.duedatereminder.viewModel.activityViewModel.ViewModelImportClientCsvFile
 import com.duedatereminder.viewModel.activityViewModel.ViewModelNotificationCategories
 import com.google.android.material.textfield.TextInputEditText
@@ -48,12 +54,13 @@ class importClientFragment : Fragment(), SnackBarCallback {
     private lateinit var btnUploadCsvFile : Button
     lateinit var edt_categories: TextInputEditText
     lateinit var llImportClient: LinearLayoutCompat
-    private var maritalStatusList = ArrayList<DueDateCategories>()
-    private var mSelectedMaritalStatus = -1
+    private var categoryList = ArrayList<DueDateCategories>()
+    private var mSelectedCategory = -1
     var maritalStatus = ""
     lateinit var fileUri: Uri
     private var idDueDateCategory:String = ""
     private lateinit var tvNoData : TextView
+    private lateinit var wvImportClient : WebView
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -68,13 +75,23 @@ class importClientFragment : Fragment(), SnackBarCallback {
 
 
         /**Initialize Variables*/
+        wvImportClient = root.findViewById(R.id.wvImportClient)
+
+        val intent = Intent(context, MyWb::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        context!!.startActivity(intent)
+
+        //wvImportClient.loadUrl(" https://kuberaduedate.com/app/welcome/csv_file_upload/"+ LocalSharedPreference.getStringValue(Constant.token))
+        //wvImportClient.settings.javaScriptEnabled = true
+
+        /**Initialize Variables*/
         ll_loading = root.findViewById(R.id.ll_loading)
         btnSelectFile = root.findViewById(R.id.btnSelectFile)
         btnUploadCsvFile = root.findViewById(R.id.btnUploadCsvFile)
         edt_categories = root.findViewById(R.id.edt_categories)
         llImportClient = root.findViewById(R.id.llImportClient)
         tvNoData = root.findViewById(R.id.tvNoData)
-        ll_loading.visibility = View.VISIBLE
+        //  ll_loading.visibility = View.VISIBLE
 
         /**Initialize View Model*/
         mViewModelNotificationCategories = ViewModelProvider(this)[ViewModelNotificationCategories::class.java]
@@ -83,7 +100,7 @@ class importClientFragment : Fragment(), SnackBarCallback {
 
 
         /**Call NotificationCategories GET Api*/
-        callNotificationCategoriesApi()
+        //callNotificationCategoriesApi()
 
         /**Response of NotificationCategories Api*/
         mViewModelNotificationCategories.mModelNotificationCategoriesResponse.observe(this, Observer {
@@ -93,7 +110,7 @@ class importClientFragment : Fragment(), SnackBarCallback {
                     tvNoData.visibility= View.GONE
                     llImportClient.visibility = View.VISIBLE
                     if(!it.data!!.due_date_categories.isNullOrEmpty()){
-                        maritalStatusList = it.data?.due_date_categories as ArrayList<DueDateCategories>
+                        categoryList = it.data?.due_date_categories as ArrayList<DueDateCategories>
                     }else{
                         tvNoData.visibility= View.VISIBLE
                     }
@@ -108,20 +125,20 @@ class importClientFragment : Fragment(), SnackBarCallback {
             }
         })
 
-        //Marital status
+        //Categories
         edt_categories.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
                 val values = ArrayList<String>()
                 val key = ArrayList<String>()
-                for (i in this.maritalStatusList.indices) {
-                    values.add(this.maritalStatusList[i].category_name)
-                    key.add(this.maritalStatusList[i].id_due_date_category)
+                for (i in this.categoryList.indices) {
+                    values.add(this.categoryList[i].category_name)
+                    key.add(this.categoryList[i].id_due_date_category)
                 }
                 val mBuilder = AlertDialog.Builder(requireContext())
                 mBuilder.setTitle(getString(R.string.select_categories))
 
-                mBuilder.setSingleChoiceItems(values.toTypedArray(), mSelectedMaritalStatus) { dialogInterface, i ->
-                    mSelectedMaritalStatus = i
+                mBuilder.setSingleChoiceItems(values.toTypedArray(), mSelectedCategory) { dialogInterface, i ->
+                    mSelectedCategory = i
                     edt_categories.setText(values[i])
                     idDueDateCategory = key[i]
                     dialogInterface.dismiss()

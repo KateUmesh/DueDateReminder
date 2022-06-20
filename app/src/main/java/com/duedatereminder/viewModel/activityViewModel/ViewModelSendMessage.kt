@@ -9,39 +9,9 @@ import com.duedatereminder.utils.Constant
 import kotlinx.coroutines.launch
 import java.net.SocketTimeoutException
 
-class ViewModelClientDetailsToSendNotification() : ViewModel(){
+class ViewModelSendMessage() : ViewModel(){
     private var mRepository = RepositoryApi()
 
-    /**GET Client Details To Send Notifications*/
-    var mModelClientDetailsToSendNotificationsResponse = MutableLiveData<ModelClientDetailsToSendNotificationsResponse>()
-    fun getClientDetailsToSendNotifications(idNotificationCategory: Int) {
-        viewModelScope.launch {
-            try {
-                val response = mRepository.getClientDetailsToSendNotifications(idNotificationCategory)
-                if (response.isSuccessful)
-                    mModelClientDetailsToSendNotificationsResponse.value = response.body()
-                else
-                    mModelClientDetailsToSendNotificationsResponse.value =
-                        ModelClientDetailsToSendNotificationsResponse(
-                            "",
-                            Constant.something_went_wrong,null
-                        )
-            } catch (e: Exception) {
-                if (e is SocketTimeoutException)
-                    mModelClientDetailsToSendNotificationsResponse.value =
-                        ModelClientDetailsToSendNotificationsResponse(
-                            "",
-                            Constant.slow_internet_connection_detected,null
-                        )
-                else
-                    mModelClientDetailsToSendNotificationsResponse.value =
-                        ModelClientDetailsToSendNotificationsResponse(
-                            "",
-                            Constant.something_went_wrong,null
-                        )
-            }
-        }
-    }
 
     /**POST Send Sms Notification*/
     var mModelSendSmsNotificationResponse = MutableLiveData<ModelSendSmsNotificationResponse>()
@@ -105,34 +75,4 @@ class ViewModelClientDetailsToSendNotification() : ViewModel(){
         }
     }
 
-    /**POST Delete Client*/
-    var mModelDeleteClientResponse = MutableLiveData<ModelDeleteClientResponse>()
-    fun deleteClient(modelDeleteClientRequest: ModelDeleteClientRequest) {
-        viewModelScope.launch {
-            try {
-                val response = mRepository.deleteClient(modelDeleteClientRequest)
-                if (response.isSuccessful)
-                    mModelDeleteClientResponse.value = response.body()
-                else
-                    mModelDeleteClientResponse.value =
-                        ModelDeleteClientResponse(
-                            "",
-                            Constant.something_went_wrong
-                        )
-            } catch (e: Exception) {
-                if (e is SocketTimeoutException)
-                    mModelDeleteClientResponse.value =
-                        ModelDeleteClientResponse(
-                            "",
-                            Constant.slow_internet_connection_detected
-                        )
-                else
-                    mModelDeleteClientResponse.value =
-                        ModelDeleteClientResponse(
-                            "",
-                            Constant.something_went_wrong
-                        )
-            }
-        }
-    }
 }

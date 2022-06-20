@@ -66,6 +66,14 @@ class SplashActivity : AppCompatActivity(),SnackBarCallback {
         mViewModelSplashScreen.mSplashScreenLiveData.observe(this, Observer {
             when(it.status){
                 "1"->{
+                    if(!it.data?.name.isNullOrEmpty()){
+                        LocalSharedPreference.putStringValue(Constant.USER_NAME,it.data?.name)
+                    }
+
+                    if(!it.data?.email.isNullOrEmpty()){
+                        LocalSharedPreference.putStringValue(Constant.USER_EMAIL,it.data?.email)
+                    }
+
                     if(LocalSharedPreference.getStringValue(Constant.token).isNullOrEmpty()){
                         callLoginActivity(this)
                     }else{

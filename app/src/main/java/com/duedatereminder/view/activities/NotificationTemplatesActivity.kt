@@ -21,6 +21,8 @@ class NotificationTemplatesActivity : AppCompatActivity(), SnackBarCallback {
     private lateinit var mViewModelNotificationTemplates: ViewModelNotificationTemplates
     private lateinit var llLoading : LinearLayoutCompat
     private var idNotificationCategory:Int=0
+    private var SEND_SMS_DETAILS:String=""
+    private var SEND_EMAIL_DETAILS:String=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notification_templates)
@@ -31,6 +33,12 @@ class NotificationTemplatesActivity : AppCompatActivity(), SnackBarCallback {
         /**Get idNotification from NotificationCategoriesFragmentAdapter*/
         if(intent.getStringExtra(Constant.ID_DUE_DATE_CATEGORY)!=null) {
             idNotificationCategory = intent.getStringExtra(Constant.ID_DUE_DATE_CATEGORY)!!.toInt()
+        }
+        if(intent.getStringExtra(Constant.SEND_SMS_DETAILS)!=null) {
+            SEND_SMS_DETAILS = intent.getStringExtra(Constant.SEND_SMS_DETAILS)!!
+        }
+        if(intent.getStringExtra(Constant.SEND_EMAIL_DETAILS)!=null) {
+            SEND_EMAIL_DETAILS = intent.getStringExtra(Constant.SEND_EMAIL_DETAILS)!!
         }
 
         /**Initialize Variables*/
@@ -52,7 +60,7 @@ class NotificationTemplatesActivity : AppCompatActivity(), SnackBarCallback {
                 "1" -> {
 
                     if (!it.data!!.templates.isNullOrEmpty()) {
-                        val mAdapter = NotificationTemplatesAdapter(this,it.data!!.templates!!,idNotificationCategory.toString())
+                        val mAdapter = NotificationTemplatesAdapter(this,it.data!!.templates!!,idNotificationCategory.toString(),SEND_SMS_DETAILS,SEND_EMAIL_DETAILS)
                         rvNotificationTemplates.adapter=mAdapter
                     }
                 }

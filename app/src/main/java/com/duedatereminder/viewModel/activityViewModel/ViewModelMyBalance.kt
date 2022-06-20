@@ -3,44 +3,45 @@ package com.duedatereminder.viewModel.activityViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.duedatereminder.model.ModelSplashRequest
-import com.duedatereminder.model.ModelSplashResponse
+import com.duedatereminder.model.*
 import com.duedatereminder.repository.RepositoryApi
 import com.duedatereminder.utils.Constant
 import kotlinx.coroutines.launch
 import java.net.SocketTimeoutException
 
-class ViewModelSplashScreen() : ViewModel(){
+class ViewModelMyBalance() : ViewModel(){
     private var mRepository = RepositoryApi()
-     var mSplashScreenLiveData = MutableLiveData<ModelSplashResponse>()
 
-    fun userAppStatus(modelSplashRequest: ModelSplashRequest) {
+    /**My Balance*/
+
+     var mModelMyBalanceResponse = MutableLiveData<ModelMyBalanceResponse>()
+    fun getMyBalance() {
         viewModelScope.launch {
             try {
-                val response = mRepository.userAppStatus(modelSplashRequest)
+                val response = mRepository.getMyBalance()
                 if (response.isSuccessful)
-                    mSplashScreenLiveData.value = response.body()
+                    mModelMyBalanceResponse.value = response.body()
                 else
-                    mSplashScreenLiveData.value =
-                        ModelSplashResponse(
+                    mModelMyBalanceResponse.value =
+                        ModelMyBalanceResponse(
                             "",
                             Constant.something_went_wrong,null
                         )
             } catch (e: Exception) {
                 if (e is SocketTimeoutException)
-                    mSplashScreenLiveData.value =
-                        ModelSplashResponse(
+                    mModelMyBalanceResponse.value =
+                        ModelMyBalanceResponse(
                             "",
                             Constant.slow_internet_connection_detected,null
                         )
                 else
-                    mSplashScreenLiveData.value =
-                        ModelSplashResponse(
+                    mModelMyBalanceResponse.value =
+                        ModelMyBalanceResponse(
                             "",
                             Constant.something_went_wrong,null
-
                         )
             }
         }
     }
+
 }

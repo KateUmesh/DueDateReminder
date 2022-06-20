@@ -28,4 +28,13 @@
         android:name="com.duedatereminder.view.activities.ui.importClient.importClientFragment"
         android:label="@string/menu_import_client"
         tools:layout="@layout/fragment_notification" />
+
+
+    <fragment
+        android:id="@+id/nav_my_balnce"
+        android:name="com.duedatereminder.view.activities.ui.myBalance.MyBalanceFragment"
+        android:label="@string/menu_my_balance"
+        tools:layout="@layout/fragment_my_balance" />
+
+
 </navigation>

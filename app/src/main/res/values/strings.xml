@@ -9,6 +9,8 @@
     //Create Account
     <string name="createAccount">Create Account</string>
     <string name="name">Name*</string>
+    <string name="firmName">Firm Name*</string>
+    <string name="accountType">Account Type*</string>
     <string name="mobileNumberAccount">Mobile Number*</string>
     <string name="whatsappNumber">Whatsapp Number*</string>
     <string name="email">Email*</string>
@@ -16,6 +18,8 @@
     <string name="you_will_get_otp">You will get an OTP on this number.</string>
     <string name="accept_terms_msg">By creating an account, you agree to our  <a href="terms:">terms and conditions</a></string>
     <string name="name_required"> Name required</string>
+    <string name="firm_name_required">Firm Name required</string>
+    <string name="account_type_required">Account Type required</string>
     <string name="invalid_whatsapp_number">Invalid whatsapp number</string>
     <string name="invalid_email_address">Invalid email address</string>
     <string name="enter_full_address">Enter full address</string>
@@ -45,6 +49,7 @@
 
     //
     <string name="Ok">Ok</string>
+    <string name="send">Send</string>
     <string name="retry">Retry</string>
     <string name="no_internet_connection">No Internet Connection</string>
     <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
@@ -61,6 +66,7 @@
     <string name="menu_client">My Clients</string>
     <string name="menu_notification">Send Messages</string>
     <string name="menu_import_client">Import Clients</string>
+    <string name="menu_my_balance">My Balance</string>
 
     //Add Client
     <string name="submit">Submit</string>

@@ -16,17 +16,52 @@
         android:src="@drawable/photo_male_6"
         app:civ_border_width="2dp"
         app:civ_shadow="true"
+        android:visibility="gone"
         app:civ_shadow_radius="0dp"/>
+    <RelativeLayout
+        android:layout_margin="@dimen/spacing_large"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RelativeLayout android:id="@+id/lyt_checked"
+            android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/shape_circle"
+                android:tint="@color/blue_grey_600"/>
+            <TextView
+                android:id="@+id/tvFirstLetterNav"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_centerInParent="true"
+                android:textSize="30sp"
+                android:text="U"/>
+            <ImageView
+                android:visibility="gone"
+                android:layout_width="25dp" android:layout_height="25dp"
+                android:layout_centerInParent="true" app:srcCompat="@drawable/ic_done"/>
+        </RelativeLayout>
+        <RelativeLayout android:id="@+id/lyt_image" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <ImageView android:id="@+id/image" android:layout_width="@dimen/spacing_xmlarge" android:layout_height="@dimen/spacing_xmlarge"/>
+            <TextView android:textAppearance="@style/TextAppearance.AppCompat.Medium" android:textColor="@android:color/white" android:id="@+id/image_letter" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true"/>
+        </RelativeLayout>
+    </RelativeLayout>
     <LinearLayout android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="wrap_content" android:layout_margin="@dimen/spacing_large"
         android:layout_alignParentBottom="true">
-        <TextView android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        <TextView
+            android:id="@+id/tvUserName"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_medium"
             android:text="John Miller"/>
-        <TextView android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:id="@+id/email"
+        <TextView
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:id="@+id/tvUserEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="johnmiller@mail.com"/>

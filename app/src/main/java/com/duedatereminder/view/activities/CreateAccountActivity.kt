@@ -1,9 +1,12 @@
 package com.duedatereminder.view.activities
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.widget.AppCompatTextView
@@ -33,9 +36,14 @@ class CreateAccountActivity : AppCompatActivity(), SnackBarCallback {
     private lateinit var tietMobileNumber : TextInputEditText
     private lateinit var tietWhatsappNumber : TextInputEditText
     private lateinit var tietAddress : TextInputEditText
+    private lateinit var edt_account_type : TextInputEditText
+    private lateinit var tietFirmName : TextInputEditText
     private lateinit var ll_loading : LinearLayoutCompat
     var otp:String = ""
+    var accountType:String = ""
+    var mSelectedAccountType=-1
     private lateinit var mViewModelCreateAccount: ViewModelCreateAccount
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_account)
@@ -49,12 +57,34 @@ class CreateAccountActivity : AppCompatActivity(), SnackBarCallback {
         tietMobileNumber = findViewById(R.id.tietMobileNumber)
         tietWhatsappNumber = findViewById(R.id.tietWhatsappNumber)
         tietAddress = findViewById(R.id.tietAddress)
+        tietFirmName = findViewById(R.id.tietFirmName)
+        edt_account_type = findViewById(R.id.edt_account_type)
         ll_loading = findViewById(R.id.ll_loading)
         val btnCreateAccount : Button = findViewById(R.id.btnCreateAccount)
         val tvTermsAndConditions: AppCompatTextView = findViewById(R.id.tvTermsAndConditions)
 
         /**Initialize View Model*/
         mViewModelCreateAccount = ViewModelProvider(this).get(ViewModelCreateAccount::class.java)
+
+        //Account type
+        edt_account_type.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                editTextClearFocus()
+                val listItems = resources.getStringArray(R.array.account_type_array)
+                val mBuilder = AlertDialog.Builder(this)
+                mBuilder.setTitle(getString(R.string.accountType))
+                mBuilder.setSingleChoiceItems(listItems, mSelectedAccountType) { dialogInterface, i ->
+                    mSelectedAccountType = i
+                    accountType = listItems[i]
+                    edt_account_type.setText(listItems[i])
+                    dialogInterface.dismiss()
+                }
+
+                val mDialog = mBuilder.create()
+                mDialog.show()
+            }
+            true
+        }
 
 
         /*Terms And Conditions Click*/
@@ -103,9 +133,11 @@ class CreateAccountActivity : AppCompatActivity(), SnackBarCallback {
             snackBar(getString(R.string.invalid_whatsapp_number),this)
         }else if(tietAddress.text.toString().isEmpty()|| tietAddress.text.toString().length<20){
             snackBar(getString(R.string.enter_full_address),this)
+        }else if(tietFirmName.text.toString().isEmpty()){
+            snackBar(getString(R.string.firm_name_required),this)
+        }else if(edt_account_type.text.toString().isEmpty()){
+            snackBar(getString(R.string.account_type_required),this)
         }else{
-            //callOtpVerificationActivity(this,tietMobileNumber.text.toString(),otp,"")
-
             callSendRegistrationOtpApi(tietMobileNumber.text.toString())
 
         }
@@ -131,5 +163,15 @@ class CreateAccountActivity : AppCompatActivity(), SnackBarCallback {
 
     override fun snackBarFailedInterConnection() {
         showSnackBar(this,getString(R.string.no_internet_connection))
+    }
+
+    private fun editTextClearFocus(){
+        tietName.clearFocus()
+        tietEmail .clearFocus()
+        tietMobileNumber.clearFocus()
+        tietWhatsappNumber .clearFocus()
+        tietAddress.clearFocus()
+        tietFirmName.clearFocus()
+        hideKeyboard(tietFirmName)
     }
 }

@@ -38,6 +38,8 @@ class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCa
     private var idNotification:String=""
     private var notificationMessage:String=""
     private var idNotificationCategory:String=""
+    private var SEND_SMS_DETAILS:String=""
+    private var SEND_EMAIL_DETAILS:String=""
     private lateinit var tvTotalClients:TextView
     private lateinit var btnSendMessage:Button
     private lateinit var nsClientDetails:NestedScrollView
@@ -87,6 +89,12 @@ class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCa
                         val mAdapter = ClientDetailsToSendNotificationAdapter(this,it.data!!.clients!!)
                         rvClientDetails.adapter=mAdapter
                         llClientDetails.visibility = View.VISIBLE
+                        if(!it.data?.send_sms_details.isNullOrEmpty()) {
+                            SEND_SMS_DETAILS = it.data?.send_sms_details!!
+                        }
+                        if(!it.data?.send_email_details.isNullOrEmpty()) {
+                            SEND_EMAIL_DETAILS = it.data?.send_email_details!!
+                        }
                     }else{
                         tvNoData.visibility = View.VISIBLE
                     }
@@ -104,7 +112,13 @@ class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCa
         /**Send Sms Button Click*/
         btnSendMessage.setOnClickListener {
             /**Call NotificationCategories GET Api*/
-            callGetNotificationTemplatesApi()
+            //callGetNotificationTemplatesApi()
+            val intent = Intent(this, NotificationTemplatesActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            intent.putExtra(Constant.ID_DUE_DATE_CATEGORY,idNotificationCategory)
+            intent.putExtra(Constant.SEND_SMS_DETAILS,SEND_SMS_DETAILS)
+            intent.putExtra(Constant.SEND_EMAIL_DETAILS,SEND_EMAIL_DETAILS)
+            startActivity(intent)
         }
 
 

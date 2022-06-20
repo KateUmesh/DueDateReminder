@@ -12,7 +12,8 @@ object ApiClient {
 
     private var serviceApiInterface: ApiInterface? = null
 
-    var baseUrl="https://ameykajarekar.com/due_date/"
+    var baseUrl1="https://ameykajarekar.com/due_date/"
+    var baseUrl="https://kuberaduedate.com/app/"
 
     private fun getUnsafeOkHttpClient():OkHttpClient.Builder{
         val interceptor = HttpLoggingInterceptor()

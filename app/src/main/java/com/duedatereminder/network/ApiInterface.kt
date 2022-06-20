@@ -73,4 +73,11 @@ interface ApiInterface {
 
     @GET(Constant.blogs)
     suspend fun getBlogs():Response<ModelBlogsResponse>
+
+    /**POST Delete Client*/
+    @POST(Constant.deleteClient)
+    suspend fun deleteClient(@Body mModelDeleteClientRequest: ModelDeleteClientRequest):Response<ModelDeleteClientResponse>
+
+    @GET(Constant.myBalance)
+    suspend fun getMyBalance():Response<ModelMyBalanceResponse>
 }

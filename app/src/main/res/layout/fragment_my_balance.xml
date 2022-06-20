@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activities.ui.importClient.MyBalanceFragment">
+
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_large"
+            app:cardCornerRadius="@dimen/offset_4"
+            app:cardElevation="@dimen/offset_8"
+            >
+            <TextView
+                android:id="@+id/tvSmsBalance"
+                android:layout_margin="@dimen/spacing_middle"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/grey_80"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="My Balance" />
+        </androidx.cardview.widget.CardView>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+    <include layout="@layout/item_loading_layout"/>
+    <include layout="@layout/no_data_found_layout"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

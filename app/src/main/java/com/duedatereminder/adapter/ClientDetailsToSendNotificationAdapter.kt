@@ -23,6 +23,10 @@ class ClientDetailsToSendNotificationAdapter(var context: Context,
         /*Set Client Name*/
         holder.tvName.text = items[position].name
 
+        /*Set First Character*/
+        val charArray = items[position].name.toCharArray()
+        holder.tvFirstLetter.text = charArray[0].toString()
+
         /*Set Client Mobile Number*/
         holder.tvMobileNumber.text = items[position].mobile
 
@@ -46,6 +50,7 @@ class ClientDetailsToSendNotificationAdapter(var context: Context,
          var tvMobileNumber:TextView  = itemView.findViewById(R.id.tvMobileNumber)
          var tvEmail:TextView  = itemView.findViewById(R.id.tvEmail)
          var tvAddress:TextView  = itemView.findViewById(R.id.tvAddress)
+         var tvFirstLetter:TextView  = itemView.findViewById(R.id.tvFirstLetter)
 
     }
 

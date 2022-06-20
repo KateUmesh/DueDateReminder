@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <androidx.coordinatorlayout.widget.CoordinatorLayout
+            <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -40,10 +40,11 @@
                     android:textStyle="bold"
                     android:textColor="@color/grey_90"
                     android:id="@+id/tvBlogName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="Name"
-                    android:singleLine="true"/>
+                    />
                 <TextView
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textStyle="bold"
@@ -54,8 +55,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="10:30 AM"
-                    android:layout_alignParentRight="true" android:layout_alignParentEnd="true"/>
-            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"/>
+            </LinearLayout>
                 <TextView android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textStyle="bold"
                     android:textColor="@color/grey_90"

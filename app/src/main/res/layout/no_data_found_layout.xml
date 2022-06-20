@@ -9,6 +9,6 @@
     android:gravity="center"
     android:textSize="20sp"
     android:id="@+id/tvNoData"
-    android:visibility="visible"
+    android:visibility="gone"
     />
 
