@@ -12,9 +12,6 @@ import com.duedatereminder.R
 import com.duedatereminder.model.DueDateCategories
 import com.duedatereminder.utils.Constant
 import com.duedatereminder.view.activities.ClientDetailsToSendNotificationsActivity
-import com.duedatereminder.view.activities.ImportClientCsvFileActivity
-import com.duedatereminder.view.activities.NotificationCategoriesActivity
-import com.duedatereminder.view.activities.NotificationTemplatesActivity
 
 class NotificationCategoriesFragmentAdapter(var context: Context, private var items: List<DueDateCategories>): RecyclerView.Adapter<NotificationCategoriesFragmentAdapter.NotificationCategoriesViewHolder>() {
 

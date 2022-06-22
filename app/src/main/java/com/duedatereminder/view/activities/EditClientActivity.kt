@@ -1,10 +1,10 @@
 package com.duedatereminder.view.activities
 
+import android.R.attr
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.util.Patterns
 import android.view.MotionEvent
 import android.view.View
@@ -46,6 +46,7 @@ class EditClientActivity : AppCompatActivity(), SnackBarCallback {
     private var dueDateCategoriesList = ArrayList<DueDateCategories>()
     private var selectedCategoriesList = ArrayList<String>()
     private var checkedItems=ArrayList<Boolean>()
+    private var LAUNCH_SECOND_ACTIVITY:Int=1
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,7 +99,7 @@ class EditClientActivity : AppCompatActivity(), SnackBarCallback {
                     }
 
                     /*Set whatsapp*/
-                    if(it.data?.client!!.whatsapp.isNotEmpty()){
+                    if(!it.data?.client!!.whatsapp.isNullOrEmpty()){
                         tietWhatsappNumber.setText(it.data?.client!!.whatsapp)
                     }
 
@@ -203,13 +204,9 @@ class EditClientActivity : AppCompatActivity(), SnackBarCallback {
             }
         })
 
-        /**Notification Categories Click*/
-        edtNotificationCategories.setOnClickListener {
-            val intent = Intent(this, NotificationCategoriesActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-            startActivity(intent)
-        }
+
     }
+
 
     private fun validateInput(){
         if(tietName.text.toString().isEmpty()){
@@ -218,9 +215,7 @@ class EditClientActivity : AppCompatActivity(), SnackBarCallback {
             snackBar(getString(R.string.invalid_email_address),this)
         }else if(tietMobileNumber.text.toString().isEmpty()|| tietMobileNumber.text.toString().length!=10|| !tietMobileNumber.text.toString().isDigitsOnly()){
             snackBar(getString(R.string.invalid_number),this)
-        }else if(tietWhatsappNumber.text.toString().isEmpty()||tietWhatsappNumber.text.toString().length!=10|| !tietWhatsappNumber.text.toString().isDigitsOnly()){
-            snackBar(getString(R.string.invalid_whatsapp_number),this)
-        }else if(tietAddress.text.toString().isEmpty()|| tietAddress.text.toString().length<20){
+        }else if(tietAddress.text.toString().isEmpty()){
             snackBar(getString(R.string.enter_full_address),this)
         }else if(selectedCategoriesList.isNullOrEmpty()){
             snackBar(getString(R.string.select_notification_categories),this)

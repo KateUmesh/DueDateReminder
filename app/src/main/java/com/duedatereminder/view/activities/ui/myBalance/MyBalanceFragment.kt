@@ -1,48 +1,23 @@
 package com.duedatereminder.view.activities.ui.myBalance
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebView
-import android.widget.Button
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import com.duedatereminder.R
-import com.duedatereminder.adapter.NotificationCategoriesAdapter
-import com.duedatereminder.adapter.NotificationCategoriesFragmentAdapter
 import com.duedatereminder.callback.SnackBarCallback
-import com.duedatereminder.databinding.FragmentImportClientBinding
 import com.duedatereminder.databinding.FragmentMyBalanceBinding
-import com.duedatereminder.databinding.FragmentNotificationBinding
-import com.duedatereminder.docpicker.DocPicker
-import com.duedatereminder.docpicker.core.DocPickerConfig
-import com.duedatereminder.model.DueDateCategories
-import com.duedatereminder.utils.Constant
 import com.duedatereminder.utils.ContextExtension
 import com.duedatereminder.utils.ContextExtension.Companion.showSnackBar
-import com.duedatereminder.utils.LocalSharedPreference
 import com.duedatereminder.utils.NetworkConnection
-import com.duedatereminder.view.activities.ClientDetailsToSendNotificationsActivity
-import com.duedatereminder.view.activities.MyWb
-import com.duedatereminder.viewModel.activityViewModel.ViewModelImportClientCsvFile
 import com.duedatereminder.viewModel.activityViewModel.ViewModelMyBalance
-import com.duedatereminder.viewModel.activityViewModel.ViewModelNotificationCategories
-import com.google.android.material.textfield.TextInputEditText
-import okhttp3.MediaType
-import okhttp3.RequestBody
-import java.io.File
 
 class MyBalanceFragment : Fragment(), SnackBarCallback {
 
@@ -54,6 +29,7 @@ class MyBalanceFragment : Fragment(), SnackBarCallback {
     private lateinit var tvNoData : TextView
     private lateinit var tvSmsBalance : TextView
     private lateinit var smsBalance : String
+    private lateinit var cvMyBalance : CardView
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -72,6 +48,7 @@ class MyBalanceFragment : Fragment(), SnackBarCallback {
         ll_loading = root.findViewById(R.id.ll_loading)
         tvNoData = root.findViewById(R.id.tvNoData)
         tvSmsBalance = root.findViewById(R.id.tvSmsBalance)
+        cvMyBalance = root.findViewById(R.id.cvMyBalance)
 
         /**Initialize View Model*/
         mViewModelMyBalance = ViewModelProvider(this)[ViewModelMyBalance::class.java]
@@ -86,14 +63,17 @@ class MyBalanceFragment : Fragment(), SnackBarCallback {
             when(it.status){
                 "1"->{
                     tvNoData.visibility= View.GONE
+                    cvMyBalance.visibility= View.VISIBLE
                     if(!it.data!!.sms_balance.isNullOrEmpty()){
                         smsBalance = it.data?.sms_balance !!
                         tvSmsBalance.text = "Sms Balance :"+smsBalance
                     }else{
                         tvNoData.visibility= View.VISIBLE
+                        cvMyBalance.visibility= View.GONE
                     }
                 }
                 "0"->{
+                    cvMyBalance.visibility= View.GONE
                     tvNoData.visibility= View.VISIBLE
                     ContextExtension.snackBar(it.message, this.requireActivity())
                 }

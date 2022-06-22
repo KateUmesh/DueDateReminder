@@ -29,14 +29,16 @@
             app:cardCornerRadius="@dimen/offset_4"
             app:cardElevation="@dimen/offset_8"
            >
-            <TextView
+
+            <TextView android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textStyle="bold"
+                android:textColor="@color/grey_90"
                 android:id="@+id/tvTemplate"
-                android:layout_margin="@dimen/spacing_middle"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/grey_80"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="template" />
+                android:layout_margin="@dimen/spacing_large"
+                android:text="Template"
+                />
         </androidx.cardview.widget.CardView>
 
 

@@ -40,8 +40,10 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
     var mobileNumber=""
     var name=""
     var email=""
-    var whatsapp=""
     var address=""
+    var whatsapp=""
+    var firmName=""
+    var accountType=""
     private var androidId:String=""
     lateinit var tvTimer : TextView
     lateinit var btnResendCode : Button
@@ -120,6 +122,16 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
             otp=intent.getStringExtra(Constant.OTP)!!
         }
 
+        /**Get firmName from CreateAccountActivity*/
+        if(!intent.getStringExtra(Constant.FIRM_NAME).isNullOrEmpty()){
+            firmName=intent.getStringExtra(Constant.FIRM_NAME)!!
+        }
+
+        /**Get accountType from CreateAccountActivity*/
+        if(!intent.getStringExtra(Constant.ACCOUNT_TYPE).isNullOrEmpty()){
+            accountType=intent.getStringExtra(Constant.ACCOUNT_TYPE)!!
+        }
+
         /**Verify and Proceed Button Click*/
         btnVerifyAndProceed.setOnClickListener {
             /*otpEt[0]?.let { it1 -> ContextExtension.hideKeyboard(it1) }
@@ -174,6 +186,8 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
             when(it.status){
                 "1"->{
                     LocalSharedPreference.putStringValue(Constant.token,it.data!!.token)
+                    LocalSharedPreference.putStringValue(Constant.USER_NAME,name)
+                    LocalSharedPreference.putStringValue(Constant.USER_EMAIL,email)
                     ContextExtension.callHomeActivity(this)
                 }
                 "0"->{
@@ -230,7 +244,7 @@ class RegistrationOTPVerificationActivity : AppCompatActivity(), SnackBarCallbac
 
     private fun callCreateAccountApi(name:String,mobileNumber:String,whatsapp:String,email:String,address:String,androidId:String){
         ll_loading.visibility = View.VISIBLE
-        val modelCreateAccountRequest= ModelCreateAccountRequest(name,mobileNumber,whatsapp,email,address,androidId)
+        val modelCreateAccountRequest= ModelCreateAccountRequest(name,mobileNumber,whatsapp,email,address,firmName,accountType,androidId)
         if(NetworkConnection.isNetworkConnected()) {
             mViewModelCreateAccount.createAccount(modelCreateAccountRequest)
         }else{

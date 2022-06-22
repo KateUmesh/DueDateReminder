@@ -6,15 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.duedatereminder.R
-import com.duedatereminder.model.DueDateCategories
 import com.duedatereminder.model.NotificationTemplates
 import com.duedatereminder.utils.Constant
-import com.duedatereminder.view.activities.ClientDetailsToSendNotificationsActivity
-import com.duedatereminder.view.activities.ImportClientCsvFileActivity
-import com.duedatereminder.view.activities.NotificationCategoriesActivity
 import com.duedatereminder.view.activities.SendMessageActivity
 
 class NotificationTemplatesAdapter(var context: Context, private var items: List<NotificationTemplates>,var idNotificationCategory:String,var SEND_SMS_DETAILS:String,var SEND_EMAIL_DETAILS:String): RecyclerView.Adapter<NotificationTemplatesAdapter.NotificationTemplatesViewHolder>() {

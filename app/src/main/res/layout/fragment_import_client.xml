@@ -5,77 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activities.ui.importClient.MyBalanceFragment">
+    tools:context=".view.activities.ui.importClient.importClientFragment">
 
     <WebView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/wvImportClient"/>
+        android:visibility="visible"
+        android:id="@+id/upload"/>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        android:orientation="vertical">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/llImportClient"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:padding="@dimen/spacing_mlarge">
-
-            <!--Select CSV File-->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSelectFile"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="@string/selectCsvFile"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                app:strokeColor="@color/grey_60"
-                android:textAllCaps="false"
-                android:textSize="16sp"
-                android:layout_marginBottom="@dimen/spacing_middle"/>
-
-            <!-- Select Categories-->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ti_categories"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:hint="@string/select_categories"
-
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_categories"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none"
-                    android:editable="false"
-                    android:focusable="false"
-                    android:drawableEnd="@drawable/ic_arrow_drop_down_24dp"
-                    android:clickable="true"
-                    android:singleLine="true"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!--Upload CSV File-->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnUploadCsvFile"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="@string/uploadCsvFile"
-                style="@style/primaryDarkBackgroundButton"
-                android:textAllCaps="false"
-                android:textSize="16sp"
-                android:layout_marginBottom="@dimen/spacing_middle"/>
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
 

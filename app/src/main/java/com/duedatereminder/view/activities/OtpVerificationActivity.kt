@@ -41,6 +41,8 @@ class OtpVerificationActivity : AppCompatActivity(),SnackBarCallback,
     var etOtp=""
     var token=""
     var mobileNumber=""
+    var userName=""
+    var userEmail=""
     lateinit var tvTimer : TextView
     lateinit var btnResendCode : Button
     lateinit var edtOtp : TextInputEditText
@@ -99,6 +101,16 @@ class OtpVerificationActivity : AppCompatActivity(),SnackBarCallback,
             token=intent.getStringExtra(Constant.token)!!
         }
 
+        /**Get USER_NAME from LoginActivity*/
+        if(!intent.getStringExtra(Constant.USER_NAME).isNullOrEmpty()){
+            userName=intent.getStringExtra(Constant.USER_NAME)!!
+        }
+
+        /**Get token from LoginActivity*/
+        if(!intent.getStringExtra(Constant.USER_EMAIL).isNullOrEmpty()){
+            userEmail=intent.getStringExtra(Constant.USER_EMAIL)!!
+        }
+
         /**Verify and Proceed Button Click*/
         btnVerifyAndProceed.setOnClickListener {
             /*otpEt[0]?.let { it1 -> hideKeyboard(it1) }
@@ -121,6 +133,8 @@ class OtpVerificationActivity : AppCompatActivity(),SnackBarCallback,
 
             if(edtOtp.text.toString() == otp){
                 LocalSharedPreference.putStringValue(Constant.token,token)
+                LocalSharedPreference.putStringValue(Constant.USER_NAME,userName)
+                LocalSharedPreference.putStringValue(Constant.USER_EMAIL,userEmail)
                 callHomeActivity(this)
             }else{
                 if(!this.isFinishing){
@@ -237,6 +251,8 @@ class OtpVerificationActivity : AppCompatActivity(),SnackBarCallback,
     fun checkingOtp() {
         if(edtOtp.text.toString() == otp){
             LocalSharedPreference.putStringValue(Constant.token,token)
+            LocalSharedPreference.putStringValue(Constant.USER_NAME,userName)
+            LocalSharedPreference.putStringValue(Constant.USER_EMAIL,userEmail)
             callHomeActivity(this)
         }else{
             if(!this.isFinishing){

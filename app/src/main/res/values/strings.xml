@@ -12,9 +12,9 @@
     <string name="firmName">Firm Name*</string>
     <string name="accountType">Account Type*</string>
     <string name="mobileNumberAccount">Mobile Number*</string>
-    <string name="whatsappNumber">Whatsapp Number*</string>
+    <string name="whatsappNumber">Whatsapp Number</string>
     <string name="email">Email*</string>
-    <string name="address">Address*</string>
+    <string name="address">City*</string>
     <string name="you_will_get_otp">You will get an OTP on this number.</string>
     <string name="accept_terms_msg">By creating an account, you agree to our  <a href="terms:">terms and conditions</a></string>
     <string name="name_required"> Name required</string>
@@ -22,8 +22,8 @@
     <string name="account_type_required">Account Type required</string>
     <string name="invalid_whatsapp_number">Invalid whatsapp number</string>
     <string name="invalid_email_address">Invalid email address</string>
-    <string name="enter_full_address">Enter full address</string>
-    <string name="select_notification_categories">Enter full address</string>
+    <string name="enter_full_address">City required</string>
+    <string name="select_notification_categories">Select Notification Category</string>
 
     //OTP Verification
     <string name="sentOTPto">OTP sent to </string>
@@ -99,5 +99,6 @@
     <string name="send_message">Send Message</string>
     <string name="send_email">Send Email</string>
     <string name="total_clients">"Total Clients  : "</string>
+    <string name="select_message">Select Message</string>
 
 </resources>

@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.IntentSender
+import android.os.Build
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
@@ -66,20 +67,25 @@ GoogleApiClient.OnConnectionFailedListener {
         mViewModelLogin = ViewModelProvider(this).get(ViewModelLogin::class.java)
 
 
+        /*Mobile Number*/
         tietMobileNumber.setOnTouchListener { _, event ->
             if (event.action == MotionEvent.ACTION_UP) {
-                if (nonMob != 0) {
+                showKeyBoard(tietMobileNumber)
+                tietMobileNumber.isEnabled = true
+                /*if(Build.VERSION.SDK_INT>Build.VERSION_CODES.R) {
+                    showKeyBoard(tietMobileNumber)
                     tietMobileNumber.isEnabled = true
-                    if (tietMobileNumber.text!!.length >= 10) tietMobileNumber.setSelection(
-                        10
-                    )
-
-                   showKeyBoard(tietMobileNumber)
-                } else {
-                    //getPhone()
-                    val pendingIntent = getPhone(this, this)
-                    startIntentResult(pendingIntent)
-                }
+                }else {
+                    if (nonMob != 0) {
+                    tietMobileNumber.isEnabled = true
+                    if (tietMobileNumber.text!!.length >= 10) tietMobileNumber.setSelection(10)
+                        showKeyBoard(tietMobileNumber)
+                    } else {
+                        //getPhone()
+                        val pendingIntent = getPhone(this, this)
+                        startIntentResult(pendingIntent)
+                    }
+                }*/
             }
             false
         }
@@ -102,7 +108,7 @@ GoogleApiClient.OnConnectionFailedListener {
             ll_loading.visibility = View.GONE
             when(it.status){
                 "1"->{
-                    callOtpVerificationActivity(this,tietMobileNumber.text.toString(),it.data?.otp!!,it.data?.token!!)
+                    callOtpVerificationActivity(this,tietMobileNumber.text.toString(),it.data?.otp!!,it.data?.token!!,it.data?.name!!,it.data?.email!!)
                 }
                 "0"->{
                     snackBar(it.message, this)

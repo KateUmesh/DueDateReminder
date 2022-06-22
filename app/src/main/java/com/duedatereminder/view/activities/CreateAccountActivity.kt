@@ -109,6 +109,8 @@ class CreateAccountActivity : AppCompatActivity(), SnackBarCallback {
                     intent.putExtra(Constant.MOBILE_NUMBER,tietMobileNumber.text.toString())
                     intent.putExtra(Constant.WHATSAPP,tietWhatsappNumber.text.toString())
                     intent.putExtra(Constant.ADDRESS,tietAddress.text.toString())
+                    intent.putExtra(Constant.FIRM_NAME,tietFirmName.text.toString())
+                    intent.putExtra(Constant.ACCOUNT_TYPE,edt_account_type.text.toString())
                     intent.putExtra(Constant.OTP,it.data?.otp!!)
                     startActivity(intent)
                 }
@@ -129,9 +131,7 @@ class CreateAccountActivity : AppCompatActivity(), SnackBarCallback {
             snackBar(getString(R.string.invalid_email_address),this)
         }else if(tietMobileNumber.text.toString().trim().isEmpty()|| tietMobileNumber.text.toString().trim().length!=10|| !tietMobileNumber.text.toString().trim().isDigitsOnly()){
             snackBar(getString(R.string.invalid_number),this)
-        }else if(tietWhatsappNumber.text.toString().isEmpty()||tietWhatsappNumber.text.toString().length!=10|| !tietWhatsappNumber.text.toString().isDigitsOnly()){
-            snackBar(getString(R.string.invalid_whatsapp_number),this)
-        }else if(tietAddress.text.toString().isEmpty()|| tietAddress.text.toString().length<20){
+        }else if(tietAddress.text.toString().isEmpty()){
             snackBar(getString(R.string.enter_full_address),this)
         }else if(tietFirmName.text.toString().isEmpty()){
             snackBar(getString(R.string.firm_name_required),this)

@@ -1,7 +1,6 @@
 package com.duedatereminder.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +9,6 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.duedatereminder.R
 import com.duedatereminder.model.DueDateCategories
-import com.duedatereminder.utils.Constant
-import com.duedatereminder.view.activities.ImportClientCsvFileActivity
-import com.duedatereminder.view.activities.ImportClientCsvFileActivity1
-import com.duedatereminder.view.activities.NotificationCategoriesActivity
 
 class NotificationCategoriesAdapter(var context: Context, private var items: List<DueDateCategories>): RecyclerView.Adapter<NotificationCategoriesAdapter.NotificationCategoriesViewHolder>() {
 
@@ -32,10 +27,7 @@ class NotificationCategoriesAdapter(var context: Context, private var items: Lis
 
         /*Item Click*/
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, ImportClientCsvFileActivity1::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-            intent.putExtra(Constant.ID_DUE_DATE_CATEGORY,items[position].id_due_date_category)
-            context.startActivity(intent)
+
         }
     }
 

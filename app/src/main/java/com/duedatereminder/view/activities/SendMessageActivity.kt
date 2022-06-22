@@ -1,7 +1,6 @@
 package com.duedatereminder.view.activities
 
 import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -16,15 +15,12 @@ import com.duedatereminder.callback.SnackBarCallback
 import com.duedatereminder.model.ModelSendEmailNotificationRequest
 import com.duedatereminder.model.ModelSendSmsNotificationRequest
 import com.duedatereminder.utils.Constant
-import com.duedatereminder.utils.ContextExtension
 import com.duedatereminder.utils.ContextExtension.Companion.showOkDialog
 import com.duedatereminder.utils.ContextExtension.Companion.showSnackBar
 import com.duedatereminder.utils.ContextExtension.Companion.snackBar
 import com.duedatereminder.utils.ContextExtension.Companion.toolbar
 import com.duedatereminder.utils.NetworkConnection
-import com.duedatereminder.viewModel.activityViewModel.ViewModelClientDetailsToSendNotification
 import com.duedatereminder.viewModel.activityViewModel.ViewModelSendMessage
-import org.jetbrains.anko.toast
 
 class SendMessageActivity : AppCompatActivity(),SnackBarCallback {
     private lateinit var btnSendSms: Button

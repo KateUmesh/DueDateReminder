@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey_10"
     tools:context=".view.activities.NotificationTemplatesActivity">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -21,8 +22,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/rvNotificationTemplates"
+            tools:listitem="@layout/item_notification_templates"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 
