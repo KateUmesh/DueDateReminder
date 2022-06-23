@@ -40,4 +40,6 @@ class RepositoryApi {
     suspend fun deleteClient(modelDeleteClientRequest: ModelDeleteClientRequest)=ApiClient.build().deleteClient(modelDeleteClientRequest)
     /**Get My Balance*/
     suspend fun getMyBalance()=ApiClient.build().getMyBalance()
+    /**Send Sms Cost*/
+    suspend fun sendSmsCost(modelSendSmsCostRequest: ModelSendSmsCostRequest)=ApiClient.build().sendSmsCost(modelSendSmsCostRequest)
 }

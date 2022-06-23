@@ -45,5 +45,6 @@ class Constant {
         const val blogs="user/blogs"
         const val deleteClient="user/deleteClient"
         const val myBalance="user/myBalance"
+        const val sendSmsCost="user/sendSmsCost"
     }
 }

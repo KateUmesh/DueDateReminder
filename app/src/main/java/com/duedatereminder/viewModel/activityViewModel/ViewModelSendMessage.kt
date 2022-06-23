@@ -75,4 +75,35 @@ class ViewModelSendMessage() : ViewModel(){
         }
     }
 
+    /**POST Send Sms Cost*/
+    var mModelSendSmsCostResponse = MutableLiveData<ModelSendSmsCostResponse>()
+    fun sendSmsCost(modelSendSmsCostRequest: ModelSendSmsCostRequest) {
+        viewModelScope.launch {
+            try {
+                val response = mRepository.sendSmsCost(modelSendSmsCostRequest)
+                if (response.isSuccessful)
+                    mModelSendSmsCostResponse.value = response.body()
+                else
+                    mModelSendSmsCostResponse.value =
+                        ModelSendSmsCostResponse(
+                            "",
+                            Constant.something_went_wrong
+                        )
+            } catch (e: Exception) {
+                if (e is SocketTimeoutException)
+                    mModelSendSmsCostResponse.value =
+                        ModelSendSmsCostResponse(
+                            "",
+                            Constant.slow_internet_connection_detected
+                        )
+                else
+                    mModelSendSmsCostResponse.value =
+                        ModelSendSmsCostResponse(
+                            "",
+                            Constant.something_went_wrong
+                        )
+            }
+        }
+    }
+
 }

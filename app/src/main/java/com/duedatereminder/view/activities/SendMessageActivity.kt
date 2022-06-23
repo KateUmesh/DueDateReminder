@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.duedatereminder.R
 import com.duedatereminder.callback.SnackBarCallback
 import com.duedatereminder.model.ModelSendEmailNotificationRequest
+import com.duedatereminder.model.ModelSendSmsCostRequest
 import com.duedatereminder.model.ModelSendSmsNotificationRequest
 import com.duedatereminder.utils.Constant
 import com.duedatereminder.utils.ContextExtension.Companion.showOkDialog
@@ -118,6 +119,24 @@ class SendMessageActivity : AppCompatActivity(),SnackBarCallback {
             }
 
         })
+
+
+        /** Response of SendSmsCost Api*/
+        mViewModelSendMessage.mModelSendSmsCostResponse.observe(this, Observer {
+            llLoading.visibility = View.GONE
+            when(it.status){
+                "1"->{
+                    showOkDialog(it.message,this)
+                }
+                "0"->{
+                    snackBar(it.message, this)
+                }
+                else->{
+                    showSnackBar(this,getString(R.string.no_internet_connection))
+                }
+            }
+
+        })
     }
 
     private fun callSendSmsNotificationPostApi(idDueDateCategory:String,idNotification:String){
@@ -142,6 +161,18 @@ class SendMessageActivity : AppCompatActivity(),SnackBarCallback {
         }
     }
 
+
+    private fun callSendSmsCostPostApi(idDueDateCategory:String,idNotification:String){
+        flag=4
+        llLoading.visibility = View.VISIBLE
+        val mModelSendSmsCostRequest = ModelSendSmsCostRequest(idDueDateCategory,idNotification)
+        if(NetworkConnection.isNetworkConnected()) {
+            mViewModelSendMessage.sendSmsCost(mModelSendSmsCostRequest)
+        }else{
+            showSnackBar(this,getString(R.string.no_internet_connection))
+        }
+    }
+
     override fun snackBarSuccessInternetConnection() {
         when(flag){
             2->{
@@ -150,6 +181,9 @@ class SendMessageActivity : AppCompatActivity(),SnackBarCallback {
             3->{
                 callSendEmailNotificationPostApi(idNotificationCategory,idNotification)
             }
+            4->{
+                callSendSmsCostPostApi(idNotificationCategory,idNotification)
+        }
         }
     }
 
@@ -159,7 +193,8 @@ class SendMessageActivity : AppCompatActivity(),SnackBarCallback {
         mBuilder.setMessage(message)
 
         mBuilder.setPositiveButton(getString(R.string.send), DialogInterface.OnClickListener { dialogInterface, i ->
-            callSendSmsNotificationPostApi(idNotificationCategory,idNotification)
+            //callSendSmsNotificationPostApi(idNotificationCategory,idNotification)
+            callSendSmsCostPostApi(idNotificationCategory,idNotification)
             dialogInterface.dismiss()
         })
 
