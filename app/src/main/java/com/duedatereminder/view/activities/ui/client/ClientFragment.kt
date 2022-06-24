@@ -2,11 +2,10 @@ package com.duedatereminder.view.activities.ui.client
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -33,6 +32,7 @@ class ClientFragment : Fragment(),SnackBarCallback {
     private lateinit var ll_loading : LinearLayoutCompat
     private lateinit var tvNoData : TextView
     private lateinit var mViewModelAllClient: ViewModelAllClient
+    private lateinit var mAdapter:AllClientsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,7 +75,7 @@ class ClientFragment : Fragment(),SnackBarCallback {
                 "1"->{
                     if(!it.data!!.clients.isNullOrEmpty()){
                         tvNoData.visibility = View.GONE
-                        val mAdapter = AllClientsAdapter(this.requireContext(),it.data!!.clients!!)
+                         mAdapter = AllClientsAdapter(this.requireContext(),it.data!!.clients!!)
                         rvAllClients.adapter=mAdapter
                     }else{
                         tvNoData.visibility = View.VISIBLE
@@ -92,6 +92,11 @@ class ClientFragment : Fragment(),SnackBarCallback {
         })
 
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
 
@@ -116,5 +121,24 @@ class ClientFragment : Fragment(),SnackBarCallback {
 
     override fun snackBarFailedInterConnection() {
         activity?.showSnackBar(this,getString(R.string.no_internet_connection))
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        //val inflater = menuInflater
+        inflater.inflate(R.menu.search_menu, menu)
+        val findItem = menu?.findItem(R.id.action_Search)
+        val  searchView: SearchView = findItem?.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+
+                mAdapter.filter.filter(newText)
+                return true
+            }
+        })
+        super.onCreateOptionsMenu(menu, inflater)
     }
 }

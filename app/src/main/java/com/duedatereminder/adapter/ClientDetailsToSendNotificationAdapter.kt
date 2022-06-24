@@ -5,13 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.duedatereminder.R
 import com.duedatereminder.model.ClientsList
+import java.util.*
+import kotlin.collections.ArrayList
 
-class ClientDetailsToSendNotificationAdapter(var context: Context,
-                                             private var items: ArrayList<ClientsList>): RecyclerView.Adapter<ClientDetailsToSendNotificationAdapter.ClientDetailsToSendNotificationViewHolder>() {
+class ClientDetailsToSendNotificationAdapter(var context: Context, private var items: ArrayList<ClientsList>)
+    : RecyclerView.Adapter<ClientDetailsToSendNotificationAdapter.ClientDetailsToSendNotificationViewHolder>(),
+    Filterable {
+
+    private var itemsFiltered = items
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClientDetailsToSendNotificationViewHolder {
@@ -20,28 +27,29 @@ class ClientDetailsToSendNotificationAdapter(var context: Context,
     }
 
     override fun onBindViewHolder(holder: ClientDetailsToSendNotificationViewHolder, position: Int) {
+        val filteredList= itemsFiltered[position]
         /*Set Client Name*/
-        holder.tvName.text = items[position].name
+        holder.tvName.text = filteredList.name
 
         /*Set First Character*/
-        val charArray = items[position].name.toCharArray()
+        val charArray = filteredList.name.toCharArray()
         holder.tvFirstLetter.text = charArray[0].toString()
 
         /*Set Client Mobile Number*/
-        holder.tvMobileNumber.text = items[position].mobile
+        holder.tvMobileNumber.text = filteredList.mobile
 
 
         /*Set Client Email*/
-        holder.tvEmail.text = items[position].email
+        holder.tvEmail.text = filteredList.email
 
         /*Set Client Address*/
-        holder.tvAddress.text = items[position].address
+        holder.tvAddress.text = filteredList.address
 
 
     }
 
     override fun getItemCount(): Int {
-       return items.size
+       return itemsFiltered.size
     }
 
 
@@ -60,5 +68,40 @@ class ClientDetailsToSendNotificationAdapter(var context: Context,
 
     interface SendEmailClickListener{
         fun sendEmailClick(position:Int,items:ArrayList<ClientsList>)
+    }
+
+    override fun getFilter(): Filter {
+
+        return object: Filter(){
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charString:String = constraint.toString()
+
+                itemsFiltered = if(charString.isEmpty()){
+                    items
+                }else{
+                    val filterList = ArrayList<ClientsList>()
+
+                    for(s in items) {
+
+                        if(s.name?.toLowerCase(Locale.ROOT)?.contains(charString.toLowerCase(
+                                Locale.ROOT
+                            )
+                            )!!
+                        )
+                            filterList.add(s)
+                    }
+                    filterList
+                }
+                val filterResult  = FilterResults()
+                filterResult.values = itemsFiltered
+                return filterResult
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                itemsFiltered = results!!.values as ArrayList<ClientsList>
+                notifyDataSetChanged()
+            }
+
+        }
     }
 }

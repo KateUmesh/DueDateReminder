@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
@@ -11,6 +12,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.appcompat.widget.SearchView
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -47,6 +49,7 @@ class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCa
     private var templateList = ArrayList<NotificationTemplates>()
     private var mSelectedTemplate = -1
     private lateinit var tvNoData:TextView
+    lateinit var mAdapter:ClientDetailsToSendNotificationAdapter
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,7 +89,7 @@ class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCa
                 "1" -> {
                     if (!it.data!!.clients.isNullOrEmpty()) {
                         tvNoData.visibility = View.GONE
-                        val mAdapter = ClientDetailsToSendNotificationAdapter(this,it.data!!.clients!!)
+                         mAdapter = ClientDetailsToSendNotificationAdapter(this,it.data!!.clients!!)
                         rvClientDetails.adapter=mAdapter
                         llClientDetails.visibility = View.VISIBLE
                         if(!it.data?.send_sms_details.isNullOrEmpty()) {
@@ -216,6 +219,25 @@ class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCa
 
     override fun snackBarFailedInterConnection() {
         showSnackBar(this,getString(R.string.no_internet_connection))
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.search_menu, menu)
+        val findItem = menu?.findItem(R.id.action_Search)
+        val  searchView: SearchView = findItem?.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+
+                mAdapter.filter.filter(newText)
+                return true
+            }
+        })
+        return true
     }
 
 }

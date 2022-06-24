@@ -7,6 +7,8 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
@@ -14,38 +16,40 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.duedatereminder.R
 import com.duedatereminder.model.AllClients
+import com.duedatereminder.model.ClientsList
 import com.duedatereminder.utils.Constant
 import com.duedatereminder.view.activities.EditClientActivity
 import java.util.*
 
-class AllClientsAdapter(var context: Context, private var items: List<AllClients>): RecyclerView.Adapter<AllClientsAdapter.AllClientsViewHolder>() {
+class AllClientsAdapter(var context: Context, private var items: List<AllClients>): RecyclerView.Adapter<AllClientsAdapter.AllClientsViewHolder>(),
+    Filterable {
 
-
+    private var itemsFiltered = items
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllClientsViewHolder {
         val view:View=LayoutInflater.from(parent.context).inflate(R.layout.item_inbox,parent,false)
         return AllClientsViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: AllClientsViewHolder, position: Int) {
-
+        val filteredList= itemsFiltered[position]
         /*Set Name*/
-        if(items[position].name.isNotEmpty()){
-            holder.tvName.text = items[position].name
+        if(filteredList.name.isNotEmpty()){
+            holder.tvName.text = filteredList.name
         }
 
         /*Set First Character*/
-        val charArray = items[position].name.toCharArray()
+        val charArray = filteredList.name.toCharArray()
         holder.tvAllClient.text = charArray[0].toString()
 
 
         /*Set Email*/
-        if(items[position].email.isNotEmpty()){
-            holder.tvEmail.text = items[position].email
+        if(filteredList.email.isNotEmpty()){
+            holder.tvEmail.text = filteredList.email
         }
 
         /*Set Address*/
-        if(items[position].address.isNotEmpty()){
-            holder.tvAddress.text = items[position].address
+        if(filteredList.address.isNotEmpty()){
+            holder.tvAddress.text = filteredList.address
         }
 
         /*Set Card background*/
@@ -55,16 +59,50 @@ class AllClientsAdapter(var context: Context, private var items: List<AllClients
         holder.lyt_parent.setOnClickListener {
             val intent = Intent(context, EditClientActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-            intent.putExtra(Constant.ID_CLIENT,items[position].id_client)
+            intent.putExtra(Constant.ID_CLIENT,filteredList.id_client)
             context.startActivity(intent)
         }
 
     }
 
     override fun getItemCount(): Int {
-       return items.size
+       return itemsFiltered.size
     }
 
+    override fun getFilter(): Filter {
+
+        return object: Filter(){
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charString:String = constraint.toString()
+
+                itemsFiltered = if(charString.isEmpty()){
+                    items
+                }else{
+                    val filterList = ArrayList<AllClients>()
+
+                    for(s in items) {
+
+                        if(s.name?.toLowerCase(Locale.ROOT)?.contains(charString.toLowerCase(
+                                Locale.ROOT
+                            )
+                            )!!
+                        )
+                            filterList.add(s)
+                    }
+                    filterList
+                }
+                val filterResult  = FilterResults()
+                filterResult.values = itemsFiltered
+                return filterResult
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                itemsFiltered = results!!.values as ArrayList<AllClients>
+                notifyDataSetChanged()
+            }
+
+        }
+    }
 
     fun getRandomColorCode(): Int {
         val random = Random()

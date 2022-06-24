@@ -76,13 +76,12 @@ class SendMessageActivity : AppCompatActivity(),SnackBarCallback {
 
         /**Send Sms Click*/
         btnSendSms.setOnClickListener {
-            //callSendSmsNotificationPostApi(idNotificationCategory,idNotification)
-            smsAlertDialog(SEND_SMS_DETAILS)
+            //smsAlertDialog(SEND_SMS_DETAILS)
+            callSendSmsCostPostApi(idNotificationCategory,idNotification)
         }
 
         /**Send Email Click*/
         btnSendEmail.setOnClickListener {
-            //callSendEmailNotificationPostApi(idNotificationCategory,idNotification)
             emailAlertDialog(SEND_EMAIL_DETAILS)
         }
 
@@ -126,7 +125,7 @@ class SendMessageActivity : AppCompatActivity(),SnackBarCallback {
             llLoading.visibility = View.GONE
             when(it.status){
                 "1"->{
-                    showOkDialog(it.message,this)
+                    smsAlertDialog(it.message)
                 }
                 "0"->{
                     snackBar(it.message, this)
@@ -193,8 +192,7 @@ class SendMessageActivity : AppCompatActivity(),SnackBarCallback {
         mBuilder.setMessage(message)
 
         mBuilder.setPositiveButton(getString(R.string.send), DialogInterface.OnClickListener { dialogInterface, i ->
-            //callSendSmsNotificationPostApi(idNotificationCategory,idNotification)
-            callSendSmsCostPostApi(idNotificationCategory,idNotification)
+            callSendSmsNotificationPostApi(idNotificationCategory,idNotification)
             dialogInterface.dismiss()
         })
 
