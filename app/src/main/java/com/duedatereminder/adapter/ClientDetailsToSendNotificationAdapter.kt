@@ -1,6 +1,7 @@
 package com.duedatereminder.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.duedatereminder.R
 import com.duedatereminder.model.ClientsList
+import com.duedatereminder.utils.Constant
+import com.duedatereminder.view.activities.ViewClientProfileActivity
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -44,6 +47,17 @@ class ClientDetailsToSendNotificationAdapter(var context: Context, private var i
 
         /*Set Client Address*/
         holder.tvAddress.text = filteredList.address
+
+        /*Item Click*/
+        holder.itemView.setOnClickListener {
+
+            val intent = Intent(context, ViewClientProfileActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            intent.putExtra(Constant.ID_CLIENT,filteredList.id_client)
+            intent.putExtra(Constant.NAME,filteredList.name)
+            intent.putExtra(Constant.MENU_STATE,"HIDE_MENU")
+            context.startActivity(intent)
+        }
 
 
     }

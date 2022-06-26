@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activities.ViewClientProfileActivity">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <include layout="@layout/toolbar_layout"/>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nsClientProfile"
+            android:visibility="gone"
+            android:scrollbars="none"
+            android:clipToPadding="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollingCache="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <LinearLayout android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!--Name-->
+                <TextView
+                    android:id="@+id/tvClientName"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+                    android:textColor="@color/grey_90"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xlarge"
+                    android:text=""/>
+
+                <LinearLayout android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_mlarge">
+                    <!--Chat Button-->
+                    <ImageButton
+                        android:id="@+id/ibChat"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:layout_width="?attr/actionBarSize"
+                        android:layout_height="?attr/actionBarSize"
+                        android:layout_margin="@dimen/spacing_middle"
+                        android:tint="@color/light_green_600"
+                        app:srcCompat="@drawable/ic_chat"/>
+
+                    <!--First Laetter-->
+                    <RelativeLayout android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <RelativeLayout android:id="@+id/lyt_checked"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:src="@drawable/shape_circle"
+                                android:tint="@color/blue_grey_600"/>
+                            <TextView
+                                android:id="@+id/tvFirstLetter"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="40sp"
+                                android:textColor="@color/white"
+                                android:layout_centerInParent="true"
+                                android:text="U"/>
+                        </RelativeLayout>
+                    </RelativeLayout>
+
+                    <!--Call Buton-->
+                    <ImageButton
+                        android:id="@+id/ibCall"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:layout_width="?attr/actionBarSize"
+                        android:layout_height="?attr/actionBarSize"
+                        android:layout_margin="@dimen/spacing_middle"
+                        android:tint="@color/light_green_600"
+                        app:srcCompat="@drawable/ic_call"/>
+                </LinearLayout>
+                <View
+                    android:visibility="visible"
+                    android:background="@color/grey_10"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" android:layout_marginTop="@dimen/spacing_large"/>
+               <!--Phone & Email-->
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/spacing_xlarge"
+                    android:layout_marginTop="@dimen/spacing_large"
+                    android:layout_marginRight="@dimen/spacing_xlarge">
+                    <!--Phone-->
+                    <LinearLayout android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Phone"/>
+                        <TextView
+                            android:id="@+id/tvMobile"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/grey_60"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_medium"
+                            android:text=""/>
+                    </LinearLayout>
+
+                    <!--Email-->
+                    <LinearLayout android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Email"/>
+                        <TextView
+                            android:id="@+id/tvEmail"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/grey_60"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_medium"
+                            android:text=""/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--Whatsapp & City-->
+                <LinearLayout android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/spacing_xlarge"
+                    android:layout_marginTop="@dimen/spacing_large"
+                    android:layout_marginRight="@dimen/spacing_xlarge">
+                    <!--Whatsapp-->
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textStyle="bold" android:textColor="@color/colorPrimary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Whatsapp"/>
+                        <TextView
+                            android:id="@+id/tvWhatsapp"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/grey_60"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_medium"
+                            android:text=""/>
+                    </LinearLayout>
+                    <!--City-->
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView
+
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="City"/>
+                        <TextView
+                            android:id="@+id/tvCity"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/grey_60"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_medium"
+                            android:text=""/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--Notification Categories-->
+                <LinearLayout android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/spacing_xlarge"
+                    android:layout_marginTop="@dimen/spacing_large"
+                    android:layout_marginRight="@dimen/spacing_xlarge">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Notification Categories"/>
+                        <TextView
+                            android:id="@+id/tvNotificationCategories"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textColor="@color/grey_60"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_medium"
+                            android:text=""/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textStyle="bold" android:textColor="@color/purple_500"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Zip Code"/>
+                        <TextView android:textAppearance="@style/TextAppearance.AppCompat.Subhead" android:textColor="@color/grey_60" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_medium" android:text="6525"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <View android:layout_width="match_parent"
+                    android:layout_height="@dimen/spacing_xxlarge"/>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <include layout="@layout/item_loading_layout"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

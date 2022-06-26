@@ -28,6 +28,7 @@ class Constant {
         const val SEND_EMAIL_DETAILS:String ="send_email_details"
         const val FIRM_NAME:String ="firm_name"
         const val ACCOUNT_TYPE:String ="account_type"
+        const val MENU_STATE:String ="menu_state"
 
         const val userAppStatus="user/userAppStatus"
         const val sendRegistrationOtp="user/sendRegistrationOtp"

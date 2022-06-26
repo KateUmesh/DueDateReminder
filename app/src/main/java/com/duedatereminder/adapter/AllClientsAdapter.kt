@@ -19,6 +19,7 @@ import com.duedatereminder.model.AllClients
 import com.duedatereminder.model.ClientsList
 import com.duedatereminder.utils.Constant
 import com.duedatereminder.view.activities.EditClientActivity
+import com.duedatereminder.view.activities.ViewClientProfileActivity
 import java.util.*
 
 class AllClientsAdapter(var context: Context, private var items: List<AllClients>): RecyclerView.Adapter<AllClientsAdapter.AllClientsViewHolder>(),
@@ -57,9 +58,15 @@ class AllClientsAdapter(var context: Context, private var items: List<AllClients
 
         /*Item Click*/
         holder.lyt_parent.setOnClickListener {
-            val intent = Intent(context, EditClientActivity::class.java)
+           /* val intent = Intent(context, EditClientActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             intent.putExtra(Constant.ID_CLIENT,filteredList.id_client)
+            context.startActivity(intent)*/
+            val intent = Intent(context, ViewClientProfileActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            intent.putExtra(Constant.ID_CLIENT,filteredList.id_client)
+            intent.putExtra(Constant.NAME,filteredList.name)
+            intent.putExtra(Constant.MENU_STATE,"SHOW_MENU")
             context.startActivity(intent)
         }
 

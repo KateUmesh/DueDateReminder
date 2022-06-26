@@ -170,9 +170,7 @@ class AddClientActivity : AppCompatActivity(), SnackBarCallback {
             snackBar(getString(R.string.invalid_email_address),this)
         }else if(tietMobileNumber.text.toString().isEmpty()|| tietMobileNumber.text.toString().length!=10|| !tietMobileNumber.text.toString().isDigitsOnly()){
             snackBar(getString(R.string.invalid_number),this)
-        }else if(tietWhatsappNumber.text.toString().isEmpty()||tietWhatsappNumber.text.toString().length!=10|| !tietWhatsappNumber.text.toString().isDigitsOnly()){
-            snackBar(getString(R.string.invalid_whatsapp_number),this)
-        }else if(tietAddress.text.toString().isEmpty()|| tietAddress.text.toString().length<20){
+        }else if(tietAddress.text.toString().isEmpty()){
             snackBar(getString(R.string.enter_full_address),this)
         }else if(selectedCategoriesList.isNullOrEmpty()){
             snackBar(getString(R.string.select_notification_categories),this)
