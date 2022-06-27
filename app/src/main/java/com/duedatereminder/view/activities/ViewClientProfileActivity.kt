@@ -2,6 +2,7 @@ package com.duedatereminder.view.activities
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -10,6 +11,7 @@ import android.text.TextUtils
 import android.view.*
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.app.ActivityCompat
@@ -18,13 +20,18 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.duedatereminder.R
 import com.duedatereminder.callback.SnackBarCallback
+import com.duedatereminder.model.ModelAddClientRequest
+import com.duedatereminder.model.ModelDeleteClientRequest
 import com.duedatereminder.utils.Constant
 import com.duedatereminder.utils.ContextExtension
+import com.duedatereminder.utils.ContextExtension.Companion.showOkDialog
 import com.duedatereminder.utils.ContextExtension.Companion.showSnackBar
+import com.duedatereminder.utils.ContextExtension.Companion.snackBar
 import com.duedatereminder.utils.ContextExtension.Companion.toast
 import com.duedatereminder.utils.ContextExtension.Companion.toolbar
 import com.duedatereminder.utils.NetworkConnection
 import com.duedatereminder.viewModel.activityViewModel.ViewModelEditClient
+import com.duedatereminder.viewModel.activityViewModel.ViewModelViewProfile
 
 class ViewClientProfileActivity : AppCompatActivity(), SnackBarCallback {
     private lateinit var tvClientName:TextView
@@ -37,13 +44,14 @@ class ViewClientProfileActivity : AppCompatActivity(), SnackBarCallback {
     private lateinit var nsClientProfile:NestedScrollView
     private lateinit var ibChat:ImageButton
     private lateinit var ibCall:ImageButton
-    private lateinit var mViewModelEditClient: ViewModelEditClient
+    private lateinit var mViewModelViewProfile: ViewModelViewProfile
     private lateinit var ll_loading : LinearLayoutCompat
     var idClient:String = ""
     var nameClient:String = ""
     var mobile:String = ""
     var whatsappNum:String = ""
     var mState:String = ""
+    var flag=0;
     private lateinit var dueDateCategoriesNames:ArrayList<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,11 +83,11 @@ class ViewClientProfileActivity : AppCompatActivity(), SnackBarCallback {
         invalidateOptionsMenu()
 
         /**Initialize View Model*/
-        mViewModelEditClient = ViewModelProvider(this).get(ViewModelEditClient::class.java)
+        mViewModelViewProfile = ViewModelProvider(this).get(ViewModelViewProfile::class.java)
 
 
         /**Response of EditClient GET Api*/
-        mViewModelEditClient.mModelEditClientGetResponse.observe(this, Observer {
+        mViewModelViewProfile.mModelEditClientGetResponse.observe(this, Observer {
             ll_loading.visibility = View.GONE
 
             when(it.status){
@@ -154,9 +162,27 @@ class ViewClientProfileActivity : AppCompatActivity(), SnackBarCallback {
                     }
                 }
                 "0"->{
-                    ContextExtension.snackBar(it.message, this)
+                    snackBar(it.message, this)
                 }
                 else->{
+                    showSnackBar(this,it.message)
+                }
+            }
+        })
+
+
+        /**Response of DeleteClient POST Api*/
+        mViewModelViewProfile.mModelDeleteClientResponse.observe(this, Observer {
+            ll_loading.visibility = View.GONE
+            when(it.status){
+                "1"->{
+                    showOkDialog(it.message,this)
+                }
+                "0"->{
+
+                    snackBar(it.message,this)
+                }
+                else ->{
                     showSnackBar(this,it.message)
                 }
             }
@@ -164,11 +190,23 @@ class ViewClientProfileActivity : AppCompatActivity(), SnackBarCallback {
     }
 
     private fun callEditClientGetApi(){
+        flag=0
         nsClientProfile.visibility = View.GONE
         ll_loading.visibility = View.VISIBLE
         dueDateCategoriesNames.clear()
         if(NetworkConnection.isNetworkConnected()) {
-            mViewModelEditClient.editClient(idClient.toInt())
+            mViewModelViewProfile.editClient(idClient.toInt())
+        }else{
+            showSnackBar(this,getString(R.string.no_internet_connection))
+        }
+    }
+
+    private fun callDeleteClientGetApi(){
+        flag=1
+        ll_loading.visibility = View.VISIBLE
+        val modelDeleteClientRequest= ModelDeleteClientRequest(idClient)
+        if(NetworkConnection.isNetworkConnected()) {
+            mViewModelViewProfile.deleteClient(modelDeleteClientRequest)
         }else{
             showSnackBar(this,getString(R.string.no_internet_connection))
         }
@@ -176,7 +214,11 @@ class ViewClientProfileActivity : AppCompatActivity(), SnackBarCallback {
 
 
     override fun snackBarSuccessInternetConnection() {
-        callEditClientGetApi()
+        if(flag==0) {
+            callEditClientGetApi()
+        }else{
+            callDeleteClientGetApi()
+        }
     }
 
     override fun snackBarFailedInterConnection() {
@@ -203,6 +245,11 @@ class ViewClientProfileActivity : AppCompatActivity(), SnackBarCallback {
                 startActivity(intent)
                 true
             }
+            R.id.action_delete -> {
+
+               showDeleteClientDialog(getString(R.string.delete_client_message),this)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -212,4 +259,23 @@ class ViewClientProfileActivity : AppCompatActivity(), SnackBarCallback {
         /**Call EditClient GET Api*/
         callEditClientGetApi()
     }
+
+    fun showDeleteClientDialog(message: String,context: Context) {
+        val builder =
+            AlertDialog.Builder(context)
+        builder.setTitle(context.getString(R.string.app_name) as CharSequence)
+        builder.setMessage(message)
+        builder.setPositiveButton(
+            R.string.delete
+        ) { _, _ ->
+            callDeleteClientGetApi()
+        }
+        builder.setNegativeButton(
+            R.string.cancel
+        ) { _, _ ->
+
+        }
+        builder.show()
+    }
+
 }
