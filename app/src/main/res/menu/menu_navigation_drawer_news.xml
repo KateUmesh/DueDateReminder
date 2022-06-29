@@ -17,10 +17,28 @@
         <item android:icon="@drawable/ic_baseline_account_balance_wallet_24"
             android:id="@+id/nav_my_balnce"
             android:title="@string/menu_my_balance"/>
+        <item android:icon="@drawable/ic_template_24"
+            android:id="@+id/nav_all_notification"
+            android:title="@string/menu_notification_templates"/>
 
     </group>
     <group android:id="@+id/grp_2"
         android:checkableBehavior="none">
+        <item android:icon="@drawable/ic_info_24"
+            android:id="@+id/nav_about_us"
+            android:title="@string/menu_about_us"/>
+        <item android:icon="@drawable/ic_info_24"
+            android:id="@+id/nav_about_app"
+            android:title="@string/menu_about_app"/>
+        <item android:icon="@drawable/ic_features_24"
+            android:id="@+id/nav_app_features"
+            android:title="@string/menu_app_features"/>
+        <item android:icon="@drawable/ic_terms_and_conditions_24dp"
+            android:id="@+id/nav_terms_and_conditions"
+            android:title="@string/menu_terms_and_conditions"/>
+        <item android:icon="@drawable/ic_privacy_24"
+            android:id="@+id/nav_privacy_policy"
+            android:title="@string/menu_privacy_policy"/>
         <item android:icon="@drawable/ic_logout_24"
             android:id="@+id/nav_logout"
             android:title="Logout"/>

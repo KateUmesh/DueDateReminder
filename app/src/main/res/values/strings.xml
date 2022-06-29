@@ -70,6 +70,13 @@
     <string name="menu_notification">Send Messages</string>
     <string name="menu_import_client">Import Clients</string>
     <string name="menu_my_balance">My Balance</string>
+    <string name="menu_notification_templates">Notification Templates</string>
+
+    <string name="menu_about_us">About us</string>
+    <string name="menu_about_app">About app</string>
+    <string name="menu_app_features">App features</string>
+    <string name="menu_terms_and_conditions">Terms and conditions</string>
+    <string name="menu_privacy_policy">Privacy policy</string>
 
     //Add Client
     <string name="submit">Submit</string>

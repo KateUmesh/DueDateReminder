@@ -42,4 +42,6 @@ class RepositoryApi {
     suspend fun getMyBalance()=ApiClient.build().getMyBalance()
     /**Send Sms Cost*/
     suspend fun sendSmsCost(modelSendSmsCostRequest: ModelSendSmsCostRequest)=ApiClient.build().sendSmsCost(modelSendSmsCostRequest)
+    /**Get All Notification Templates Display*/
+    suspend fun getAllNotificationTemplatesDisplay()=ApiClient.build().getAllNotificationTemplatesDisplay()
 }

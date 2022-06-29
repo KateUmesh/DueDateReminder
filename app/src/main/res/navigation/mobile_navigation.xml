@@ -36,5 +36,40 @@
         android:label="@string/menu_my_balance"
         tools:layout="@layout/fragment_my_balance" />
 
+    <fragment
+        android:id="@+id/nav_all_notification"
+        android:name="com.duedatereminder.view.activities.ui.allTemplates.AllNotificationTemplatesDisplayFragment"
+        android:label="@string/menu_notification_templates"
+        tools:layout="@layout/fragment_all_notification_templates_display" />
+
+    <fragment
+        android:id="@+id/nav_about_us"
+        android:name="com.duedatereminder.view.fragments.AboutUsFragment"
+        android:label="@string/menu_about_us"
+        tools:layout="@layout/fragment_about_us" />
+    <fragment
+        android:id="@+id/nav_about_app"
+        android:name="com.duedatereminder.view.fragments.AboutUsFragment"
+        android:label="@string/menu_about_app"
+        tools:layout="@layout/fragment_about_app" />
+
+    <fragment
+        android:id="@+id/nav_app_features"
+        android:name="com.duedatereminder.view.fragments.AppFeaturesFragment"
+        android:label="@string/menu_app_features"
+        tools:layout="@layout/fragment_app_features" />
+
+    <fragment
+        android:id="@+id/nav_terms_and_conditions"
+        android:name="com.duedatereminder.view.fragments.TermsAndConditionsFragment"
+        android:label="@string/menu_terms_and_conditions"
+        tools:layout="@layout/fragment_terms_and_conditions" />
+
+    <fragment
+        android:id="@+id/nav_privacy_policy"
+        android:name="com.duedatereminder.view.fragments.PrivacyPolicyFragment"
+        android:label="@string/menu_privacy_policy"
+        tools:layout="@layout/fragment_privacy_policy" />
+
 
 </navigation>

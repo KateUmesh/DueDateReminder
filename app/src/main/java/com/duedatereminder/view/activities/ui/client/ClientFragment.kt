@@ -66,8 +66,7 @@ class ClientFragment : Fragment(),SnackBarCallback {
             startActivity(intent)
         }
 
-        /**Call All Clients GET Api*/
-        callAllClientsApi()
+
 
         /**Response of All Clients GET Api*/
         mViewModelAllClient.mModelAllClientsResponse.observe(viewLifecycleOwner, Observer {
@@ -117,7 +116,7 @@ class ClientFragment : Fragment(),SnackBarCallback {
     }
 
     override fun snackBarSuccessInternetConnection() {
-
+        callAllClientsApi()
     }
 
     override fun snackBarFailedInterConnection() {
@@ -141,5 +140,11 @@ class ClientFragment : Fragment(),SnackBarCallback {
             }
         })
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        /**Call All Clients GET Api*/
+        callAllClientsApi()
     }
 }

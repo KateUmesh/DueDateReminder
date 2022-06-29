@@ -25,6 +25,7 @@ import com.duedatereminder.model.ModelDeleteClientRequest
 import com.duedatereminder.utils.Constant
 import com.duedatereminder.utils.ContextExtension
 import com.duedatereminder.utils.ContextExtension.Companion.showOkDialog
+import com.duedatereminder.utils.ContextExtension.Companion.showOkFinishActivityDialog
 import com.duedatereminder.utils.ContextExtension.Companion.showSnackBar
 import com.duedatereminder.utils.ContextExtension.Companion.snackBar
 import com.duedatereminder.utils.ContextExtension.Companion.toast
@@ -134,6 +135,14 @@ class ViewClientProfileActivity : AppCompatActivity(), SnackBarCallback {
                             intent.data = Uri.parse(url)
                             startActivity(intent)
                         }
+                    }else{
+                        /**Chat Button Click*/
+                        ibChat.setOnClickListener {
+                            val url  = "https://api.whatsapp.com/send?phone=+91$mobile"
+                            val intent = Intent(Intent.ACTION_VIEW)
+                            intent.data = Uri.parse(url)
+                            startActivity(intent)
+                        }
                     }
 
                     /*Set email*/
@@ -176,7 +185,7 @@ class ViewClientProfileActivity : AppCompatActivity(), SnackBarCallback {
             ll_loading.visibility = View.GONE
             when(it.status){
                 "1"->{
-                    showOkDialog(it.message,this)
+                    showOkFinishActivityDialog(it.message,this)
                 }
                 "0"->{
 

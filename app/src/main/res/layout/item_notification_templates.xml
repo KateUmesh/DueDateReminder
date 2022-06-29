@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/spacing_large"
-android:layout_marginEnd="@dimen/spacing_large"
-    android:layout_marginTop="@dimen/spacing_middle"
+    android:layout_marginEnd="@dimen/spacing_large"
+    android:layout_marginBottom="@dimen/spacing_middle"
 app:cardCornerRadius="@dimen/offset_4"
 app:cardElevation="@dimen/offset_8"
     >

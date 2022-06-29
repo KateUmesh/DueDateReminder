@@ -1,0 +1,4 @@
+package com.duedatereminder.model
+
+class ModelAllNotificationTemplatesDisplayResponse(var status:String,var message:String,var data:AllNotificationTemplatesDisplayData?)
+class AllNotificationTemplatesDisplayData(var templates:ArrayList<AllNotificationTemplates>?)

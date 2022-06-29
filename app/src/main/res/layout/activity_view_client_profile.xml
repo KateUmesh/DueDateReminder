@@ -55,7 +55,7 @@
                         android:layout_height="?attr/actionBarSize"
                         android:layout_margin="@dimen/spacing_middle"
                         android:tint="@color/light_green_600"
-                        app:srcCompat="@drawable/ic_chat"/>
+                        app:srcCompat="@drawable/ic_whatsapp_24dp"/>
 
                     <!--First Laetter-->
                     <RelativeLayout android:orientation="vertical"

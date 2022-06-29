@@ -30,6 +30,7 @@ class Constant {
         const val ACCOUNT_TYPE:String ="account_type"
         const val MENU_STATE:String ="menu_state"
 
+        const val baseUrl="https://kuberaduedate.com/app/"
         const val userAppStatus="user/userAppStatus"
         const val sendRegistrationOtp="user/sendRegistrationOtp"
         const val createAccount="user/createAccount"
@@ -47,5 +48,11 @@ class Constant {
         const val deleteClient="user/deleteClient"
         const val myBalance="user/myBalance"
         const val sendSmsCost="user/sendSmsCost"
+        const val allNotificationTemplatesDisplay="user/allNotificationTemplatesDisplay"
+        const val about_us="welcome/about_us"
+        const val app_features="welcome/app_features"
+        const val terms_and_conditions="welcome/terms_and_conditions"
+        const val privacy_policy="welcome/privacy_policy"
+        const val about_app="welcome/about_app"
     }
 }

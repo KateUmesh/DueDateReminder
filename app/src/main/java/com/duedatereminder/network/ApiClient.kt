@@ -1,6 +1,7 @@
 package com.duedatereminder.network
 
 import com.duedatereminder.utils.Constant
+import com.duedatereminder.utils.Constant.Companion.baseUrl
 import com.duedatereminder.utils.LocalSharedPreference
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -13,7 +14,7 @@ object ApiClient {
     private var serviceApiInterface: ApiInterface? = null
 
     var baseUrl1="https://ameykajarekar.com/due_date/"
-    var baseUrl="https://kuberaduedate.com/app/"
+    //var baseUrl="https://kuberaduedate.com/app/"
 
     private fun getUnsafeOkHttpClient():OkHttpClient.Builder{
         val interceptor = HttpLoggingInterceptor()

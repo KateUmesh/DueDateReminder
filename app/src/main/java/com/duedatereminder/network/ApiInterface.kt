@@ -85,4 +85,8 @@ interface ApiInterface {
     /**POST Send Sms Cost*/
     @POST(Constant.sendSmsCost)
     suspend fun sendSmsCost(@Body mModelSendSmsCostRequest: ModelSendSmsCostRequest):Response<ModelSendSmsCostResponse>
+
+    /**GET All Notification Templates Display*/
+    @GET(Constant.allNotificationTemplatesDisplay)
+    suspend fun getAllNotificationTemplatesDisplay():Response<ModelAllNotificationTemplatesDisplayResponse>
 }

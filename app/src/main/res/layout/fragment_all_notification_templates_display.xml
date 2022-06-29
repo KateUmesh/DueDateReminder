@@ -5,31 +5,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_10"
-    tools:context=".view.activities.NotificationTemplatesActivity">
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <include layout="@layout/toolbar_layout"/>
-        </com.google.android.material.appbar.AppBarLayout>
+    android:background="@color/grey_10">
 
 
-        <androidx.recyclerview.widget.RecyclerView
+
+    <androidx.recyclerview.widget.RecyclerView
             android:paddingTop="@dimen/spacing_middle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/rvNotificationTemplates"
+            android:id="@+id/rvAllNotificationTemplatesDisplay"
             tools:listitem="@layout/item_notification_templates"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <include layout="@layout/item_loading_layout"/>
     <include layout="@layout/no_data_found_layout"/>
