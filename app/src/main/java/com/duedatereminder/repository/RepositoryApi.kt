@@ -48,4 +48,6 @@ class RepositoryApi {
     suspend fun getContactUs()=ApiClient.build().getContactUs()
     /**Submit Feedback*/
     suspend fun submitFeedback(modelSubmitFeedbackRequest: ModelSubmitFeedbackRequest)=ApiClient.build().submitFeedback(modelSubmitFeedbackRequest)
+    /**Get DueDateReminderReport*/
+    suspend fun getDueDateReminderReport()=ApiClient.build().getDueDateReminderReport()
 }

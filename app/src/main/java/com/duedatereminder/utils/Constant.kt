@@ -57,5 +57,6 @@ class Constant {
         const val about_app="welcome/about_app"
         const val contactus="user/contactus"
         const val submitFeedback="user/submitFeedback"
+        const val dueDateReminderReport="user/dueDateReminderReport"
     }
 }

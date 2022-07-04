@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Compliance Reminder</string>
+    <string name="notificationChannelId">Compliance Reminder</string>
 
     //Login
     <string name="mobileNumber">Mobile Number</string>
@@ -80,6 +81,7 @@
     <string name="menu_app_features">App features</string>
     <string name="menu_terms_and_conditions">Terms and conditions</string>
     <string name="menu_privacy_policy">Privacy policy</string>
+    <string name="menu_reminder_report">Reminder Report</string>
 
     //Add Client
     <string name="submit">Submit</string>
@@ -118,8 +120,9 @@
     <string name="no_clients_found">No Clients Found</string>
 
     //Contact Us
-    <string name="business_email">Business Email</string>
-    <string name="app_email">App Email</string>
+    <string name="business_email">For business queries</string>
+    <string name="app_email">For Queries &amp; suggestions related to App</string>
+    <string name="customer_care">For Customer Care Call</string>
     <string name="enter_feedback">Enter your feedback</string>
     <string name="send_feedback">Send Feedback</string>
 

@@ -97,4 +97,8 @@ interface ApiInterface {
     /**POST submit Feedback*/
     @POST(Constant.submitFeedback)
     suspend fun submitFeedback(@Body mModelSubmitFeedbackRequest: ModelSubmitFeedbackRequest):Response<ModelSubmitFeedbackResponse>
+
+    /**GET Due Date Reminder Report*/
+    @GET(Constant.dueDateReminderReport)
+    suspend fun getDueDateReminderReport():Response<ModelReminderReportResponse>
 }

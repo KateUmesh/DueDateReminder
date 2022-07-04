@@ -155,7 +155,7 @@ class SendMessageActivity : AppCompatActivity(),SnackBarCallback {
         flag=2
         //llLoading.visibility = View.VISIBLE
         progressDialog.show()
-        val mModelSendSmsNotificationRequest = ModelSendSmsNotificationRequest(idDueDateCategory,idNotification)
+        val mModelSendSmsNotificationRequest = ModelSendSmsNotificationRequest(idDueDateCategory,idNotification,mClientIdList)
         if(NetworkConnection.isNetworkConnected()) {
             mViewModelSendMessage.sendSmsNotification(mModelSendSmsNotificationRequest)
         }else{
@@ -167,7 +167,7 @@ class SendMessageActivity : AppCompatActivity(),SnackBarCallback {
         flag=3
         //llLoading.visibility = View.VISIBLE
         progressDialog.show()
-        val mModelSendEmailNotificationRequest = ModelSendEmailNotificationRequest(idDueDateCategory,idNotification)
+        val mModelSendEmailNotificationRequest = ModelSendEmailNotificationRequest(idDueDateCategory,idNotification,mClientIdList)
         if(NetworkConnection.isNetworkConnected()) {
             mViewModelSendMessage.sendEmailNotification(mModelSendEmailNotificationRequest)
         }else{
@@ -179,7 +179,7 @@ class SendMessageActivity : AppCompatActivity(),SnackBarCallback {
     private fun callSendSmsCostPostApi(idDueDateCategory:String,idNotification:String){
         flag=4
         llLoading.visibility = View.VISIBLE
-        val mModelSendSmsCostRequest = ModelSendSmsCostRequest(idDueDateCategory,idNotification)
+        val mModelSendSmsCostRequest = ModelSendSmsCostRequest(idDueDateCategory,idNotification,mClientIdList)
         if(NetworkConnection.isNetworkConnected()) {
             mViewModelSendMessage.sendSmsCost(mModelSendSmsCostRequest)
         }else{

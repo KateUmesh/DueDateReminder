@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:orientation="vertical"
+    android:id="@+id/lyt_parent"
+    android:clickable="true"
+    android:background="?selectableItemBackground"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/spacing_large"
+    android:layout_marginEnd="@dimen/spacing_large"
+    android:layout_marginTop="@dimen/spacing_large"
+    app:cardCornerRadius="@dimen/offset_8"
+    app:cardElevation="@dimen/offset_4"
+    android:layout_centerInParent="true">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/spacing_large"
+        android:paddingBottom="@dimen/spacing_large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View android:layout_width="@dimen/spacing_smlarge" android:layout_height="0dp"/>
+        <RelativeLayout android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold"
+                    android:textColor="@color/grey_90"
+                    android:id="@+id/tvNotificationType"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="SMS"
+                    />
+                <TextView
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textStyle="bold"
+                    android:layout_gravity="end"
+                    android:visibility="visible"
+                    android:textColor="@color/blue_600"
+                    android:id="@+id/tvReminderDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10:30 AM"
+                    android:layout_alignParentEnd="true"/>
+            </LinearLayout>
+                <TextView android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textStyle="bold"
+                    android:textColor="@color/grey_90"
+                    android:id="@+id/tvMessageSent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:text="DescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescriptionDescription"
+                    />
+                <TextView
+                    android:visibility="gone"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/grey_40" android:id="@+id/tvAddress"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Address"
+                    android:maxLines="1" android:singleLine="true"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+        <View android:layout_width="@dimen/spacing_large" android:layout_height="0dp"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
+

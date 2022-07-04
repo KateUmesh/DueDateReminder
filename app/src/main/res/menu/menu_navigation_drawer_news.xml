@@ -21,6 +21,10 @@
             android:id="@+id/nav_all_notification"
             android:title="@string/menu_notification_templates"/>
 
+        <item android:icon="@drawable/ic_template_24"
+            android:id="@+id/nav_reminder_report"
+            android:title="@string/menu_reminder_report"/>
+
     </group>
     <group android:id="@+id/grp_2"
         android:checkableBehavior="none">

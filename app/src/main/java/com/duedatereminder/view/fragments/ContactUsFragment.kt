@@ -30,6 +30,7 @@ import com.duedatereminder.databinding.FragmentImportClientBinding
 import com.duedatereminder.model.ModelSubmitFeedbackRequest
 import com.duedatereminder.utils.Constant
 import com.duedatereminder.utils.ContextExtension
+import com.duedatereminder.utils.ContextExtension.Companion.showOkDialog
 import com.duedatereminder.utils.ContextExtension.Companion.showOkFinishActivityDialog
 import com.duedatereminder.utils.ContextExtension.Companion.showSnackBar
 import com.duedatereminder.utils.ContextExtension.Companion.snackBar
@@ -132,7 +133,8 @@ class ContactUsFragment : Fragment(),SnackBarCallback {
             ll_loading.visibility = View.GONE
             when(it.status){
                 "1"->{
-                    showOkFinishActivityDialog(it.message,requireActivity())
+                    edtSendFeedback.setText("")
+                    showOkDialog(it.message,requireActivity())
                 }
                 "0"->{
                     tvNoData.visibility = View.VISIBLE
