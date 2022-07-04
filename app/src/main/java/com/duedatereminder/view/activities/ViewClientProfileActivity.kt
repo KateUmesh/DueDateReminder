@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +19,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.duedatereminder.R
+import com.duedatereminder.adapter.AllNotificationTemplatesDisplayAdapter
 import com.duedatereminder.callback.SnackBarCallback
 import com.duedatereminder.model.ModelAddClientRequest
 import com.duedatereminder.model.ModelDeleteClientRequest
@@ -33,8 +36,9 @@ import com.duedatereminder.utils.ContextExtension.Companion.toolbar
 import com.duedatereminder.utils.NetworkConnection
 import com.duedatereminder.viewModel.activityViewModel.ViewModelEditClient
 import com.duedatereminder.viewModel.activityViewModel.ViewModelViewProfile
+import java.net.URLEncoder
 
-class ViewClientProfileActivity : AppCompatActivity(), SnackBarCallback {
+class ViewClientProfileActivity : AppCompatActivity(), SnackBarCallback,AllNotificationTemplatesDisplayAdapter.OnChatClickListener {
     private lateinit var tvClientName:TextView
     private lateinit var tvFirstLetter:TextView
     private lateinit var tvMobile:TextView
@@ -47,6 +51,8 @@ class ViewClientProfileActivity : AppCompatActivity(), SnackBarCallback {
     private lateinit var ibCall:ImageButton
     private lateinit var mViewModelViewProfile: ViewModelViewProfile
     private lateinit var ll_loading : LinearLayoutCompat
+    private lateinit var rvAllNotificationTemplatesDisplay: RecyclerView
+    private lateinit var llAllTemplates: LinearLayout
     var idClient:String = ""
     var nameClient:String = ""
     var mobile:String = ""
@@ -80,6 +86,8 @@ class ViewClientProfileActivity : AppCompatActivity(), SnackBarCallback {
         ibChat = findViewById(R.id.ibChat)
         ibCall = findViewById(R.id.ibCall)
         ll_loading = findViewById(R.id.ll_loading)
+        llAllTemplates = findViewById(R.id.llAllTemplates)
+        rvAllNotificationTemplatesDisplay = findViewById(R.id.rvAllNotificationTemplatesDisplay)
         dueDateCategoriesNames = ArrayList()
         invalidateOptionsMenu()
 
@@ -180,6 +188,31 @@ class ViewClientProfileActivity : AppCompatActivity(), SnackBarCallback {
         })
 
 
+
+        /**Response of AllNotificationTemplatesDisplay Api*/
+        mViewModelViewProfile.mModelAllNotificationTemplatesDisplayResponse.observe(this, Observer {
+            ll_loading.visibility = View.GONE
+            when(it.status){
+                "1"->{
+                    if(!it.data!!.templates.isNullOrEmpty()){
+                        llAllTemplates.visibility=View.VISIBLE
+                        val mAdapter = AllNotificationTemplatesDisplayAdapter(this,it.data!!.templates!!,1,this)
+                        rvAllNotificationTemplatesDisplay.adapter=mAdapter
+                    }else{
+                        llAllTemplates.visibility = View.GONE
+                    }
+                }
+                "0"->{
+                    llAllTemplates.visibility = View.GONE
+                    snackBar(it.message, this)
+                }
+                else->{
+                   showSnackBar(this,it.message)
+                }
+            }
+        })
+
+
         /**Response of DeleteClient POST Api*/
         mViewModelViewProfile.mModelDeleteClientResponse.observe(this, Observer {
             ll_loading.visibility = View.GONE
@@ -221,12 +254,24 @@ class ViewClientProfileActivity : AppCompatActivity(), SnackBarCallback {
         }
     }
 
+    private fun callAllNotificationTemplatesDisplayApi(){
+        flag=2
+        ll_loading.visibility = View.VISIBLE
+        if(NetworkConnection.isNetworkConnected()) {
+            mViewModelViewProfile.getAllNotificationTemplatesDisplay()
+        }else{
+            showSnackBar(this,getString(R.string.no_internet_connection))
+        }
+    }
+
 
     override fun snackBarSuccessInternetConnection() {
         if(flag==0) {
             callEditClientGetApi()
-        }else{
+        }else if(flag==1){
             callDeleteClientGetApi()
+        }else{
+            callAllNotificationTemplatesDisplayApi()
         }
     }
 
@@ -267,6 +312,8 @@ class ViewClientProfileActivity : AppCompatActivity(), SnackBarCallback {
         super.onResume()
         /**Call EditClient GET Api*/
         callEditClientGetApi()
+        /**Call AllNotificationTemplatesDisplay Api*/
+        callAllNotificationTemplatesDisplayApi()
     }
 
     fun showDeleteClientDialog(message: String,context: Context) {
@@ -285,6 +332,20 @@ class ViewClientProfileActivity : AppCompatActivity(), SnackBarCallback {
 
         }
         builder.show()
+    }
+
+    override fun onChatItemClick(template:String) {
+        if(whatsappNum.isNotEmpty()){
+            val url  = "https://api.whatsapp.com/send?phone=+91$whatsappNum" +"&text=" + URLEncoder.encode(template, "UTF-8")
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            startActivity(intent)
+        }else{
+            val url  = "https://api.whatsapp.com/send?phone=+91$mobile" +"&text=" + URLEncoder.encode(template, "UTF-8")
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            startActivity(intent)
+        }
     }
 
 }

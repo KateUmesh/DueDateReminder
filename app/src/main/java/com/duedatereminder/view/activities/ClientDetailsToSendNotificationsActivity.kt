@@ -4,26 +4,31 @@ import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.duedatereminder.R
 import com.duedatereminder.adapter.ClientDetailsToSendNotificationAdapter
 import com.duedatereminder.callback.SnackBarCallback
-import com.duedatereminder.model.*
+import com.duedatereminder.model.ClientsList
+import com.duedatereminder.model.NotificationTemplates
 import com.duedatereminder.utils.Constant
 import com.duedatereminder.utils.ContextExtension
-import com.duedatereminder.utils.ContextExtension.Companion.showOkDialog
 import com.duedatereminder.utils.ContextExtension.Companion.showSnackBar
+import com.duedatereminder.utils.ContextExtension.Companion.snackBar
 import com.duedatereminder.utils.ContextExtension.Companion.toast
 import com.duedatereminder.utils.ContextExtension.Companion.toolbar
 import com.duedatereminder.utils.NetworkConnection
@@ -31,7 +36,7 @@ import com.duedatereminder.viewModel.activityViewModel.ViewModelClientDetailsToS
 import com.duedatereminder.viewModel.activityViewModel.ViewModelNotificationTemplates
 
 
-class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCallback {
+class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCallback,ClientDetailsToSendNotificationAdapter.ClientItemOnClickListener {
     lateinit var rvClientDetails: RecyclerView
     private lateinit var mViewModelClientDetailsToSendNotification: ViewModelClientDetailsToSendNotification
     private lateinit var mViewModelNotificationTemplates: ViewModelNotificationTemplates
@@ -47,9 +52,14 @@ class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCa
     private lateinit var nsClientDetails:NestedScrollView
     private var flag:Int=1
     private var templateList = ArrayList<NotificationTemplates>()
+    private var clientsList=ArrayList<ClientsList>()
     private var mSelectedTemplate = -1
     private lateinit var tvNoData:TextView
     lateinit var mAdapter:ClientDetailsToSendNotificationAdapter
+    private  lateinit var  mClientIdList: ArrayList<String>
+     var select:String ="1";
+    private var menu: Menu? = null
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +82,9 @@ class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCa
         nsClientDetails = findViewById(R.id.nsClientDetails)
         llClientDetails = findViewById(R.id.llClientDetails)
         tvNoData = findViewById(R.id.tvNoData)
+        mClientIdList = ArrayList()
+        mAdapter = ClientDetailsToSendNotificationAdapter(this,ArrayList(),this)
+        rvClientDetails.adapter=mAdapter
 
         llLoading.visibility = View.VISIBLE
 
@@ -89,8 +102,11 @@ class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCa
                 "1" -> {
                     if (!it.data!!.clients.isNullOrEmpty()) {
                         tvNoData.visibility = View.GONE
-                         mAdapter = ClientDetailsToSendNotificationAdapter(this,it.data!!.clients!!)
-                        rvClientDetails.adapter=mAdapter
+                        clientsList = it.data!!.clients!!
+                        for( i in 0 until clientsList.size){
+                            clientsList[i].isSelected=false
+                        }
+                        mAdapter.setList(it.data!!.clients!!)
                         llClientDetails.visibility = View.VISIBLE
                         if(!it.data?.send_sms_details.isNullOrEmpty()) {
                             SEND_SMS_DETAILS = it.data?.send_sms_details!!
@@ -100,10 +116,12 @@ class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCa
                         }
                     }else{
                         tvNoData.visibility = View.VISIBLE
+                        tvNoData.text = getString(R.string.no_clients_found)
                     }
                 }
                 "0" -> {
                     tvNoData.visibility = View.VISIBLE
+                    tvNoData.text = getString(R.string.no_clients_found)
                     ContextExtension.snackBar(it.message, this)
                 }
                 else -> {
@@ -114,14 +132,22 @@ class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCa
 
         /**Send Sms Button Click*/
         btnSendMessage.setOnClickListener {
-            /**Call NotificationCategories GET Api*/
-            //callGetNotificationTemplatesApi()
-            val intent = Intent(this, NotificationTemplatesActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-            intent.putExtra(Constant.ID_DUE_DATE_CATEGORY,idNotificationCategory)
-            intent.putExtra(Constant.SEND_SMS_DETAILS,SEND_SMS_DETAILS)
-            intent.putExtra(Constant.SEND_EMAIL_DETAILS,SEND_EMAIL_DETAILS)
-            startActivity(intent)
+            if(mClientIdList.isNullOrEmpty()){
+                Log.e("clientIdLst", mClientIdList.toString()+"mClientIdList is empty")
+                snackBar("Select Clients",this)
+
+            }else {
+                Log.e("clientIdLst", mClientIdList.toString())
+                /**Call NotificationCategories GET Api*/
+                val intent = Intent(this, NotificationTemplatesActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                intent.putExtra(Constant.ID_DUE_DATE_CATEGORY,idNotificationCategory)
+                intent.putExtra(Constant.SEND_SMS_DETAILS,SEND_SMS_DETAILS)
+                intent.putExtra(Constant.SEND_EMAIL_DETAILS,SEND_EMAIL_DETAILS)
+                intent.putStringArrayListExtra(Constant.ID_CLIENT_LIST, mClientIdList);
+                startActivity(intent)
+            }
+
         }
 
 
@@ -222,6 +248,7 @@ class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCa
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        this.menu = menu;
         val inflater = menuInflater
         inflater.inflate(R.menu.search_menu, menu)
         val findItem = menu?.findItem(R.id.action_Search)
@@ -237,7 +264,71 @@ class ClientDetailsToSendNotificationsActivity : AppCompatActivity(), SnackBarCa
                 return true
             }
         })
+
+
+       /*Visibility of Check box for select all*/
+        menu.findItem(R.id.action_select).isVisible = true
+
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        return when (item.itemId) {
+            /*R.id.menuShowDue -> {
+                mAdapter.deselectAllCheckbox("1")
+                *//*if(item.isChecked)
+                {
+                    mAdapter.select=0
+                    item.isChecked = false
+                    mAdapter.notifyDataSetChanged()
+                }else{
+                    mAdapter.select=1
+                    item.isChecked = true
+                    mAdapter.notifyDataSetChanged()
+                }*//*
+                true
+            }*/
+
+            R.id.action_select -> {
+
+                if(select=="1"){
+                    mAdapter.deselectAllCheckbox(select)
+                    select="0"
+                    item.icon=ContextCompat.getDrawable(this, R.drawable.ic_check_box_24)
+                    mClientIdList.clear()
+                    for( i in 0 until clientsList.size){
+                        clientsList[i].isSelected=true
+                        mClientIdList.add(clientsList[i].id_client)
+                    }
+                }else{
+                    mAdapter.deselectAllCheckbox(select)
+                    select="1"
+                    item.icon = ContextCompat.getDrawable(this, R.drawable.ic_check_box_outline_blank_24)
+                    mClientIdList.clear()
+                    for( i in 0 until clientsList.size) {
+                        clientsList[i].isSelected = false
+                    }
+                }
+
+
+
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onClientItemClickListener(position: Int, item: ClientsList, checkBox: CheckBox) {
+        if(checkBox.isChecked){
+            mClientIdList.add(item.id_client)
+        }else{
+            if(mClientIdList.contains(item.id_client)){
+                mClientIdList.remove(item.id_client)
+            }
+        }
+
     }
 
 }

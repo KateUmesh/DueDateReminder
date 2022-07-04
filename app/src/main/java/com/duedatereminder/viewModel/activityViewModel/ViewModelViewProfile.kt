@@ -78,4 +78,35 @@ class ViewModelViewProfile() : ViewModel(){
         }
     }
 
+    /**All Notification Templates Display*/
+    var mModelAllNotificationTemplatesDisplayResponse = MutableLiveData<ModelAllNotificationTemplatesDisplayResponse>()
+    fun getAllNotificationTemplatesDisplay() {
+        viewModelScope.launch {
+            try {
+                val response = mRepository.getAllNotificationTemplatesDisplay()
+                if (response.isSuccessful)
+                    mModelAllNotificationTemplatesDisplayResponse.value = response.body()
+                else
+                    mModelAllNotificationTemplatesDisplayResponse.value =
+                        ModelAllNotificationTemplatesDisplayResponse(
+                            "",
+                            Constant.something_went_wrong,null
+                        )
+            } catch (e: Exception) {
+                if (e is SocketTimeoutException)
+                    mModelAllNotificationTemplatesDisplayResponse.value =
+                        ModelAllNotificationTemplatesDisplayResponse(
+                            "",
+                            Constant.slow_internet_connection_detected,null
+                        )
+                else
+                    mModelAllNotificationTemplatesDisplayResponse.value =
+                        ModelAllNotificationTemplatesDisplayResponse(
+                            "",
+                            Constant.something_went_wrong,null
+                        )
+            }
+        }
+    }
+
 }

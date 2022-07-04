@@ -43,13 +43,19 @@
         tools:layout="@layout/fragment_all_notification_templates_display" />
 
     <fragment
+        android:id="@+id/nav_contact_us"
+        android:name="com.duedatereminder.view.fragments.ContactUsFragment"
+        android:label="@string/menu_contact_us"
+        tools:layout="@layout/fragment_contact_us" />
+
+    <fragment
         android:id="@+id/nav_about_us"
         android:name="com.duedatereminder.view.fragments.AboutUsFragment"
         android:label="@string/menu_about_us"
         tools:layout="@layout/fragment_about_us" />
     <fragment
         android:id="@+id/nav_about_app"
-        android:name="com.duedatereminder.view.fragments.AboutUsFragment"
+        android:name="com.duedatereminder.view.fragments.AboutAppFragment"
         android:label="@string/menu_about_app"
         tools:layout="@layout/fragment_about_app" />
 

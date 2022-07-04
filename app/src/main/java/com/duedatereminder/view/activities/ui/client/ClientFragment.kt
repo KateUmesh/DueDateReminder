@@ -126,6 +126,8 @@ class ClientFragment : Fragment(),SnackBarCallback {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         //val inflater = menuInflater
         inflater.inflate(R.menu.search_menu, menu)
+        /*Visibility of Check box for select all*/
+        menu.findItem(R.id.action_select).isVisible = false
         val findItem = menu?.findItem(R.id.action_Search)
         val  searchView: SearchView = findItem?.actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

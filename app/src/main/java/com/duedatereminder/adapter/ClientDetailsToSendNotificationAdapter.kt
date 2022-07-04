@@ -5,7 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.CheckBox
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
@@ -17,11 +17,17 @@ import com.duedatereminder.view.activities.ViewClientProfileActivity
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ClientDetailsToSendNotificationAdapter(var context: Context, private var items: ArrayList<ClientsList>)
+
+class ClientDetailsToSendNotificationAdapter(var context: Context, private var items: ArrayList<ClientsList>,var listItem:ClientItemOnClickListener)
     : RecyclerView.Adapter<ClientDetailsToSendNotificationAdapter.ClientDetailsToSendNotificationViewHolder>(),
     Filterable {
 
+    var row_index = 0
     private var itemsFiltered = items
+    var select:Int=0
+    private  var clearAll: String =""
+
+    var cardViewList= ArrayList<CheckBox>()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClientDetailsToSendNotificationViewHolder {
@@ -31,6 +37,11 @@ class ClientDetailsToSendNotificationAdapter(var context: Context, private var i
 
     override fun onBindViewHolder(holder: ClientDetailsToSendNotificationViewHolder, position: Int) {
         val filteredList= itemsFiltered[position]
+
+        if (!cardViewList.contains(holder.cbClient)) {
+            cardViewList.add(holder.cbClient);
+        }
+
         /*Set Client Name*/
         holder.tvName.text = filteredList.name
 
@@ -59,6 +70,48 @@ class ClientDetailsToSendNotificationAdapter(var context: Context, private var i
             context.startActivity(intent)
         }
 
+        if (filteredList.isSelected) {
+            holder.cbClient.isChecked = true;
+        }
+        else {
+            holder.cbClient.isChecked = false;
+        }
+
+        holder.cbClient.setOnClickListener {
+            listItem.onClientItemClickListener(position, filteredList,holder.cbClient)
+            if (filteredList.isSelected) {
+                holder.cbClient.isChecked=false
+                filteredList.isSelected=false
+            }
+            else {
+                holder.cbClient.isChecked = true;
+                filteredList.isSelected=true
+            }
+            notifyDataSetChanged()
+        }
+
+
+
+
+
+       /* if(row_index==position){
+            holder.cbClient.isChecked=true
+        }
+        else
+        {
+            holder.cbClient.isChecked=false
+
+        }*/
+
+
+
+        /*if(clearAll=="1"){
+            holder.cbClient.isChecked=true
+        }else{
+            holder.cbClient.isChecked=false
+        }*/
+
+
 
     }
 
@@ -66,6 +119,20 @@ class ClientDetailsToSendNotificationAdapter(var context: Context, private var i
        return itemsFiltered.size
     }
 
+    fun setList(clientList: ArrayList<ClientsList>) {
+        this.items.addAll(clientList)
+        notifyDataSetChanged()
+    }
+
+    fun deselectAllCheckbox( clearAll: String){
+        this.clearAll = clearAll
+        notifyDataSetChanged()
+    }
+
+    fun selectAllCheckbox( clearAll: String){
+        this.clearAll = clearAll
+        notifyDataSetChanged()
+    }
 
     class ClientDetailsToSendNotificationViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
          var tvName:TextView  = itemView.findViewById(R.id.tvName)
@@ -73,7 +140,13 @@ class ClientDetailsToSendNotificationAdapter(var context: Context, private var i
          var tvEmail:TextView  = itemView.findViewById(R.id.tvEmail)
          var tvAddress:TextView  = itemView.findViewById(R.id.tvAddress)
          var tvFirstLetter:TextView  = itemView.findViewById(R.id.tvFirstLetter)
+         var cbClient:CheckBox  = itemView.findViewById(R.id.cbClient)
 
+    }
+
+    fun setSelected(select:Int){
+        this.select=select
+        notifyDataSetChanged()
     }
 
     interface SendSmsClickListener{
@@ -82,6 +155,11 @@ class ClientDetailsToSendNotificationAdapter(var context: Context, private var i
 
     interface SendEmailClickListener{
         fun sendEmailClick(position:Int,items:ArrayList<ClientsList>)
+    }
+
+    interface ClientItemOnClickListener
+    {
+        fun onClientItemClickListener(position:Int,item:ClientsList,checkBox: CheckBox)
     }
 
     override fun getFilter(): Filter {

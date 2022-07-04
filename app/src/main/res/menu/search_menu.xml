@@ -10,5 +10,14 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
 
 
+    <item
+        android:id="@+id/action_select"
+        android:icon="@drawable/ic_check_box_outline_blank_24"
+        android:title="@string/select_all"
+        android:visible="false"
+        app:showAsAction="always|withText"/>
+
+
+
 
 </menu>

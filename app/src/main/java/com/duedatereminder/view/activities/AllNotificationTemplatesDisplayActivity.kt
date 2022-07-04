@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.duedatereminder.R
 import com.duedatereminder.adapter.AllNotificationTemplatesDisplayAdapter
-import com.duedatereminder.adapter.NotificationTemplatesAdapter
 import com.duedatereminder.callback.SnackBarCallback
 import com.duedatereminder.utils.Constant
 import com.duedatereminder.utils.ContextExtension
@@ -17,7 +16,7 @@ import com.duedatereminder.utils.ContextExtension.Companion.toolbar
 import com.duedatereminder.utils.NetworkConnection
 import com.duedatereminder.viewModel.activityViewModel.ViewModelAllNotificationTemplatesDisplay
 
-class AllNotificationTemplatesDisplayActivity : AppCompatActivity(), SnackBarCallback {
+class AllNotificationTemplatesDisplayActivity : AppCompatActivity(), SnackBarCallback,AllNotificationTemplatesDisplayAdapter.OnChatClickListener {
     lateinit var rvNotificationTemplates: RecyclerView
     private lateinit var mViewModelAllNotificationTemplatesDisplay: ViewModelAllNotificationTemplatesDisplay
     private lateinit var llLoading : LinearLayoutCompat
@@ -61,7 +60,7 @@ class AllNotificationTemplatesDisplayActivity : AppCompatActivity(), SnackBarCal
                 "1" -> {
 
                     if (!it.data!!.templates.isNullOrEmpty()) {
-                        val mAdapter = AllNotificationTemplatesDisplayAdapter(this,it.data!!.templates!!)
+                        val mAdapter = AllNotificationTemplatesDisplayAdapter(this,it.data!!.templates!!,0,this)
                         rvNotificationTemplates.adapter=mAdapter
                     }
                 }
@@ -90,5 +89,9 @@ class AllNotificationTemplatesDisplayActivity : AppCompatActivity(), SnackBarCal
 
     override fun snackBarFailedInterConnection() {
         showSnackBar(this,getString(R.string.no_internet_connection))
+    }
+
+    override fun onChatItemClick(template: String) {
+        TODO("Not yet implemented")
     }
 }

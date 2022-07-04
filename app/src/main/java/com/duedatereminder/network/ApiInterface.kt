@@ -89,4 +89,12 @@ interface ApiInterface {
     /**GET All Notification Templates Display*/
     @GET(Constant.allNotificationTemplatesDisplay)
     suspend fun getAllNotificationTemplatesDisplay():Response<ModelAllNotificationTemplatesDisplayResponse>
+
+    /**GET contact us*/
+    @GET(Constant.contactus)
+    suspend fun getContactUs():Response<ModelContactUsResponse>
+
+    /**POST submit Feedback*/
+    @POST(Constant.submitFeedback)
+    suspend fun submitFeedback(@Body mModelSubmitFeedbackRequest: ModelSubmitFeedbackRequest):Response<ModelSubmitFeedbackResponse>
 }

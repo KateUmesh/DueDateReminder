@@ -44,4 +44,8 @@ class RepositoryApi {
     suspend fun sendSmsCost(modelSendSmsCostRequest: ModelSendSmsCostRequest)=ApiClient.build().sendSmsCost(modelSendSmsCostRequest)
     /**Get All Notification Templates Display*/
     suspend fun getAllNotificationTemplatesDisplay()=ApiClient.build().getAllNotificationTemplatesDisplay()
+    /**Get ContactUs*/
+    suspend fun getContactUs()=ApiClient.build().getContactUs()
+    /**Submit Feedback*/
+    suspend fun submitFeedback(modelSubmitFeedbackRequest: ModelSubmitFeedbackRequest)=ApiClient.build().submitFeedback(modelSubmitFeedbackRequest)
 }

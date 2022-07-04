@@ -29,6 +29,7 @@ class Constant {
         const val FIRM_NAME:String ="firm_name"
         const val ACCOUNT_TYPE:String ="account_type"
         const val MENU_STATE:String ="menu_state"
+        const val ID_CLIENT_LIST="idClientList"
 
         const val baseUrl="https://kuberaduedate.com/app/"
         const val userAppStatus="user/userAppStatus"
@@ -54,5 +55,7 @@ class Constant {
         const val terms_and_conditions="welcome/terms_and_conditions"
         const val privacy_policy="welcome/privacy_policy"
         const val about_app="welcome/about_app"
+        const val contactus="user/contactus"
+        const val submitFeedback="user/submitFeedback"
     }
 }

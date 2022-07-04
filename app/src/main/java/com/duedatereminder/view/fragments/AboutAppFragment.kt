@@ -43,7 +43,7 @@ class AboutAppFragment : Fragment() {
         wVAboutApp = root.findViewById(R.id.wVAboutApp)
         wVAboutApp!!.getSettings().javaScriptEnabled = true
         wVAboutApp!!.getSettings().javaScriptCanOpenWindowsAutomatically = true
-        wVAboutApp!!.loadUrl(Constant.baseUrl+Constant.about_us)
+        wVAboutApp!!.loadUrl(Constant.baseUrl+Constant.about_app)
 
 
 

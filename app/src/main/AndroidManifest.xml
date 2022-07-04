@@ -8,6 +8,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <queries>
+        <package android:name="com.whatsapp" />
+    </queries>
+
     <application
         android:name=".application.ApplicationContext"
         android:allowBackup="false"
@@ -19,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DueDateReminder"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.activities.ViewClientProfileActivity"></activity>
+        <activity android:name=".view.activities.ViewClientProfileActivity"/>
         <activity
             android:name=".view.activities.SendMessageActivity"
             android:exported="true" />

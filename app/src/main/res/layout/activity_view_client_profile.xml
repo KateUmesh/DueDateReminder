@@ -20,7 +20,7 @@
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nsClientProfile"
-            android:visibility="gone"
+            android:visibility="visible"
             android:scrollbars="none"
             android:clipToPadding="false"
             android:layout_width="match_parent"
@@ -242,8 +242,55 @@
                         <TextView android:textAppearance="@style/TextAppearance.AppCompat.Subhead" android:textColor="@color/grey_60" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_medium" android:text="6525"/>
                     </LinearLayout>
                 </LinearLayout>
-                <View android:layout_width="match_parent"
-                    android:layout_height="@dimen/spacing_xxlarge"/>
+
+                <!--Notification Templates-->
+                <LinearLayout
+                    android:id="@+id/llAllTemplates"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_large"
+                    >
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView
+                            android:layout_marginStart="@dimen/spacing_xlarge"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Notification Templates"/>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:paddingTop="@dimen/spacing_middle"
+                            android:paddingStart="@dimen/spacing_mlarge"
+                            android:paddingEnd="@dimen/spacing_mlarge"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/rvAllNotificationTemplatesDisplay"
+                            tools:listitem="@layout/item_notification_templates"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:textStyle="bold" android:textColor="@color/purple_500"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Zip Code"/>
+                        <TextView android:textAppearance="@style/TextAppearance.AppCompat.Subhead" android:textColor="@color/grey_60" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/spacing_medium" android:text="6525"/>
+                    </LinearLayout>
+                </LinearLayout>
+
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 

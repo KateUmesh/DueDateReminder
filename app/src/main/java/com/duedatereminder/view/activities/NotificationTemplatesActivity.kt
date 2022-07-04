@@ -23,6 +23,7 @@ class NotificationTemplatesActivity : AppCompatActivity(), SnackBarCallback {
     private var idNotificationCategory:Int=0
     private var SEND_SMS_DETAILS:String=""
     private var SEND_EMAIL_DETAILS:String=""
+    private  lateinit var  mClientIdList: ArrayList<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notification_templates)
@@ -39,6 +40,9 @@ class NotificationTemplatesActivity : AppCompatActivity(), SnackBarCallback {
         }
         if(intent.getStringExtra(Constant.SEND_EMAIL_DETAILS)!=null) {
             SEND_EMAIL_DETAILS = intent.getStringExtra(Constant.SEND_EMAIL_DETAILS)!!
+        }
+        if(intent.getStringArrayListExtra(Constant.ID_CLIENT_LIST)!=null) {
+           mClientIdList = intent.getStringArrayListExtra(Constant.ID_CLIENT_LIST)!!
         }
 
         /**Initialize Variables*/
@@ -60,7 +64,7 @@ class NotificationTemplatesActivity : AppCompatActivity(), SnackBarCallback {
                 "1" -> {
 
                     if (!it.data!!.templates.isNullOrEmpty()) {
-                        val mAdapter = NotificationTemplatesAdapter(this,it.data!!.templates!!,idNotificationCategory.toString(),SEND_SMS_DETAILS,SEND_EMAIL_DETAILS)
+                        val mAdapter = NotificationTemplatesAdapter(this,it.data!!.templates!!,idNotificationCategory.toString(),SEND_SMS_DETAILS,SEND_EMAIL_DETAILS,mClientIdList)
                         rvNotificationTemplates.adapter=mAdapter
                     }
                 }

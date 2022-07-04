@@ -1,10 +1,15 @@
 package com.duedatereminder.view.activities.ui.allTemplates
 
+import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -24,7 +29,7 @@ import com.duedatereminder.utils.NetworkConnection
 import com.duedatereminder.viewModel.activityViewModel.ViewModelAllNotificationTemplatesDisplay
 import com.duedatereminder.viewModel.activityViewModel.ViewModelNotificationCategories
 
-class AllNotificationTemplatesDisplayFragment : Fragment(), SnackBarCallback {
+class AllNotificationTemplatesDisplayFragment : Fragment(), SnackBarCallback,AllNotificationTemplatesDisplayAdapter.OnChatClickListener {
 
 
     private var _binding: FragmentAllNotificationTemplatesDisplayBinding? = null
@@ -65,7 +70,7 @@ class AllNotificationTemplatesDisplayFragment : Fragment(), SnackBarCallback {
                 "1"->{
                     if(!it.data!!.templates.isNullOrEmpty()){
                         tvNoData.visibility = View.GONE
-                        val mAdapter = AllNotificationTemplatesDisplayAdapter(this.requireContext(),it.data!!.templates!!)
+                        val mAdapter = AllNotificationTemplatesDisplayAdapter(this.requireContext(),it.data!!.templates!!,0,this)
                         rvAllNotificationTemplatesDisplay.adapter=mAdapter
                     }else{
                         tvNoData.visibility = View.VISIBLE
@@ -104,5 +109,16 @@ class AllNotificationTemplatesDisplayFragment : Fragment(), SnackBarCallback {
 
     override fun snackBarFailedInterConnection() {
         activity?.showSnackBar(this,getString(R.string.no_internet_connection))
+    }
+
+    override fun onChatItemClick(template: String) {
+        activity!!.copyToClipboard(template)
+    }
+
+    fun Context.copyToClipboard(text: CharSequence){
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("label",text)
+        clipboard.setPrimaryClip(clip)
+        snackBar("Template copied", context as Activity)
     }
 }

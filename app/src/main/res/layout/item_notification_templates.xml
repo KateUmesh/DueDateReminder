@@ -11,13 +11,40 @@ app:cardCornerRadius="@dimen/offset_4"
 app:cardElevation="@dimen/offset_8"
     >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_large"
+        android:orientation="horizontal">
     <TextView android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textStyle="bold" android:textColor="@color/grey_90"
-        android:id="@+id/tvNotificationTemplates" android:layout_width="wrap_content"
+        android:id="@+id/tvNotificationTemplates"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_large"
+        android:layout_weight="1"
+        android:layout_gravity="center"
         android:text="Template"
        />
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/ivChat"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/spacing_middle"
+            android:tint="@color/light_green_600"
+            app:srcCompat="@drawable/ic_whatsapp_24dp"/>
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/ivCopy"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/spacing_middle"
+            app:srcCompat="@drawable/ic_copy_24"/>
+    </LinearLayout>
 </androidx.cardview.widget.CardView>
 
 <!--

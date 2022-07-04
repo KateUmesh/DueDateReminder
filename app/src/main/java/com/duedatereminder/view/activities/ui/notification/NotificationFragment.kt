@@ -71,6 +71,7 @@ class NotificationFragment : Fragment(), SnackBarCallback {
                         rvNotificationCategories.adapter=mAdapter
                     }else{
                         tvNoData.visibility = View.VISIBLE
+
                     }
                 }
                 "0"->{

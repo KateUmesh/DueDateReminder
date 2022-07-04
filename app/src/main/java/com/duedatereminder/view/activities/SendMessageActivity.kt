@@ -1,7 +1,10 @@
 package com.duedatereminder.view.activities
 
+import android.app.ProgressDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -32,9 +35,11 @@ class SendMessageActivity : AppCompatActivity(),SnackBarCallback {
     private var SEND_SMS_DETAILS:String=""
     private var SEND_EMAIL_DETAILS:String=""
     private var idNotificationCategory:String=""
+    private  var  mClientIdList=ArrayList<String>()
     private lateinit var llLoading : LinearLayoutCompat
     private lateinit var mViewModelSendMessage: ViewModelSendMessage
     private var flag:Int=1
+    lateinit var progressDialog:ProgressDialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_send_message)
@@ -47,6 +52,9 @@ class SendMessageActivity : AppCompatActivity(),SnackBarCallback {
         btnSendEmail = findViewById(R.id.btnSendEmail)
         llLoading = findViewById(R.id.ll_loading)
         tvTemplate = findViewById(R.id.tvTemplate)
+        progressDialog = ProgressDialog(this)
+        progressDialog.setCancelable(false)
+        progressDialog.setMessage("Loading...")
 
         /**Initialize View Model*/
         mViewModelSendMessage = ViewModelProvider(this)[ViewModelSendMessage::class.java]
@@ -70,6 +78,9 @@ class SendMessageActivity : AppCompatActivity(),SnackBarCallback {
             SEND_EMAIL_DETAILS = intent.getStringExtra(Constant.SEND_EMAIL_DETAILS)!!
 
         }
+        if(intent.getStringArrayListExtra(Constant.ID_CLIENT_LIST)!=null) {
+            mClientIdList = intent.getStringArrayListExtra(Constant.ID_CLIENT_LIST)!!
+        }
 
         /**Set Template*/
         tvTemplate.text = template
@@ -87,7 +98,8 @@ class SendMessageActivity : AppCompatActivity(),SnackBarCallback {
 
         /** Response of SendSms Api*/
         mViewModelSendMessage.mModelSendSmsNotificationResponse.observe(this, Observer {
-            llLoading.visibility = View.GONE
+            //llLoading.visibility = View.GONE
+            progressDialog.dismiss()
             when(it.status){
                 "1"->{
                     showOkDialog(it.message,this)
@@ -104,7 +116,8 @@ class SendMessageActivity : AppCompatActivity(),SnackBarCallback {
 
         /** Response of SendEmail Api*/
         mViewModelSendMessage.mModelSendSmsNotificationResponse.observe(this, Observer {
-            llLoading.visibility = View.GONE
+            progressDialog.dismiss()
+           // llLoading.visibility = View.GONE
             when(it.status){
                 "1"->{
                     showOkDialog(it.message,this)
@@ -140,7 +153,8 @@ class SendMessageActivity : AppCompatActivity(),SnackBarCallback {
 
     private fun callSendSmsNotificationPostApi(idDueDateCategory:String,idNotification:String){
         flag=2
-        llLoading.visibility = View.VISIBLE
+        //llLoading.visibility = View.VISIBLE
+        progressDialog.show()
         val mModelSendSmsNotificationRequest = ModelSendSmsNotificationRequest(idDueDateCategory,idNotification)
         if(NetworkConnection.isNetworkConnected()) {
             mViewModelSendMessage.sendSmsNotification(mModelSendSmsNotificationRequest)
@@ -151,7 +165,8 @@ class SendMessageActivity : AppCompatActivity(),SnackBarCallback {
 
     private fun callSendEmailNotificationPostApi(idDueDateCategory:String,idNotification:String){
         flag=3
-        llLoading.visibility = View.VISIBLE
+        //llLoading.visibility = View.VISIBLE
+        progressDialog.show()
         val mModelSendEmailNotificationRequest = ModelSendEmailNotificationRequest(idDueDateCategory,idNotification)
         if(NetworkConnection.isNetworkConnected()) {
             mViewModelSendMessage.sendEmailNotification(mModelSendEmailNotificationRequest)
@@ -228,5 +243,16 @@ class SendMessageActivity : AppCompatActivity(),SnackBarCallback {
 
     override fun snackBarFailedInterConnection() {
         showSnackBar(this,getString(R.string.no_internet_connection))
+    }
+
+    fun showOKDialog(message: String,context: Context) {
+        val builder =
+            AlertDialog.Builder(context)
+        builder.setTitle(context.getString(R.string.app_name) as CharSequence)
+        builder.setMessage(message)
+        builder.setPositiveButton(
+            R.string.Ok
+        ) { _, _ -> }
+        builder.show()
     }
 }
